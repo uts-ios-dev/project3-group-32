@@ -27,28 +27,35 @@ class ViewController: UIViewController {
     @IBOutlet weak var denominatorLabel: UILabel!
     @IBOutlet weak var operatorLabel: UILabel!
     @IBOutlet weak var answerLabel: UILabel!
+    @IBOutlet weak var gameTimerLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     let number = 9999999999
     var problemSize = 100
     var wrongAnswer: Bool = false
+    var gameTimer: Timer!
+    var gameTime: Int = 30
+    var gameOver: Bool = false
+    var score: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadNewProplem()
-//        numeratorLabel.text = "123"
-//        operatorLabel.text = "+"
-//        denominatorLabel.text = "12"
-//        answerLabel.text = ""
-        // Do any additional setup after loading the view, typically from a nib.
+        gameTimerLabel.text = String(gameTime)
+        startGameTimer()
+        scoreLabel.text = String(score)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
     @IBAction func numberButtonTouched(_ sender: UIButton) {
+        if gameOver {
+            return
+        }
+        
         if wrongAnswer {
             wrongAnswer = false
             answerLabel.text = ""
@@ -105,6 +112,9 @@ class ViewController: UIViewController {
         
         if result == Int(answer) {
             loadNewProplem()
+            score += 1
+            gameTime += 1
+            scoreLabel.text = String(score)
         } else {
             answerLabel.textColor = UIColor.red
             wrongAnswer = true
@@ -123,9 +133,22 @@ class ViewController: UIViewController {
             numeratorLabel.text = String(num2)
             denominatorLabel.text = String(num1)
         }
-        
         operatorLabel.text = plus
         answerLabel.text = ""
+    }
+    
+    func startGameTimer()  {
+        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateGameTimer), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateGameTimer() {
+        if gameTime < 1 {
+            gameTimer.invalidate()
+            gameOver = true
+        } else {
+            gameTime -= 1
+            gameTimerLabel.text = String(gameTime)
+        }
     }
     
 }
