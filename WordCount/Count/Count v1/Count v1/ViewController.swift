@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     var equation: String = ""
     var op: String = plus
     let number = 9999999999
-    var problemSize = 10
+    var problemSize = 10000
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
     var gameTime: Int = 30
@@ -160,23 +160,30 @@ class ViewController: UIViewController {
     }
     
     func hint() {
-        print("Hint \(denominatorLabel.text!.count)")
+//        print("Hint \(denominatorLabel.text!.count)")
         
         guard let denominator = denominatorLabel.text else {return}
-        hintLabel.text = "\(denominator) = "
-//        var exponent = denominator.count
+//        hintLabel.text = "\(denominator) = "
+        var exponent = denominator.count
         var next: Int = 0
         guard var base = Int(denominator) else {return}
-        for i in 1 ..< denominator.count {
+        print("Base: \(base)")
+        for _ in 0 ..< denominator.count {
 //            labelArray.append()
 //            print(Int(denominator)! * i * num
-            next = base % Int(pow(10.0, Double(i)))
+            next = base % Int(pow(10.0, Double(exponent)))
 //            print("Next: \(next)")
-            print(base - next)
+            if base - next != 0{
+                print(base - next)
+            }
+//            hintLabel.text!.append("\(base - next) + ")
             base = next
-//            exponent -= 1
+            exponent -= 1
         }
-        print("Next: \(next)")
+        if next != 0 {
+            print("\(next)")
+        }
+//        hintLabel.text!.append("\(next)")
     }
     
     func startGameTimer()  {
