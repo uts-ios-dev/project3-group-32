@@ -14,6 +14,7 @@
 		367E3FDD20AA8324004DA775 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 367E3FDB20AA8324004DA775 /* LaunchScreen.storyboard */; };
 		367E3FE520AA8DC7004DA775 /* Calculator Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367E3FE420AA8DC7004DA775 /* Calculator Model.swift */; };
 		367E3FE720AA8EA6004DA775 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367E3FE620AA8EA6004DA775 /* Helper.swift */; };
+		367E3FE920AA8F72004DA775 /* Count Game Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367E3FE820AA8F72004DA775 /* Count Game Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		367E3FDE20AA8324004DA775 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		367E3FE420AA8DC7004DA775 /* Calculator Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calculator Model.swift"; sourceTree = "<group>"; };
 		367E3FE620AA8EA6004DA775 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		367E3FE820AA8F72004DA775 /* Count Game Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Count Game Model.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				367E3FDE20AA8324004DA775 /* Info.plist */,
 				367E3FE420AA8DC7004DA775 /* Calculator Model.swift */,
 				367E3FE620AA8EA6004DA775 /* Helper.swift */,
+				367E3FE820AA8F72004DA775 /* Count Game Model.swift */,
 			);
 			path = "Count v1";
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				367E3FD520AA8322004DA775 /* ViewController.swift in Sources */,
+				367E3FE920AA8F72004DA775 /* Count Game Model.swift in Sources */,
 				367E3FD320AA8322004DA775 /* AppDelegate.swift in Sources */,
 				367E3FE520AA8DC7004DA775 /* Calculator Model.swift in Sources */,
 				367E3FE720AA8EA6004DA775 /* Helper.swift in Sources */,
