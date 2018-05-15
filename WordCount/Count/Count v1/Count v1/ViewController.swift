@@ -35,13 +35,15 @@ class ViewController: UIViewController {
     var equation: String = ""
     var op: String = plus
     let number = 9999999999
-    var problemSize = 10000
+    var numeratorProblemSize = 10
+    var denominatorProblemSize = 10
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
     var gameTime: Int = 30
     var gameTimeBonus = 1
     var gameOver: Bool = false
     var score: Int = 0
+    var flag: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,17 +115,23 @@ class ViewController: UIViewController {
     
     func calculate() {
         guard let answer = answerLabel.text else { return }
-        
         if result == Int(answer) {
             loadNewProblem()
             score += 1
             if score != 0 && score % 10 == 0 {
-                problemSize *= 10
-                gameTimeBonus += (score/3)
+                if flag {
+                    numeratorProblemSize *= 10
+                    flag = false
+                } else {
+                    denominatorProblemSize *= 10
+                    flag = true
+                }
+                gameTimeBonus += (numeratorLabel.text!.count)
             }
             gameTime += gameTimeBonus
             gameTimerLabel.text = String(gameTime)
             scoreLabel.text = String(score)
+            hintLabel.text = ""
         } else {
             answerLabel.textColor = UIColor.red
             wrongAnswer = true
@@ -132,8 +140,8 @@ class ViewController: UIViewController {
     
     func loadNewProblem() {
         answerLabel.textColor = UIColor.black
-        var num1 = RandomInt(min: number % (problemSize/10), max: number % problemSize)
-        var num2 = RandomInt(min: number % (problemSize/10), max: number % problemSize)
+        var num1 = RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize)
+        var num2 = RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize)
         
         if num2 > num1 {
             print("swap: \(num1) \(num2)")
@@ -162,28 +170,30 @@ class ViewController: UIViewController {
     func hint() {
 //        print("Hint \(denominatorLabel.text!.count)")
         
-        guard let denominator = denominatorLabel.text else {return}
-//        hintLabel.text = "\(denominator) = "
+        guard let denominator = denominatorLabel.text, let numerator = numeratorLabel.text
+            else {return}
+        
+        hintLabel.text = """
+        \(numerator)
+        \(op) \(denominator)
+        """
+        
         var exponent = denominator.count
         var next: Int = 0
         guard var base = Int(denominator) else {return}
         print("Base: \(base)")
         for _ in 0 ..< denominator.count {
-//            labelArray.append()
-//            print(Int(denominator)! * i * num
             next = base % Int(pow(10.0, Double(exponent)))
 //            print("Next: \(next)")
             if base - next != 0{
                 print(base - next)
             }
-//            hintLabel.text!.append("\(base - next) + ")
             base = next
             exponent -= 1
         }
         if next != 0 {
             print("\(next)")
         }
-//        hintLabel.text!.append("\(next)")
     }
     
     func startGameTimer()  {
