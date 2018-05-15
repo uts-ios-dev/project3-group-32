@@ -11,15 +11,16 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet var oneButton: UIButton!
-    @IBOutlet var twoButton: UIButton!
-    @IBOutlet var threeButton: UIButton!
-    @IBOutlet var fourButton: UIButton!
-    @IBOutlet var fiveButton: UIButton!
-    @IBOutlet var sixButton: UIButton!
-    @IBOutlet var sevenButton: UIButton!
-    @IBOutlet var eightButton: UIButton!
-    @IBOutlet var nineButton: UIButton!
-    @IBOutlet var zeroButton: UIButton!
+    @IBOutlet weak var twoButton: UIButton!
+    @IBOutlet weak var threeButton: UIButton!
+    @IBOutlet weak var fourButton: UIButton!
+    @IBOutlet weak var fiveButton: UIButton!
+    @IBOutlet weak var sixButton: UIButton!
+    @IBOutlet weak var sevenButton: UIButton!
+    @IBOutlet weak var eightButton: UIButton!
+    @IBOutlet weak var nineButton: UIButton!
+    @IBOutlet weak var zeroButton: UIButton!
+    
     
     @IBOutlet var checkButton: UIButton!
     
@@ -92,8 +93,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func checkButtonTouched(_ sender: UIButton) {
-    }
+
     
     func numberTouchedAction(number: Int){
         if let currentLabel = answerLabel.text {
@@ -105,15 +105,14 @@ class ViewController: UIViewController {
         guard let numerator = numeratorLabel.text, let op = operatorLabel.text, let denominator = denominatorLabel.text, let answer = answerLabel.text else { return }
         
         let equation = "\(numerator) \(op) \(denominator)"
-        
         let result = ShuntingYard.parse(equation, operators: operators)
-        
         print("Result: \(result)")
         
         if result == Int(answer) {
             loadNewProplem()
             score += 1
-            gameTime += 1
+            gameTime += 5
+            gameTimerLabel.text = String(gameTime)
             scoreLabel.text = String(score)
         } else {
             answerLabel.textColor = UIColor.red
