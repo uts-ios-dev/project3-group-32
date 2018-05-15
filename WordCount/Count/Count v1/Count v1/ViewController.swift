@@ -20,8 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var eightButton: UIButton!
     @IBOutlet weak var nineButton: UIButton!
     @IBOutlet weak var zeroButton: UIButton!
-    
-    
+    @IBOutlet weak var hintButton: UIButton!
     @IBOutlet var checkButton: UIButton!
     
     @IBOutlet weak var numeratorLabel: UILabel!
@@ -30,21 +29,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var gameTimerLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var hintLabel: UILabel!
     
+    var result: Int = 0
+    var equation: String = ""
+    var op: String = plus
     let number = 9999999999
-    var problemSize = 100
+    var problemSize = 10
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
     var gameTime: Int = 30
+    var gameTimeBonus = 1
     var gameOver: Bool = false
     var score: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadNewProplem()
+        loadNewProblem()
         gameTimerLabel.text = String(gameTime)
         startGameTimer()
         scoreLabel.text = String(score)
+        hintLabel.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,31 +92,36 @@ class ViewController: UIViewController {
         case checkButton:
             print("Answer")
             calculate()
+        case hintButton:
+            hint()
         default:
             print("Clear")
             answerLabel.text = ""
         }
     }
     
-
-    
     func numberTouchedAction(number: Int){
         if let currentLabel = answerLabel.text {
             answerLabel.text = "\(currentLabel)\(String(number))"
         }
+        
+        guard let answer = answerLabel.text else { return }
+        if result == Int(answer) {
+            calculate()
+        }
     }
     
     func calculate() {
-        guard let numerator = numeratorLabel.text, let op = operatorLabel.text, let denominator = denominatorLabel.text, let answer = answerLabel.text else { return }
-        
-        let equation = "\(numerator) \(op) \(denominator)"
-        let result = ShuntingYard.parse(equation, operators: operators)
-        print("Result: \(result)")
+        guard let answer = answerLabel.text else { return }
         
         if result == Int(answer) {
-            loadNewProplem()
+            loadNewProblem()
             score += 1
-            gameTime += 5
+            if score != 0 && score % 10 == 0 {
+                problemSize *= 10
+                gameTimeBonus += (score/3)
+            }
+            gameTime += gameTimeBonus
             gameTimerLabel.text = String(gameTime)
             scoreLabel.text = String(score)
         } else {
@@ -120,20 +130,53 @@ class ViewController: UIViewController {
         }
     }
     
-    func loadNewProplem() {
+    func loadNewProblem() {
         answerLabel.textColor = UIColor.black
-        let num1 = RandomInt(min: number % (problemSize/10), max: number % problemSize)
-        let num2 = RandomInt(min: number % (problemSize/10), max: number % problemSize)
+        var num1 = RandomInt(min: number % (problemSize/10), max: number % problemSize)
+        var num2 = RandomInt(min: number % (problemSize/10), max: number % problemSize)
         
-        if num1 > num2 {
-            numeratorLabel.text = String(num1)
-            denominatorLabel.text = String(num2)
-        } else {
-            numeratorLabel.text = String(num2)
-            denominatorLabel.text = String(num1)
+        if num2 > num1 {
+            print("swap: \(num1) \(num2)")
+            swap(&num1, &num2)
+            print("swapped: \(num1) \(num2)")
         }
-        operatorLabel.text = plus
+        
+        equation = "\(num1) \(op) \(num2)"
+        result = ShuntingYard.parse(equation, operators: operators)
+        print("Result: \(result)")
+        
+        if num2 < 10 {
+            hintButton.isEnabled = false
+            hintButton.alpha = 0.2
+        } else {
+            hintButton.isEnabled = true
+            hintButton.alpha = 1
+        }
+        
+        numeratorLabel.text = String(num1)
+        denominatorLabel.text = String(num2)
+        operatorLabel.text = op
         answerLabel.text = ""
+    }
+    
+    func hint() {
+        print("Hint \(denominatorLabel.text!.count)")
+        
+        guard let denominator = denominatorLabel.text else {return}
+        hintLabel.text = "\(denominator) = "
+//        var exponent = denominator.count
+        var next: Int = 0
+        guard var base = Int(denominator) else {return}
+        for i in 1 ..< denominator.count {
+//            labelArray.append()
+//            print(Int(denominator)! * i * num
+            next = base % Int(pow(10.0, Double(i)))
+//            print("Next: \(next)")
+            print(base - next)
+            base = next
+//            exponent -= 1
+        }
+        print("Next: \(next)")
     }
     
     func startGameTimer()  {
@@ -149,6 +192,5 @@ class ViewController: UIViewController {
             gameTimerLabel.text = String(gameTime)
         }
     }
-    
 }
 
