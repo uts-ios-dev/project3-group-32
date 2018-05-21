@@ -33,10 +33,11 @@ class ViewController: UIViewController {
     
     var result: Int = 0
     var equation: String = ""
-    var op: String = plus
+//    var op: String = plus
+    var op: String = minus
     let number = 9999999999
-    var numeratorProblemSize = 10
-    var denominatorProblemSize = 10
+    var numeratorProblemSize = 100
+    var denominatorProblemSize = 100
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
     var gameTime: Int = 30
@@ -45,6 +46,7 @@ class ViewController: UIViewController {
     var score: Int = 0
     var flag: Bool = true
     var additionHintContainer = [Int]()
+    var minusHintContainer = [Int]()
     var hintFlag: Bool = false
     var realResult = 0 //to hold the result when the hint flag is true
     
@@ -126,9 +128,11 @@ class ViewController: UIViewController {
 //                answer = \(answer)
 //                hintFlag = \(hintFlag)
 //                """)
-            additionHintContainer.remove(at: 0)
-            if !additionHintContainer.isEmpty {
-                loadNewProblem(num1: result, num2: additionHintContainer[0])
+            if op == plus {
+                additionHintContainer.remove(at: 0)
+                if !additionHintContainer.isEmpty {
+                    loadNewProblem(num1: result, num2: additionHintContainer[0])
+                }
             }
         }
         
@@ -173,10 +177,13 @@ class ViewController: UIViewController {
         var num2 = num2
         
         if num2 > num1 {
-            print("swap: \(num1) \(num2)")
+//            print("swap: \(num1) \(num2)")
             swap(&num1, &num2)
-            print("swapped: \(num1) \(num2)")
+//            print("swapped: \(num1) \(num2)")
         }
+        
+        let numTest = num2 % denominatorProblemSize
+        print ("NumTest: \(numTest)")
         
         equation = "\(num1) \(op) \(num2)"
         result = calculate(equation)
@@ -199,40 +206,57 @@ class ViewController: UIViewController {
         print("hint()")
         hintFlag = true
         realResult = result
-        additionHintContainer.removeAll()
+        
         guard let denominator = denominatorLabel.text, let numerator = numeratorLabel.text
             else {return}
         
-        var exponent = denominator.count
-        var next: Int = 0
-        guard var base = Int(denominator) else {return}
-        print("Base: \(base)")
-        for _ in 0 ..< denominator.count {
-            next = base % Int(pow(10.0, Double(exponent)))
-//            print("Next: \(next)")
-            if base - next != 0{
-                print(base - next)
-                additionHintContainer.append(base - next)
+        switch op {
+        case plus:
+            additionHintContainer.removeAll()
+            additionHintContainer = createHintContainer(denominator: denominator)
+            hintLabel.text = "\(denominator) = \(additionHintContainer[0])"
+            for i in 1..<additionHintContainer.count {
+                var current = hintLabel.text!
+                current = "\(current) + \(additionHintContainer[i])"
+                hintLabel.text = current
             }
-            base = next
-            exponent -= 1
-        }
-        if next != 0 {
-            print("\(next)")
-            additionHintContainer.append(next)
-            print(additionHintContainer)
-        }
-        
-        hintLabel.text = "\(denominator) = \(additionHintContainer[0])"
-        for i in 1..<additionHintContainer.count {
-            var current = hintLabel.text!
-            current = "\(current) + \(additionHintContainer[i])"
-            hintLabel.text = current
+            loadNewProblem(num1: Int(numerator)!, num2: Int(additionHintContainer[0]))
+            
+        case minus:
+            minusHintContainer.removeAll()
+            minusHintContainer = createHintContainer(denominator: denominator)
+            
+        default:
+            return
         }
         
-        loadNewProblem(num1: Int(numerator)!, num2: Int(additionHintContainer[0]))
     }
     
+    
+    func createHintContainer(denominator: String) -> [Int] {
+        var hintContainer = [Int]()
+        var exponent = denominator.count
+        var next: Int = 0
+        if var base = Int(denominator) {
+            print("Base: \(base)")
+            for _ in 0 ..< denominator.count {
+                next = base % Int(pow(10.0, Double(exponent)))
+                //            print("Next: \(next)")
+                if base - next != 0{
+                    print(base - next)
+                    hintContainer.append(base - next)
+                }
+                base = next
+                exponent -= 1
+            }
+            if next != 0 {
+                print("\(next)")
+                hintContainer.append(next)
+                print(hintContainer)
+            }
+        }
+        return hintContainer
+    }
     
     func startGameTimer()  {
         gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateGameTimer), userInfo: nil, repeats: true)
