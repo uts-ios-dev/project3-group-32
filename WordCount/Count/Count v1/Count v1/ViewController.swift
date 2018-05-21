@@ -35,8 +35,8 @@ class ViewController: UIViewController {
     var equation: String = ""
     var op: String = plus
     let number = 9999999999
-    var numeratorProblemSize = 100
-    var denominatorProblemSize = 100
+    var numeratorProblemSize = 10
+    var denominatorProblemSize = 10
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
     var gameTime: Int = 30
@@ -45,10 +45,14 @@ class ViewController: UIViewController {
     var score: Int = 0
     var flag: Bool = true
     var additionHintContainer = [Int]()
+    var hintFlag: Bool = false
+    var realResult = 0 //to hold the result when the hint flag is true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadNewProblem()
+//        loadNewProblem()
+        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize))
         gameTimerLabel.text = String(gameTime)
         startGameTimer()
         scoreLabel.text = String(score)
@@ -93,8 +97,6 @@ class ViewController: UIViewController {
         case zeroButton:
             numberTouchedAction(number: 0)
         case clearButton:
-//            print("Answer")
-//            calculate()
             print("Clear")
             answerLabel.text = ""
         case hintButton:
@@ -111,15 +113,31 @@ class ViewController: UIViewController {
         }
         
         guard let answer = answerLabel.text else { return }
-        if result == Int(answer) {
+        if !hintFlag && result == Int(answer) {
             replay()
+        } else if hintFlag && Int(answer) == realResult {
+            replay()
+            print("Hint Cycle Complete")
+        } else if hintFlag && result == Int(answer) {
+//            print("""
+//                load the next part of the hint
+//                realResult = \(realResult)
+//                result = \(result)
+//                answer = \(answer)
+//                hintFlag = \(hintFlag)
+//                """)
+            additionHintContainer.remove(at: 0)
+            if !additionHintContainer.isEmpty {
+                loadNewProblem(num1: result, num2: additionHintContainer[0])
+            }
         }
+        
     }
     
     func replay() {
-//        guard let answer = answerLabel.text else { return }
-//        if result == Int(answer) {
-            loadNewProblem()
+        print("replay()")
+        
+//        if !hintFlag { // uncomment if you want to turn scoring off if hint used
             score += 1
             if score != 0 && score % 10 == 0 {
                 if flag {
@@ -134,24 +152,25 @@ class ViewController: UIViewController {
             gameTime += gameTimeBonus
             gameTimerLabel.text = String(gameTime)
             scoreLabel.text = String(score)
-            hintLabel.text = ""
 //        } else {
-//            answerLabel.textColor = UIColor.red
-//            wrongAnswer = true
+            hintLabel.text = ""
+            hintFlag = false
 //        }
+        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize))
     }
     
     func calculate(_ equation: String) -> Int {
-//        equation = "\(num1) \(op) \(num2)"
+        print("calculate()")
         result = ShuntingYard.parse(equation, operators: operators)
         print("Result: \(result)")
         return result
     }
     
-    func loadNewProblem() {
-        answerLabel.textColor = UIColor.black
-        var num1 = RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize)
-        var num2 = RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize)
+//    func loadNewProblem() {
+    func loadNewProblem(num1: Int, num2: Int) {
+        print("loadNewProblem")
+        var num1 = num1
+        var num2 = num2
         
         if num2 > num1 {
             print("swap: \(num1) \(num2)")
@@ -161,10 +180,8 @@ class ViewController: UIViewController {
         
         equation = "\(num1) \(op) \(num2)"
         result = calculate(equation)
-//        result = ShuntingYard.parse(equation, operators: operators)
-//        print("Result: \(result)")
         
-        if num2 < 10 {
+        if num2 < 10 || hintFlag{
             hintButton.isEnabled = false
             hintButton.alpha = 0.2
         } else {
@@ -179,15 +196,12 @@ class ViewController: UIViewController {
     }
     
     func hint() {
-//        print("Hint \(denominatorLabel.text!.count)")
+        print("hint()")
+        hintFlag = true
+        realResult = result
         additionHintContainer.removeAll()
         guard let denominator = denominatorLabel.text, let numerator = numeratorLabel.text
             else {return}
-        
-        hintLabel.text = """
-        \(numerator)
-        \(op) \(denominator)
-        """
         
         var exponent = denominator.count
         var next: Int = 0
@@ -208,62 +222,16 @@ class ViewController: UIViewController {
             additionHintContainer.append(next)
             print(additionHintContainer)
         }
-        additionHintCycle(additionHintContainer)
-    }
-    
-    func additionHintCycle(_ additionHintContainer: [Int]) {
-////        var hintNum1: Int?
-////        var hintNum2: Int?
-////        answerLabel.text = ""
-//        if hintResult == result {
-//            replay()
-//        }
-//
-//        var tempContainer = [Int]()
-//        denominatorLabel.text = String(additionHintContainer[0])
-//
-//        guard let hintNum1 = Int(numeratorLabel.text!), let hintNum2 = Int(denominatorLabel.text!)
-//        else { return }
-//        let hintEquation = "\(hintNum1) \(op) \(hintNum2)"
-//        let hintResult = calculate(hintEquation)
-//
-//        guard let hintAnswer = answerLabel.text else { return }
-//
-//        if hintResult == Int(hintAnswer) {
-//            tempContainer = additionHintContainer
-//            tempContainer = [tempContainer.remove(at: 0)]
-//            print(tempContainer)
-//            numeratorLabel.text = String(hintResult)
-//            additionHintCycle(tempContainer)
-//        }
-//
-    
-//        var i: Int = 0
-//        while i < additionHintContainer.count {
-//            denominatorLabel.text = String(additionHintContainer[i])
-//            guard var hintNum1 = Int(numeratorLabel.text!), var hintNum2 = Int(denominatorLabel.text!)
-//            else { return }
-////            var hintAnswer = hintNum1 + hintNum2
-//
-//            var hintEquation = "\(hintNum1) \(op) \(hintNum2)"
-//            var hintResult = calculate(hintEquation)
-//
-//            if var hintAnswer = answerLabel.text {
-////                while hintResult != Int(hintAnswer) {
-////                    hintAnswer = answerLabel.text!
-////                }
-//            }
-//            numeratorLabel.text = String(hintResult)
-//            i += 1
-////            denominatorLabel.text = String(additionHintContainer[i])
-//        }
         
+        hintLabel.text = "\(denominator) = \(additionHintContainer[0])"
+        for i in 1..<additionHintContainer.count {
+            var current = hintLabel.text!
+            current = "\(current) + \(additionHintContainer[i])"
+            hintLabel.text = current
+        }
         
-//        for i in 1 ..< additionHintContainer.count {
-//            print("\(i): \(additionHintContainer[i])")
-//        }
+        loadNewProblem(num1: Int(numerator)!, num2: Int(additionHintContainer[0]))
     }
-    
     
     
     func startGameTimer()  {
