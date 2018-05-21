@@ -33,14 +33,14 @@ class ViewController: UIViewController {
     
     var result: Int = 0
     var equation: String = ""
-//    var op: String = plus
-    var op: String = minus
+    var op: String = plus
+//    var op: String = minus
     let number = 9999999999
-    var numeratorProblemSize = 100
-    var denominatorProblemSize = 100
+    var numeratorProblemSize = 10
+    var denominatorProblemSize = 10
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
-    var gameTime: Int = 30
+    var gameTime: Int = 60
     var gameTimeBonus = 1
     var gameOver: Bool = false
     var score: Int = 0
@@ -71,12 +71,6 @@ class ViewController: UIViewController {
         if gameOver {
             return
         }
-        
-//        if wrongAnswer {
-//            wrongAnswer = false
-//            answerLabel.text = ""
-//            answerLabel.textColor = UIColor.black
-//        }
         
         switch sender {
         case oneButton:
@@ -110,6 +104,7 @@ class ViewController: UIViewController {
         }
     }
     
+    
     func numberTouchedAction(number: Int){
         if let currentLabel = answerLabel.text {
             answerLabel.text = "\(currentLabel)\(String(number))"
@@ -122,13 +117,13 @@ class ViewController: UIViewController {
             replay()
             print("Hint Cycle Complete")
         } else if hintFlag && result == Int(answer) {
-            print("""
-                load the next part of the hint
-                realResult = \(realResult)
-                result = \(result)
-                answer = \(answer)
-                hintFlag = \(hintFlag)
-                """)
+//            print("""
+//                load the next part of the hint
+//                realResult = \(realResult)
+//                result = \(result)
+//                answer = \(answer)
+//                hintFlag = \(hintFlag)
+//                """)
             switch op {
             case plus:
                 additionHintContainer.remove(at: 0)
@@ -155,7 +150,7 @@ class ViewController: UIViewController {
     func replay() {
         print("replay()")
         
-//        if !hintFlag { // uncomment if you want to turn scoring off if hint used
+        if !hintFlag { // uncomment if you want to turn scoring off if hint used
             score += 1
             if score != 0 && score % 10 == 0 {
                 if flag {
@@ -170,11 +165,11 @@ class ViewController: UIViewController {
             gameTime += gameTimeBonus
             gameTimerLabel.text = String(gameTime)
             scoreLabel.text = String(score)
-//        } else {
+        } else {
             hintLabel.text = ""
             hintFlag = false
-//        }
-        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: op)
+        }
+        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: randomOp())
     }
     
     func calculate(_ equation: String) -> Int {
@@ -184,7 +179,7 @@ class ViewController: UIViewController {
         return result
     }
     
-//    func loadNewProblem() {
+
     func loadNewProblem(num1: Int, num2: Int, op: String) {
         print("loadNewProblem")
         var num1 = num1
@@ -235,28 +230,23 @@ class ViewController: UIViewController {
         case minus:
             minusHintContainer.removeAll()
             willRoundUp = minusHintChoice(numeratorContainer: createHintContainer(numerator), denominatorContainer: createHintContainer(denominator))
-            print("Will Round Up: \(willRoundUp)")
+//            print("Will Round Up: \(willRoundUp)")
             if willRoundUp {
                 let tmp = createHintContainer(denominator)
                 let hintNumber = (tmp[0] / (denominatorProblemSize/10) + 1) * (denominatorProblemSize/10)
                 let difference = hintNumber - Int(denominator)!
                 minusHintContainer = createHintContainer(String(hintNumber + difference))
-//                minusHintContainer[0] = hintNumber
-//                minusHintContainer.insert(hintNumber, at: 0)
-                print("Rounded up container: \(minusHintContainer)")
+//                print("Rounded up container: \(minusHintContainer)")
                 printHintLabel(denominator: denominator, container: minusHintContainer, operation: minus)
-//                loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: plus)
             } else {
                 minusHintContainer = createHintContainer(denominator)
                 minusHintContainer = minusHintContainer.filter({$0 != 0})
                 printHintLabel(denominator: denominator, container: minusHintContainer, operation: plus)
-//                loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: minus)
             }
             loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: minus)
         default:
             return
         }
-        
     }
     
     func printHintLabel(denominator: String?, container: [Int], operation: String) {
@@ -302,6 +292,16 @@ class ViewController: UIViewController {
 //            }
         }
         return hintContainer
+    }
+    
+    func randomOp() -> String{
+        let x = RandomInt(min: 0, max: 100)
+        if x % 2 == 0{
+            op = plus
+        } else {
+            op = minus
+        }
+        return op
     }
     
     func startGameTimer()  {
