@@ -122,13 +122,13 @@ class ViewController: UIViewController {
             replay()
             print("Hint Cycle Complete")
         } else if hintFlag && result == Int(answer) {
-//            print("""
-//                load the next part of the hint
-//                realResult = \(realResult)
-//                result = \(result)
-//                answer = \(answer)
-//                hintFlag = \(hintFlag)
-//                """)
+            print("""
+                load the next part of the hint
+                realResult = \(realResult)
+                result = \(result)
+                answer = \(answer)
+                hintFlag = \(hintFlag)
+                """)
             switch op {
             case plus:
                 additionHintContainer.remove(at: 0)
@@ -137,7 +137,14 @@ class ViewController: UIViewController {
                 }
             case minus:
                 print("Inside of numberTouchedAction() switch case: minus")
-                return
+                minusHintContainer.remove(at: 0)
+                if !minusHintContainer.isEmpty {
+                    if !willRoundUp {
+                        loadNewProblem(num1: result, num2: minusHintContainer[0], op: minus)
+                    } else {
+                        loadNewProblem(num1: result, num2: minusHintContainer[0], op: plus)
+                    }
+                }
             default:
                 return
             }
@@ -221,42 +228,45 @@ class ViewController: UIViewController {
         case plus:
             additionHintContainer.removeAll()
             additionHintContainer = createHintContainer(denominator)
-            hintLabel.text = "\(denominator) = \(additionHintContainer[0])"
-            for i in 1..<additionHintContainer.count {
-                var current = hintLabel.text!
-                current = "\(current) + \(additionHintContainer[i])"
-                hintLabel.text = current
-            }
+            additionHintContainer = additionHintContainer.filter({$0 != 0})
+            printHintLabel(denominator: denominator, container: additionHintContainer, operation: plus)
             loadNewProblem(num1: Int(numerator)!, num2: Int(additionHintContainer[0]), op: op)
             
         case minus:
             minusHintContainer.removeAll()
-            minusHintContainer = createHintContainer(denominator)
             willRoundUp = minusHintChoice(numeratorContainer: createHintContainer(numerator), denominatorContainer: createHintContainer(denominator))
+            print("Will Round Up: \(willRoundUp)")
             if willRoundUp {
-                let hintNumber = (minusHintContainer[0] / (denominatorProblemSize/10) + 1) * (denominatorProblemSize/10)
-                hintLabel.text = "\(denominator) = \(hintNumber)"
-                for i in 1 ..< minusHintContainer.count {
-                    var current = hintLabel.text!
-//____________________________________________________________________________________________________________Up to here
-//                    need to make the math right for 10's complement
-                    current = "\(current) - \(minusHintContainer[i])"
-                    hintLabel.text = current
-                }
-                loadNewProblem(num1: Int(numerator)!, num2: hintNumber, op: op)
+                let tmp = createHintContainer(denominator)
+                let hintNumber = (tmp[0] / (denominatorProblemSize/10) + 1) * (denominatorProblemSize/10)
+                let difference = hintNumber - Int(denominator)!
+                minusHintContainer = createHintContainer(String(hintNumber + difference))
+//                minusHintContainer[0] = hintNumber
+//                minusHintContainer.insert(hintNumber, at: 0)
+                print("Rounded up container: \(minusHintContainer)")
+                printHintLabel(denominator: denominator, container: minusHintContainer, operation: minus)
+//                loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: plus)
             } else {
-                hintLabel.text = "\(denominator) = \(minusHintContainer[0])"
-                for i in 1 ..< minusHintContainer.count {
-                    var current = hintLabel.text!
-                    current = "\(current) + \(minusHintContainer[i])"
-                    hintLabel.text = current
-                }
-                loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: op)
+                minusHintContainer = createHintContainer(denominator)
+                minusHintContainer = minusHintContainer.filter({$0 != 0})
+                printHintLabel(denominator: denominator, container: minusHintContainer, operation: plus)
+//                loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: minus)
             }
+            loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: minus)
         default:
             return
         }
         
+    }
+    
+    func printHintLabel(denominator: String?, container: [Int], operation: String) {
+        guard let denominator = denominator else { return }
+        hintLabel.text = "\(denominator) = \(container[0])"
+        for i in 1..<container.count {
+            var current = hintLabel.text!
+            current = "\(current) \(operation) \(container[i])"
+            hintLabel.text = current
+        }
     }
     
     func minusHintChoice(numeratorContainer: [Int], denominatorContainer: [Int]) -> Bool {
@@ -271,25 +281,25 @@ class ViewController: UIViewController {
     
     func createHintContainer(_ str: String) -> [Int] {
         var hintContainer = [Int]()
-        var exponent = str.count
+        var exponent = str.count - 1
         var next: Int = 0
         if var base = Int(str) {
             print("Base: \(base)")
-            for _ in 0 ..< str.count {
+            for _ in 1 ..< str.count {
                 next = base % Int(pow(10.0, Double(exponent)))
                 //            print("Next: \(next)")
-                if base - next != 0{
+//                if base - next != 0{
                     print(base - next)
                     hintContainer.append(base - next)
-                }
+//                }
                 base = next
                 exponent -= 1
             }
-            if next != 0 {
+//            if next != 0 {
                 print("\(next)")
                 hintContainer.append(next)
                 print(hintContainer)
-            }
+//            }
         }
         return hintContainer
     }
