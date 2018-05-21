@@ -49,12 +49,13 @@ class ViewController: UIViewController {
     var minusHintContainer = [Int]()
     var hintFlag: Bool = false
     var realResult = 0 //to hold the result when the hint flag is true
+    var willRoundUp: Bool = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        loadNewProblem()
-        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize))
+        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: op)
         gameTimerLabel.text = String(gameTime)
         startGameTimer()
         scoreLabel.text = String(score)
@@ -71,11 +72,11 @@ class ViewController: UIViewController {
             return
         }
         
-        if wrongAnswer {
-            wrongAnswer = false
-            answerLabel.text = ""
-            answerLabel.textColor = UIColor.black
-        }
+//        if wrongAnswer {
+//            wrongAnswer = false
+//            answerLabel.text = ""
+//            answerLabel.textColor = UIColor.black
+//        }
         
         switch sender {
         case oneButton:
@@ -132,7 +133,7 @@ class ViewController: UIViewController {
             case plus:
                 additionHintContainer.remove(at: 0)
                 if !additionHintContainer.isEmpty {
-                    loadNewProblem(num1: result, num2: additionHintContainer[0])
+                    loadNewProblem(num1: result, num2: additionHintContainer[0], op: op)
                 }
             case minus:
                 print("Inside of numberTouchedAction() switch case: minus")
@@ -166,7 +167,7 @@ class ViewController: UIViewController {
             hintLabel.text = ""
             hintFlag = false
 //        }
-        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize))
+        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: op)
     }
     
     func calculate(_ equation: String) -> Int {
@@ -177,7 +178,7 @@ class ViewController: UIViewController {
     }
     
 //    func loadNewProblem() {
-    func loadNewProblem(num1: Int, num2: Int) {
+    func loadNewProblem(num1: Int, num2: Int, op: String) {
         print("loadNewProblem")
         var num1 = num1
         var num2 = num2
@@ -219,38 +220,62 @@ class ViewController: UIViewController {
         switch op {
         case plus:
             additionHintContainer.removeAll()
-            additionHintContainer = createHintContainer(denominator: denominator)
+            additionHintContainer = createHintContainer(denominator)
             hintLabel.text = "\(denominator) = \(additionHintContainer[0])"
             for i in 1..<additionHintContainer.count {
                 var current = hintLabel.text!
                 current = "\(current) + \(additionHintContainer[i])"
                 hintLabel.text = current
             }
-            loadNewProblem(num1: Int(numerator)!, num2: Int(additionHintContainer[0]))
+            loadNewProblem(num1: Int(numerator)!, num2: Int(additionHintContainer[0]), op: op)
             
         case minus:
             minusHintContainer.removeAll()
-            minusHintContainer = createHintContainer(denominator: denominator)
-            var numTest = minusHintContainer[0] / (denominatorProblemSize/10)
-            print("numTest 1: \(numTest)")
-            numTest += 1
-            print("numTest 2: \(numTest)")
-            numTest *= denominatorProblemSize/10
-            print("numTest 3: \(numTest)")
+            minusHintContainer = createHintContainer(denominator)
+            willRoundUp = minusHintChoice(numeratorContainer: createHintContainer(numerator), denominatorContainer: createHintContainer(denominator))
+            if willRoundUp {
+                let hintNumber = (minusHintContainer[0] / (denominatorProblemSize/10) + 1) * (denominatorProblemSize/10)
+                hintLabel.text = "\(denominator) = \(hintNumber)"
+                for i in 1 ..< minusHintContainer.count {
+                    var current = hintLabel.text!
+//____________________________________________________________________________________________________________Up to here
+//                    need to make the math right for 10's complement
+                    current = "\(current) - \(minusHintContainer[i])"
+                    hintLabel.text = current
+                }
+                loadNewProblem(num1: Int(numerator)!, num2: hintNumber, op: op)
+            } else {
+                hintLabel.text = "\(denominator) = \(minusHintContainer[0])"
+                for i in 1 ..< minusHintContainer.count {
+                    var current = hintLabel.text!
+                    current = "\(current) + \(minusHintContainer[i])"
+                    hintLabel.text = current
+                }
+                loadNewProblem(num1: Int(numerator)!, num2: minusHintContainer[0], op: op)
+            }
         default:
             return
         }
         
     }
     
+    func minusHintChoice(numeratorContainer: [Int], denominatorContainer: [Int]) -> Bool {
+        for i in stride(from: denominatorContainer.count-1, to: 0, by: -1) {
+            if denominatorContainer[i] > numeratorContainer[i] {
+                return true
+            }
+        }
+        return false
+    }
     
-    func createHintContainer(denominator: String) -> [Int] {
+    
+    func createHintContainer(_ str: String) -> [Int] {
         var hintContainer = [Int]()
-        var exponent = denominator.count
+        var exponent = str.count
         var next: Int = 0
-        if var base = Int(denominator) {
+        if var base = Int(str) {
             print("Base: \(base)")
-            for _ in 0 ..< denominator.count {
+            for _ in 0 ..< str.count {
                 next = base % Int(pow(10.0, Double(exponent)))
                 //            print("Next: \(next)")
                 if base - next != 0{
