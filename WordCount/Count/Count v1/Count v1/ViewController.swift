@@ -128,11 +128,17 @@ class ViewController: UIViewController {
 //                answer = \(answer)
 //                hintFlag = \(hintFlag)
 //                """)
-            if op == plus {
+            switch op {
+            case plus:
                 additionHintContainer.remove(at: 0)
                 if !additionHintContainer.isEmpty {
                     loadNewProblem(num1: result, num2: additionHintContainer[0])
                 }
+            case minus:
+                print("Inside of numberTouchedAction() switch case: minus")
+                return
+            default:
+                return
             }
         }
         
@@ -151,7 +157,7 @@ class ViewController: UIViewController {
                     denominatorProblemSize *= 10
                     flag = true
                 }
-                gameTimeBonus += (numeratorLabel.text!.count)
+                gameTimeBonus += (numeratorLabel.text!.count * 2)
             }
             gameTime += gameTimeBonus
             gameTimerLabel.text = String(gameTime)
@@ -225,7 +231,12 @@ class ViewController: UIViewController {
         case minus:
             minusHintContainer.removeAll()
             minusHintContainer = createHintContainer(denominator: denominator)
-            
+            var numTest = minusHintContainer[0] / (denominatorProblemSize/10)
+            print("numTest 1: \(numTest)")
+            numTest += 1
+            print("numTest 2: \(numTest)")
+            numTest *= denominatorProblemSize/10
+            print("numTest 3: \(numTest)")
         default:
             return
         }
