@@ -230,9 +230,9 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hxe-U1-sSH">
                                                                 <rect key="frame" x="0.0" y="0.0" width="164.5" height="143.5"/>
-                                                                <color key="backgroundColor" red="0.17532778361774473" green="0.66666668653488159" blue="0.20019338913737456" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                <state key="normal" title="Check">
+                                                                <state key="normal" title="Clear">
                                                                     <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </state>
                                                                 <connections>
@@ -252,7 +252,7 @@
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ThI-jh-oYn">
                                                                 <rect key="frame" x="342.5" y="0.0" width="164.5" height="143.5"/>
-                                                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="backgroundColor" red="0.1596189897247314" green="0.80936285621761661" blue="0.20577540448174084" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                                                 <state key="normal" title="Hint">
                                                                     <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -291,7 +291,7 @@
                     </view>
                     <connections>
                         <outlet property="answerLabel" destination="Nwa-fo-NRc" id="4kl-VD-lP4"/>
-                        <outlet property="checkButton" destination="Hxe-U1-sSH" id="INt-sa-1px"/>
+                        <outlet property="clearButton" destination="Hxe-U1-sSH" id="W7j-1m-bn1"/>
                         <outlet property="denominatorLabel" destination="A01-31-pf8" id="iEe-Lj-wcx"/>
                         <outlet property="eightButton" destination="uku-m5-vYO" id="eXr-L8-xqn"/>
                         <outlet property="fiveButton" destination="bHX-8K-Oxd" id="9An-kC-nrn"/>

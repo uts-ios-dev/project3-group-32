@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var nineButton: UIButton!
     @IBOutlet weak var zeroButton: UIButton!
     @IBOutlet weak var hintButton: UIButton!
-    @IBOutlet var checkButton: UIButton!
+    @IBOutlet weak var clearButton: UIButton!
     
     @IBOutlet weak var numeratorLabel: UILabel!
     @IBOutlet weak var denominatorLabel: UILabel!
@@ -35,8 +35,8 @@ class ViewController: UIViewController {
     var equation: String = ""
     var op: String = plus
     let number = 9999999999
-    var numeratorProblemSize = 10
-    var denominatorProblemSize = 10
+    var numeratorProblemSize = 100
+    var denominatorProblemSize = 100
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
     var gameTime: Int = 30
@@ -44,6 +44,7 @@ class ViewController: UIViewController {
     var gameOver: Bool = false
     var score: Int = 0
     var flag: Bool = true
+    var additionHintContainer = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,9 +92,11 @@ class ViewController: UIViewController {
             numberTouchedAction(number: 9)
         case zeroButton:
             numberTouchedAction(number: 0)
-        case checkButton:
-            print("Answer")
-            calculate()
+        case clearButton:
+//            print("Answer")
+//            calculate()
+            print("Clear")
+            answerLabel.text = ""
         case hintButton:
             hint()
         default:
@@ -109,13 +112,13 @@ class ViewController: UIViewController {
         
         guard let answer = answerLabel.text else { return }
         if result == Int(answer) {
-            calculate()
+            replay()
         }
     }
     
-    func calculate() {
-        guard let answer = answerLabel.text else { return }
-        if result == Int(answer) {
+    func replay() {
+//        guard let answer = answerLabel.text else { return }
+//        if result == Int(answer) {
             loadNewProblem()
             score += 1
             if score != 0 && score % 10 == 0 {
@@ -132,10 +135,17 @@ class ViewController: UIViewController {
             gameTimerLabel.text = String(gameTime)
             scoreLabel.text = String(score)
             hintLabel.text = ""
-        } else {
-            answerLabel.textColor = UIColor.red
-            wrongAnswer = true
-        }
+//        } else {
+//            answerLabel.textColor = UIColor.red
+//            wrongAnswer = true
+//        }
+    }
+    
+    func calculate(_ equation: String) -> Int {
+//        equation = "\(num1) \(op) \(num2)"
+        result = ShuntingYard.parse(equation, operators: operators)
+        print("Result: \(result)")
+        return result
     }
     
     func loadNewProblem() {
@@ -150,8 +160,9 @@ class ViewController: UIViewController {
         }
         
         equation = "\(num1) \(op) \(num2)"
-        result = ShuntingYard.parse(equation, operators: operators)
-        print("Result: \(result)")
+        result = calculate(equation)
+//        result = ShuntingYard.parse(equation, operators: operators)
+//        print("Result: \(result)")
         
         if num2 < 10 {
             hintButton.isEnabled = false
@@ -169,7 +180,7 @@ class ViewController: UIViewController {
     
     func hint() {
 //        print("Hint \(denominatorLabel.text!.count)")
-        
+        additionHintContainer.removeAll()
         guard let denominator = denominatorLabel.text, let numerator = numeratorLabel.text
             else {return}
         
@@ -187,14 +198,73 @@ class ViewController: UIViewController {
 //            print("Next: \(next)")
             if base - next != 0{
                 print(base - next)
+                additionHintContainer.append(base - next)
             }
             base = next
             exponent -= 1
         }
         if next != 0 {
             print("\(next)")
+            additionHintContainer.append(next)
+            print(additionHintContainer)
         }
+        additionHintCycle(additionHintContainer)
     }
+    
+    func additionHintCycle(_ additionHintContainer: [Int]) {
+////        var hintNum1: Int?
+////        var hintNum2: Int?
+////        answerLabel.text = ""
+//        if hintResult == result {
+//            replay()
+//        }
+//
+//        var tempContainer = [Int]()
+//        denominatorLabel.text = String(additionHintContainer[0])
+//
+//        guard let hintNum1 = Int(numeratorLabel.text!), let hintNum2 = Int(denominatorLabel.text!)
+//        else { return }
+//        let hintEquation = "\(hintNum1) \(op) \(hintNum2)"
+//        let hintResult = calculate(hintEquation)
+//
+//        guard let hintAnswer = answerLabel.text else { return }
+//
+//        if hintResult == Int(hintAnswer) {
+//            tempContainer = additionHintContainer
+//            tempContainer = [tempContainer.remove(at: 0)]
+//            print(tempContainer)
+//            numeratorLabel.text = String(hintResult)
+//            additionHintCycle(tempContainer)
+//        }
+//
+    
+//        var i: Int = 0
+//        while i < additionHintContainer.count {
+//            denominatorLabel.text = String(additionHintContainer[i])
+//            guard var hintNum1 = Int(numeratorLabel.text!), var hintNum2 = Int(denominatorLabel.text!)
+//            else { return }
+////            var hintAnswer = hintNum1 + hintNum2
+//
+//            var hintEquation = "\(hintNum1) \(op) \(hintNum2)"
+//            var hintResult = calculate(hintEquation)
+//
+//            if var hintAnswer = answerLabel.text {
+////                while hintResult != Int(hintAnswer) {
+////                    hintAnswer = answerLabel.text!
+////                }
+//            }
+//            numeratorLabel.text = String(hintResult)
+//            i += 1
+////            denominatorLabel.text = String(additionHintContainer[i])
+//        }
+        
+        
+//        for i in 1 ..< additionHintContainer.count {
+//            print("\(i): \(additionHintContainer[i])")
+//        }
+    }
+    
+    
     
     func startGameTimer()  {
         gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateGameTimer), userInfo: nil, repeats: true)
