@@ -15,6 +15,7 @@
 //https://help.apple.com/xcode/mac/current/#/devea503dbda
 //https://stackoverflow.com/questions/3087089/xcode-build-and-archive-menu-item-disabled
 //https://developer.apple.com/documentation/gamekit/gkplayer/1520695-displayname
+//
 
 import SpriteKit
 import GameplayKit
@@ -25,235 +26,367 @@ protocol GameSceneDelegate {
 
 // Type of bubble launches
 enum SequenceType: Int {
-    case one, halfMax, max, chain, fastChain
+    //case one, halfMax, max, chain, fastChain
+    case chain, fastChain
 }
 
 class GameScene: SKScene {
-// Declere view controller
+    //Game View Controller
     weak var viewController: GameViewController!
-//    Declare delegate
+    
+    //Game Scene Delegate
     var gameSceneDelegate: GameSceneDelegate?
     var gameKitEnabled: Bool = true
-// View Parameters
+   
+    // View Parameters
     var viewWidth = 1024
     var viewHeight = 750
+    
     // Slice variables for touch
     var activeSlicePoints = [CGPoint]()
     var activeSliceBG: SKShapeNode!
     var activeSliceFG: SKShapeNode!
     var isSwooshSoundActive = false
-// Game play parameters
+    
+    // Game play parameters
     var popupTime = 0.5
-    var gravity = -6.0
+    var gravity = CGVector(dx: -4, dy: -0.1)
     var sequence: [SequenceType]!
     var sequencePosition = 0
     var chainDelay = 3.0
     var nextSequenceQueued = true
-// Bubble parameters
+    var wordCompleted = false
+
+    // Bubble parameters
     var activeBubbles = [SKSpriteNode]()
     var maxActiveBubbles: Int = 15
     var multiplierLabel: SKLabelNode!
     var addToScoreLabel: SKLabelNode!
     var topScoreLabel: SKLabelNode!
     var topScore = 0
-// Start countdown
+    
+    // Start countdown
     let startTimerLable = SKLabelNode(fontNamed: "Avenir Next Condensed Bold")
     var startCountDown: Timer!
     var startTime = 3
     var istimerAnimationOn: Bool = false
-// Last bubble popped menu
+    
+    // Last bubble popped menu
     var lastBubbblePopImageContainer = [SKSpriteNode]()
     var lastPoppedName: String = "No Popped"
     var lastBubbblePopImage: SKSpriteNode!
     var pointsMultiplier: Float = 1.0
-// Game timer menu
+    
+    // Game timer menu
     let clockLabel = SKLabelNode(fontNamed: "Avenir Next Condensed Bold")
     var gameTimer: Timer!
     var gameTime = 60.0
-// End game
+    
+    // End game
     var gameEnded = false
     var finalScore = 0
-// Game score menu
+    
+    // Game score menu
     var gameScore: SKLabelNode!
+    
+    // Words
+    var charsToDisplay: [Bool] = []
+    var wordToDisplay: String = ""
+    var gameWords: [String] = [ "Salah", "Westbrook", "Gerrard", "LeBron", "Alonso", "Kobe"]
+    var displayedLetters: [SKLabelNode] = []
+    var hiddenLetters: [String] = []
+    
+    
     var score: Float = 0 {
         didSet {
             gameScore.text = "Score: \(Int(score))"
         }
     }
     
+    //Creates the display node for a given letter and adjusts
+    //what is displayed according to visibility.
+    //  @return void
+    func createLetterNode(letterToAdd: String, offsetBy: CGPoint, visible: Bool) {
+        let letter = SKLabelNode(fontNamed: "Avenir Next Condensed Bold")
+        
+        letter.text = letterToAdd
+        letter.fontSize = 50
+        letter.horizontalAlignmentMode = .center
+        letter.verticalAlignmentMode = .bottom
+        letter.position = offsetBy
+        
+        displayedLetters.append(letter)
+        
+        if(visible) {
+            charsToDisplay.append(true)
+        } else {
+            charsToDisplay.append(false)
+            hiddenLetters.append(letterToAdd)
+            letter.text = "_"
+        }
+        
+        addChild(letter)
+    }
     
+    
+    // Creates the words that display along the bottom of the screen.
+    //   @return void
+    func createWordProgress(){
+        let xOffSet = (viewWidth - (50 * wordToDisplay.count))/2
+        var currentOffSet = 0
+      
+        for index in 0 ... wordToDisplay.count - 1 {
+            
+            let randomProbabilityNumber = RandomInt(min: 1, max: 100);
+            let letter = String(wordToDisplay[wordToDisplay.index(wordToDisplay.startIndex, offsetBy: index)])
+            let offset = CGPoint(x: xOffSet + currentOffSet, y: 15)
+            
+            switch randomProbabilityNumber {
+                case 1 ... 60:
+                    createLetterNode(letterToAdd: letter, offsetBy: offset, visible: true)
+                default:
+                    createLetterNode(letterToAdd: letter, offsetBy: offset, visible: false)
+            }
+
+            currentOffSet = currentOffSet + 50
+            
+        }
+    }
+    
+    //Refreshes the displayed word, when characters are found by a player
+    //  @return void
+    func updateWordProgress(){
+        let max = (charsToDisplay.count) - 1
+       
+        for index in 0 ... max {
+            if(charsToDisplay[index] == true){
+                  let text = wordToDisplay[wordToDisplay.index(wordToDisplay.startIndex, offsetBy: index)]
+                  displayedLetters[index].text = String(text)
+            }
+        }
+    }
+    
+    
+    //Gets a word to display for the game from gameWords array.
+    // NOTE: THIS WILL NEED TO BE UDPATED TO ADJUST FOR VARIOUS WORD TYPES
+    // @return void
+    func getGameWord(){
+        wordToDisplay = gameWords[RandomInt(min: 0, max: gameWords.count - 1)].uppercased()
+    }
+    
+    //When a game is started by a player the background is set, labels are set,
+    //game word is retreived and game scores are reset.
+    // @return void
     override func didMove(to view: SKView) {
         setBackGround()
         setInteractiveLabels()
+        getGameWord()
         resetGame()
     }
     
+    
+    //Function to display slices
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
-// Clear view of existing slices
+        // Clear view of existing slices
         activeSlicePoints.removeAll(keepingCapacity: true)
         
-// Read the touch location
+        // Read the touch location
         if let touch = touches.first {
             let location = touch.location(in: self)
             activeSlicePoints.append(location)
             
-// Draw the current slice
+            // Draw the current slice
             redrawActiveSlice()
             
-// Clear the node tree of slices actions
+            // Clear the node tree of slices actions
             activeSliceBG.removeAllActions()
             activeSliceFG.removeAllActions()
             
-// Make the slice visible
+            // Make the slice visible
             activeSliceBG.alpha = 1
             activeSliceFG.alpha = 1
         }
     }
     
+    
+    //Removes all actives bubbles from screen.
+    //  @return void
+    func removeActiveBubbles(){
+        for bubble in activeBubbles {
+            bubble.removeFromParent()
+        }
+        activeBubbles.removeAll()
+    }
+    
+    
+    //Removes displayed word from screen.
+    //  @return void
+    func removeDisplayedWord(){
+        for letter in displayedLetters {
+            letter.removeFromParent()
+        }
+        displayedLetters.removeAll()
+        charsToDisplay.removeAll()
+        hiddenLetters.removeAll()
+    }
+    
+    //Removes a hidden letter when found. Used to keep track
+    //of which letters have been found.
+    //  @return void
+    func removeHiddenLetter(_ letterToFind: String){
+        var i = 0
+        var found = false;
+        
+        for letter in hiddenLetters{
+            if(letter.contains(letterToFind)){
+                hiddenLetters.remove(at: i)
+                found = true;
+            }
+
+            if(!found){
+               i += 1
+            } else {
+               found = false;
+            }
+        }
+    }
+    
+    func foundHiddenLetter(letterFound: String){
+        var index = 0
+        for letter in wordToDisplay {
+            if(String(letter).contains(letterFound)){
+                charsToDisplay [index] = true
+                score += 10
+            }
+            index += 1
+        }
+    }
+    
+    func addToScoreAnimation(_ score: Float, _ oldScore: Float){
+        addToScoreLabel.text = "+\(Int(score - oldScore))"
+        addToScoreLabel.alpha = 0.8
+        animateNode(addToScoreLabel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [unowned self] in
+            self.addToScoreLabel.alpha = 0
+        }
+    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-// Disable if game is over
+        // Disable if game is over
         if gameEnded {
             return
         }
-// Read touch action
+        
+        // Read touch action
         guard let touch = touches.first else { return }
-// Set location of touch
+        // Set location of touch
         let location = touch.location(in: self)
-// Draw the slice
+        // Draw the slice
         activeSlicePoints.append(location)
         redrawActiveSlice()
-// Make slice sounds
+        // Make slice sounds
         if !isSwooshSoundActive {
             playSwooshSound()
         }
-// Detect interesction of touch and bubble
+        
+        // Detect interesction of touch and bubble
         let nodesAtPoint = nodes(at: location)
         for node in nodesAtPoint {
             
-// If bubble is touched then pop it
-            if node.name == "bubbleRed" || node.name == "bubblePink" || node.name == "bubbleGreen" || node.name == "bubbleBlue" || node.name == "bubbleBlack" {
-                let nodeName = node.name!
+            // If bubble is touched then pop it
+            if node.name != nil {
                 
-// Fire the coloured explosion animation on bubble popped
-                let emitter = SKEmitterNode(fileNamed: "\(nodeName)SliceHit")!
-                emitter.position = node.position
-                addChild(emitter)
-                
-//  Check if consecutive colours were popped, apply score multiplier and show label if true
-                if lastPoppedName == nodeName {
-//  Add a bonus time to game timer for a same bubble popped sequence
-                    gameTime += 0.5
-                    pointsMultiplier = 1.5
-                    multiplierLabel.alpha = 0.8
-                    animateNode(multiplierLabel)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [unowned self] in
-                        self.multiplierLabel.alpha = 0
-                    }
-                } else {
-                    pointsMultiplier = 1.0
-                }
-// For testing
-//              print("Last Bubble: \(lastPoppedName) nodeName: \(nodeName) \(pointsMultiplier)")
-//  Clear bubble from view
-                lastPoppedName = nodeName
+                let nodeName = node.name
                 node.name = ""
-                lastBubbblePopImage.removeFromParent()
-// Prohibit physics interactions
+                
+                // Prohibit physics interactions
                 node.physicsBody?.isDynamic = false
-// Animate bubble removal
+                
+                // Animate bubble removal
                 let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
                 let fadeOut = SKAction.fadeOut(withDuration: 0.2)
                 let group = SKAction.group([scaleOut, fadeOut])
-//  Run animation
+               
+                //  Run animation
                 let seq = SKAction.sequence([group, SKAction.removeFromParent()])
                 node.run(seq)
-// Add score and set last bubble popped label
+               
+                // Add score and set last bubble popped label
                 let oldScore = score
-                switch nodeName {
-                case "bubbleRed":
-                    score += 1 * pointsMultiplier
-                    createlastBubblePop(imageName: "ballRed")
-                case "bubblePink":
-                    score += 2 * pointsMultiplier
-                    createlastBubblePop(imageName: "ballPink")
-                case "bubbleGreen":
-                    score += 5 * pointsMultiplier
-                    createlastBubblePop(imageName: "ballGreen")
-                case "bubbleBlue":
-                    score += 8 * pointsMultiplier
-                    createlastBubblePop(imageName: "ballCyan")
-                case "bubbleBlack":
-                    score += 10 * pointsMultiplier
-                    createlastBubblePop(imageName: "ballBlack")
-                default:
-                    score += 0
-                    createlastBubblePop(imageName: "sliceLife")
+                
+                if(hiddenLetters.contains(nodeName!)){
+                    foundHiddenLetter(letterFound: nodeName!)
+                    removeHiddenLetter(nodeName!)
+                    updateWordProgress()
+                    
+        
+                    while(hiddenLetters.isEmpty){
+                        removeActiveBubbles()
+                        removeDisplayedWord()
+                        getGameWord()
+                        createWordProgress()
+                    }
+                    
+                    addToScoreAnimation(score, oldScore)
                 }
                 
-                addToScoreLabel.text = "+\(Int(score - oldScore))"
-                addToScoreLabel.alpha = 0.8
-                animateNode(addToScoreLabel)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [unowned self] in
-                    self.addToScoreLabel.alpha = 0
+                if let index = activeBubbles.index(of: node as! SKSpriteNode) {
+                    activeBubbles.remove(at: index)
                 }
-// Remove bubble from active bubble array
-                let index = activeBubbles.index(of: node as! SKSpriteNode)!
-                activeBubbles.remove(at: index)
-// Play bubble popped sound effect
+                
+                // Play bubble popped sound effect
                 run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
             }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//  Animate slice disappearing
+        //  Animate slice disappearing
         activeSliceBG.run(SKAction.fadeOut(withDuration: 0.20))
         activeSliceFG.run(SKAction.fadeOut(withDuration: 0.15))
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//  Trigger slice disappearing animation
+        //  Trigger slice disappearing animation
         touchesEnded(touches, with: event)
     }
     
     override func update(_ currentTime: TimeInterval) {
-// Called before each frame is rendered
+//         Called before each frame is rendered
+        
         if activeBubbles.count > 0 {
             for node in activeBubbles {
-//  Remove bubbles that are off the bottom of the screen from the node tree or popped
+                //  Remove bubbles that are off the bottom of the screen from the node tree or popped
                 if node.position.y < -140 {
                     node.removeAllActions()
-                    if node.name == "bubbleRed" || node.name == "bubblePink" || node.name == "bubbleGreen" || node.name == "bubbleBlue" || node.name == "bubbleBlack" {
-                        node.name = ""
-                        node.removeFromParent()
-                        if let index = activeBubbles.index(of: node) {
-                            activeBubbles.remove(at: index)
-                        }
+                    node.removeFromParent()
+                    if let index = activeBubbles.index(of: node) {
+                        activeBubbles.remove(at: index)
                     }
                 }
             }
         } else {
             if !nextSequenceQueued {
-//  Throw more bubbles
+                //  Throw more bubbles
                 DispatchQueue.main.asyncAfter(deadline: .now() + popupTime) { [unowned self] in
                     self.tossBubbles()
                 }
                 nextSequenceQueued = true
-            }
+           }
         }
     }
     
     func setBackGround()  {
-//  Set the background
+        //  Set the background
         let background = SKSpriteNode(imageNamed: "sliceBackground")
         background.position = CGPoint(x: viewWidth/2, y: viewHeight/2)
         background.blendMode = .replace
         background.zPosition = -2
         addChild(background)
     }
-
+    
     func setInteractiveLabels()  {
         // Set the score multiplier
         multiplierLabel = SKLabelNode(fontNamed: "Avenir Next Condensed Bold")
@@ -288,8 +421,8 @@ class GameScene: SKScene {
         topScoreLabel.zPosition = -1
         addChild(topScoreLabel)
     }
-
-// Build score label
+    
+    // Build score label
     func createScore() {
         gameScore = SKLabelNode(fontNamed: "Avenir Next Condensed Bold")
         gameScore.text = "Score: 0"
@@ -299,15 +432,17 @@ class GameScene: SKScene {
         addChild(gameScore)
         gameScore.position = CGPoint(x: 20, y: 10)
     }
-
-//  Create last bubble popped label
+    
+    //  Create last bubble popped label
     func createlastBubblePop(imageName: String) {
+
         lastBubbblePopImage = SKSpriteNode(imageNamed: imageName)
         lastBubbblePopImage.position = CGPoint(x: Int(Float(viewWidth)*0.9), y: Int(Float(viewHeight)*0.95))
+        
         addChild(lastBubbblePopImage)
     }
     
-// Build timer label
+    // Build timer label
     func createTimer() {
         clockLabel.text = "Time: \(timeString(time: TimeInterval(gameTime)))"
         clockLabel.horizontalAlignmentMode = .left
@@ -317,7 +452,7 @@ class GameScene: SKScene {
         clockLabel.position = CGPoint(x: 20, y: viewHeight-10)
     }
     
-// Build game starting countdown timer
+    // Build game starting countdown timer
     func startTimer() {
         startTimerLable.text = "3"
         startTimerLable.horizontalAlignmentMode = .center
@@ -328,8 +463,8 @@ class GameScene: SKScene {
         animateNode(startTimerLable)
         startCountDown = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateStartTimer)), userInfo: nil, repeats: true)
     }
-
-// Initiate and start game
+    
+    // Initiate and start game
     @objc func updateStartTimer() {
         if startTime == 1 {
             resetGame()
@@ -340,47 +475,55 @@ class GameScene: SKScene {
             createlastBubblePop(imageName: "noBubblePop")
             createSlices()
             createTimer()
+            
+            
             startCountDown.invalidate()
             startTimerLable.removeFromParent()
             startTimerLable.removeAllActions()
             runTimer()
             tossBubbles()
+            createWordProgress()
         } else {
             startTime -= 1
             startTimerLable.text = "\(startTime)"
         }
         
     }
-
-// Run the game timer
+    
+    // Run the game timer
     func runTimer() {
         gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
     }
     
-// Update the game timer iver seconed. If time is up stop game
+    // Update the game timer every seconed. If time is up stop game
     @objc func updateTimer()  {
         if gameTime < 1 {
+            
+            //Remove word and bubbles
+            removeActiveBubbles()
+            removeDisplayedWord()
+            
             //Send alert to indicate time's up.
             gameTimer.invalidate()
             startTime = 3
-// Move the clock to centre of screen
+            // Move the clock to centre of screen
             clockLabel.horizontalAlignmentMode = .center
             clockLabel.verticalAlignmentMode = .center
             clockLabel.position = CGPoint(x: viewWidth/2, y: viewHeight/2)
             clockLabel.text = "Times Up!"
-// Move the score to centre of screen
+            // Move the score to centre of screen
             gameScore.horizontalAlignmentMode = .center
             gameScore.verticalAlignmentMode = .center
             gameScore.fontSize = 80
             gameScore.position = CGPoint(x: viewWidth/2, y: Int(Float(viewHeight)/1.5))
-//  Clear last bubble popped menu
+            //  Clear last bubble popped menu
             lastBubbblePopImage.removeFromParent()
             if gameKitEnabled {
                 viewController.updateLeaderBoard(Int(score))
             }
-//  End game
+            //  End game
             gameEnded = true
-// Go to menu
+            // Go to menu
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [unowned self] in
                 if self.gameKitEnabled {
                     self.topScoreLabel.removeFromParent()
@@ -392,39 +535,39 @@ class GameScene: SKScene {
                 self.score = 0.0
                 self.clockLabel.removeFromParent()
                 self.gameSceneDelegate?.gameOver()
-                }
+            }
         } else {
             gameTime -= 1
-//  Formate timer label
+            //  Formate timer label
             if gameTime >= 60.0 {
                 clockLabel.text = "Time: \(timeString(time: TimeInterval(Int(gameTime))))"
             } else {
                 clockLabel.text = "Time: \(Int(gameTime))"
             }
-// Animate the clock label when time is running out
+            // Animate the clock label when time is running out
             if gameTime <= 10.0 {
                 clockLabel.fontColor = UIColor.red
                 animateNode(clockLabel)
                 istimerAnimationOn = true
             } else if istimerAnimationOn && gameTime > 10.0 {
-//  Disable animation - this is only used when time is added to the game timer for score multiplier
+                //  Disable animation - this is only used when time is added to the game timer for score multiplier
                 clockLabel.removeAllActions()
             }
-//  Animate top score label if top score is achieved
+            //  Animate top score label if top score is achieved
             if gameKitEnabled && Int(score) > topScore {
                 topScoreLabel.text = "New Top Score: \(Int(score))"
                 animateNode(topScoreLabel)
             }
         }
     }
-// Formate timer string if time is more than 60 seconds
+    // Formate timer string if time is more than 60 seconds
     func timeString(time:TimeInterval) -> String {
         let minutes = Int(time) / 60 % 60
         let seconds = Int(time) % 60
         return String(format:"%i:%02i", minutes, seconds)
     }
     
-//  Animate nodes reference: https://www.swiftbysundell.com/posts/using-spritekit-to-create-animations-in-swift
+    //  Animate nodes reference: https://www.swiftbysundell.com/posts/using-spritekit-to-create-animations-in-swift
     func animateNode(_ node: SKNode) {
         node.run(.sequence([
             .repeatForever(.sequence([
@@ -436,7 +579,7 @@ class GameScene: SKScene {
             ]))
     }
     
-// Create slices
+    // Create slices
     func createSlices() {
         activeSliceBG = SKShapeNode()
         activeSliceBG.zPosition = 2
@@ -453,8 +596,8 @@ class GameScene: SKScene {
         addChild(activeSliceBG)
         addChild(activeSliceFG)
     }
-
-//  Draw slices
+    
+    //  Draw slices
     func redrawActiveSlice() {
         if activeSlicePoints.count < 2 {
             activeSliceBG.path = nil
@@ -477,7 +620,7 @@ class GameScene: SKScene {
         activeSliceFG.path = path.cgPath
     }
     
-// Play slice sound effect
+    // Play slice sound effect
     func playSwooshSound() {
         isSwooshSoundActive = true
         
@@ -490,133 +633,109 @@ class GameScene: SKScene {
             self.isSwooshSoundActive = false
         }
     }
-
-// Create bubbles and play sound effects
-    func createBubbles()  {
-        
+    
+    
+    //Reference https://stackoverflow.com/questions/26845307/generate-random-alphanumeric-string-in-swift
+    func randomLetter() -> String {
+        let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let randomIndex = RandomInt(min: 0, max: letters.count-1)
+        let randomLetter = String(letters[letters.index(letters.startIndex, offsetBy: randomIndex)])
+        return randomLetter
+    }
+    
+    
+    func createBubbleWithLetter(letter: String) {
         var bubble: SKSpriteNode
+        var bubbleLetter: SKLabelNode
+        let bubbleName = letter
         
-        let bubbleType = RandomDouble(min: 0, max: 99)
+        //CreateBubble
+        bubble = SKSpriteNode(imageNamed: "ballRed")
+        run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+        bubble.name = bubbleName
+        bubble.zPosition = 0
         
-        switch bubbleType {
-        case 0..<40:
-            bubble = SKSpriteNode(imageNamed: "ballRed")
-            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
-            bubble.name = "bubbleRed"
-        case 40..<70:
-            bubble = SKSpriteNode(imageNamed: "ballPink")
-            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
-            bubble.name = "bubblePink"
-        case 70..<85:
-            bubble = SKSpriteNode(imageNamed: "ballGreen")
-            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
-            bubble.name = "bubbleGreen"
-        case 85..<95:
-            bubble = SKSpriteNode(imageNamed: "ballCyan")
-            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
-            bubble.name = "bubbleBlue"
-        default:
-            bubble = SKSpriteNode(imageNamed: "ballBlack")
-            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
-            bubble.name = "bubbleBlack"
-        }
+        //Attach Letter To Bubble
+        bubbleLetter = SKLabelNode(fontNamed: "Avenir Next Condensed Bold")
+        bubbleLetter.text = bubbleName
+        bubbleLetter.fontSize = 40
+        bubbleLetter.horizontalAlignmentMode = .center
+        bubbleLetter.verticalAlignmentMode = .center
+        bubbleLetter.zPosition = 1
         
+        
+        bubble.addChild(bubbleLetter)
         addChild(bubble)
+        
+        
         activeBubbles.append(bubble)
         
-// Randomise bubble posiion
-        let randomPosition = CGPoint(x: RandomInt(min: 20, max: 1000), y: -10)
+        //Randomise Bubble Starting Position
+        let randomPosition = CGPoint(x: RandomInt(min: 500, max: 1050), y: 750)
         bubble.position = randomPosition
         
-// Randomise bubble angle velocity
+        // Randomise Bubble Angular Velocity
         let randomAngularVelocity = CGFloat(RandomInt(min: -10, max: 10)) / 2.0
-        var randomXVelocity = 0
         
-// Randomise bubble horizontail velocity
-        if randomPosition.x < 256 {
-            randomXVelocity = RandomInt(min: 3, max: 10)
-        } else if randomPosition.x < 512 {
-            randomXVelocity = RandomInt(min: 1, max: 5)
-        } else if randomPosition.x < 768 {
-            randomXVelocity = -RandomInt(min: 1, max: 5)
-        } else {
-            randomXVelocity = -RandomInt(min: 3, max: 10)
-        }
+        //Randomise Bubble X Velocity (Horizontal)
+        let randomXVelocity = RandomInt(min: -10, max: -20)
         
-// Randomise bubble verticle velocity
-        let randomYVelocity = RandomInt(min: 20, max: 40)
+        //Randomise Bubble Y Velocity (Verticle)
+        let randomYVelocity = RandomInt(min: 2, max: 5)
         
-// Apply physics
+        // Apply physics
         bubble.physicsBody = SKPhysicsBody(circleOfRadius: bubble.size.width / 2.0)
         bubble.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
         bubble.physicsBody?.angularVelocity = randomAngularVelocity
-        physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth, height: viewHeight+300))
+        physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth+500, height: viewHeight+300))
         bubble.physicsBody?.restitution = 0.2
     }
     
-// Bubble sequence methods
-    func maxBubbleGenerator() {
-        for _ in 0...maxActiveBubbles   {
-            createBubbles()
+    func createBubbles()  {
+        for letter in hiddenLetters {
+            createBubbleWithLetter(letter: letter)
+        }
+        for _ in 0 ... (maxActiveBubbles - hiddenLetters.count) {
+            createBubbleWithLetter(letter: randomLetter())
         }
     }
     
-    func halfMaxBubbleGenerator() {
-        for _ in 0...maxActiveBubbles   {
-            createBubbles()
-        }
-    }
     
-    func chainBubbleGenerator() {
-        createBubbles()
-        for _ in 0...RandomInt(min: 1, max: maxActiveBubbles) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
-        }
-    }
-    
-    func fastChainBubbleGenerator(){
-        createBubbles()
-        for _ in 0...RandomInt(min: 1, max: maxActiveBubbles) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
-        }
-    }
-    
+    //Create a sequence array of either chain or fast chain sequence
     func initialiseBubblesSequence() {
-        sequence = [.one, .halfMax, .max, .chain, .fastChain]
+        sequence = [.chain, .fastChain]
         for _ in 0 ... 1000 {
-            let nextSequence = SequenceType(rawValue: RandomInt(min: 0, max: 4))!
+            let nextSequence = SequenceType(rawValue: RandomInt(min: 0, max: 1))!
             sequence.append(nextSequence)
         }
     }
     
-// Throw bubbles onto the view
+    //Bubble sequence methods
+    func chainBubbleGenerator() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
+  
+    }
+    
+    func fastChainBubbleGenerator(){
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
+        
+    }
+    
+   
+    
+    //Throw bubbles onto the view
     func tossBubbles() {
-//  Diable if game is over
+        //Disable if game is over
         if gameEnded {
             return
         }
-// Increase game difficulty as game progresses
+        
+        //Creating Bubbles
+        createBubbles()
+        
+        //Increase game difficulty as game progresses
         popupTime *= 0.951
         chainDelay *= 0.9
-        physicsWorld.speed *= 1.07
-        gravity *= 1.015
-        physicsWorld.gravity = CGVector(dx: 0, dy: gravity)
-        
-        let sequenceType = sequence[sequencePosition]
-        
-        switch sequenceType {
-        case .one:
-            createBubbles()
-        case .halfMax:
-            halfMaxBubbleGenerator()
-        case .max:
-            maxBubbleGenerator()
-        case .chain:
-            chainBubbleGenerator()
-        case .fastChain:
-            fastChainBubbleGenerator()
-        }
-        
         sequencePosition += 1
         nextSequenceQueued = false
     }
@@ -624,13 +743,10 @@ class GameScene: SKScene {
     func resetGame()  {
         gameEnded = false
         finalScore = 0
-        physicsWorld.gravity = CGVector(dx: 0, dy: gravity)
-        physicsWorld.speed = 0.5
+        physicsWorld.speed = 0.1
         popupTime = 0.5
-        gravity = -6.0
         chainDelay = 3.0
         initialiseBubblesSequence()
     }
-    
-
 }
+
