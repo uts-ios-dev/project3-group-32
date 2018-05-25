@@ -1,0 +1,585 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B47C05620B2FBE000F7F71C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B47C05520B2FBE000F7F71C /* Extensions.swift */; };
+		2BFD203E20B2F3C400B0004F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD203D20B2F3C400B0004F /* AppDelegate.swift */; };
+		2BFD204020B2F3C400B0004F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2BFD203F20B2F3C400B0004F /* GameScene.sks */; };
+		2BFD204220B2F3C400B0004F /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2BFD204120B2F3C400B0004F /* Actions.sks */; };
+		2BFD204420B2F3C400B0004F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD204320B2F3C400B0004F /* GameScene.swift */; };
+		2BFD204620B2F3C400B0004F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD204520B2F3C400B0004F /* GameViewController.swift */; };
+		2BFD204920B2F3C400B0004F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BFD204720B2F3C400B0004F /* Main.storyboard */; };
+		2BFD204B20B2F3C500B0004F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BFD204A20B2F3C500B0004F /* Assets.xcassets */; };
+		2BFD204E20B2F3C500B0004F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BFD204C20B2F3C500B0004F /* LaunchScreen.storyboard */; };
+		2BFD205920B2F3C600B0004F /* animated_bgTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD205820B2F3C600B0004F /* animated_bgTests.swift */; };
+		2BFD206420B2F3C600B0004F /* animated_bgUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD206320B2F3C600B0004F /* animated_bgUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BFD205520B2F3C600B0004F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BFD203220B2F3C400B0004F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BFD203920B2F3C400B0004F;
+			remoteInfo = "animated-bg";
+		};
+		2BFD206020B2F3C600B0004F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BFD203220B2F3C400B0004F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BFD203920B2F3C400B0004F;
+			remoteInfo = "animated-bg";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2B47C05520B2FBE000F7F71C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		2BFD203A20B2F3C400B0004F /* animated-bg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "animated-bg.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BFD203D20B2F3C400B0004F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2BFD203F20B2F3C400B0004F /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		2BFD204120B2F3C400B0004F /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		2BFD204320B2F3C400B0004F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		2BFD204520B2F3C400B0004F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		2BFD204820B2F3C400B0004F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2BFD204A20B2F3C500B0004F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2BFD204D20B2F3C500B0004F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2BFD204F20B2F3C500B0004F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BFD205420B2F3C600B0004F /* animated-bgTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "animated-bgTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BFD205820B2F3C600B0004F /* animated_bgTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = animated_bgTests.swift; sourceTree = "<group>"; };
+		2BFD205A20B2F3C600B0004F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BFD205F20B2F3C600B0004F /* animated-bgUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "animated-bgUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BFD206320B2F3C600B0004F /* animated_bgUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = animated_bgUITests.swift; sourceTree = "<group>"; };
+		2BFD206520B2F3C600B0004F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2BFD203720B2F3C400B0004F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BFD205120B2F3C600B0004F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BFD205C20B2F3C600B0004F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2BFD203120B2F3C400B0004F = {
+			isa = PBXGroup;
+			children = (
+				2BFD203C20B2F3C400B0004F /* animated-bg */,
+				2BFD205720B2F3C600B0004F /* animated-bgTests */,
+				2BFD206220B2F3C600B0004F /* animated-bgUITests */,
+				2BFD203B20B2F3C400B0004F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2BFD203B20B2F3C400B0004F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2BFD203A20B2F3C400B0004F /* animated-bg.app */,
+				2BFD205420B2F3C600B0004F /* animated-bgTests.xctest */,
+				2BFD205F20B2F3C600B0004F /* animated-bgUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2BFD203C20B2F3C400B0004F /* animated-bg */ = {
+			isa = PBXGroup;
+			children = (
+				2BFD203D20B2F3C400B0004F /* AppDelegate.swift */,
+				2BFD203F20B2F3C400B0004F /* GameScene.sks */,
+				2BFD204120B2F3C400B0004F /* Actions.sks */,
+				2BFD204320B2F3C400B0004F /* GameScene.swift */,
+				2B47C05520B2FBE000F7F71C /* Extensions.swift */,
+				2BFD204520B2F3C400B0004F /* GameViewController.swift */,
+				2BFD204720B2F3C400B0004F /* Main.storyboard */,
+				2BFD204A20B2F3C500B0004F /* Assets.xcassets */,
+				2BFD204C20B2F3C500B0004F /* LaunchScreen.storyboard */,
+				2BFD204F20B2F3C500B0004F /* Info.plist */,
+			);
+			path = "animated-bg";
+			sourceTree = "<group>";
+		};
+		2BFD205720B2F3C600B0004F /* animated-bgTests */ = {
+			isa = PBXGroup;
+			children = (
+				2BFD205820B2F3C600B0004F /* animated_bgTests.swift */,
+				2BFD205A20B2F3C600B0004F /* Info.plist */,
+			);
+			path = "animated-bgTests";
+			sourceTree = "<group>";
+		};
+		2BFD206220B2F3C600B0004F /* animated-bgUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2BFD206320B2F3C600B0004F /* animated_bgUITests.swift */,
+				2BFD206520B2F3C600B0004F /* Info.plist */,
+			);
+			path = "animated-bgUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2BFD203920B2F3C400B0004F /* animated-bg */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BFD206820B2F3C600B0004F /* Build configuration list for PBXNativeTarget "animated-bg" */;
+			buildPhases = (
+				2BFD203620B2F3C400B0004F /* Sources */,
+				2BFD203720B2F3C400B0004F /* Frameworks */,
+				2BFD203820B2F3C400B0004F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "animated-bg";
+			productName = "animated-bg";
+			productReference = 2BFD203A20B2F3C400B0004F /* animated-bg.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2BFD205320B2F3C600B0004F /* animated-bgTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BFD206B20B2F3C600B0004F /* Build configuration list for PBXNativeTarget "animated-bgTests" */;
+			buildPhases = (
+				2BFD205020B2F3C600B0004F /* Sources */,
+				2BFD205120B2F3C600B0004F /* Frameworks */,
+				2BFD205220B2F3C600B0004F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BFD205620B2F3C600B0004F /* PBXTargetDependency */,
+			);
+			name = "animated-bgTests";
+			productName = "animated-bgTests";
+			productReference = 2BFD205420B2F3C600B0004F /* animated-bgTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2BFD205E20B2F3C600B0004F /* animated-bgUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BFD206E20B2F3C600B0004F /* Build configuration list for PBXNativeTarget "animated-bgUITests" */;
+			buildPhases = (
+				2BFD205B20B2F3C600B0004F /* Sources */,
+				2BFD205C20B2F3C600B0004F /* Frameworks */,
+				2BFD205D20B2F3C600B0004F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BFD206120B2F3C600B0004F /* PBXTargetDependency */,
+			);
+			name = "animated-bgUITests";
+			productName = "animated-bgUITests";
+			productReference = 2BFD205F20B2F3C600B0004F /* animated-bgUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2BFD203220B2F3C400B0004F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "Charlie Sweeney";
+				TargetAttributes = {
+					2BFD203920B2F3C400B0004F = {
+						CreatedOnToolsVersion = 9.3.1;
+						ProvisioningStyle = Automatic;
+					};
+					2BFD205320B2F3C600B0004F = {
+						CreatedOnToolsVersion = 9.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 2BFD203920B2F3C400B0004F;
+					};
+					2BFD205E20B2F3C600B0004F = {
+						CreatedOnToolsVersion = 9.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 2BFD203920B2F3C400B0004F;
+					};
+				};
+			};
+			buildConfigurationList = 2BFD203520B2F3C400B0004F /* Build configuration list for PBXProject "animated-bg" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2BFD203120B2F3C400B0004F;
+			productRefGroup = 2BFD203B20B2F3C400B0004F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2BFD203920B2F3C400B0004F /* animated-bg */,
+				2BFD205320B2F3C600B0004F /* animated-bgTests */,
+				2BFD205E20B2F3C600B0004F /* animated-bgUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2BFD203820B2F3C400B0004F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BFD204920B2F3C400B0004F /* Main.storyboard in Resources */,
+				2BFD204020B2F3C400B0004F /* GameScene.sks in Resources */,
+				2BFD204B20B2F3C500B0004F /* Assets.xcassets in Resources */,
+				2BFD204E20B2F3C500B0004F /* LaunchScreen.storyboard in Resources */,
+				2BFD204220B2F3C400B0004F /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BFD205220B2F3C600B0004F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BFD205D20B2F3C600B0004F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2BFD203620B2F3C400B0004F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BFD204420B2F3C400B0004F /* GameScene.swift in Sources */,
+				2BFD204620B2F3C400B0004F /* GameViewController.swift in Sources */,
+				2BFD203E20B2F3C400B0004F /* AppDelegate.swift in Sources */,
+				2B47C05620B2FBE000F7F71C /* Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BFD205020B2F3C600B0004F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BFD205920B2F3C600B0004F /* animated_bgTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BFD205B20B2F3C600B0004F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BFD206420B2F3C600B0004F /* animated_bgUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BFD205620B2F3C600B0004F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BFD203920B2F3C400B0004F /* animated-bg */;
+			targetProxy = 2BFD205520B2F3C600B0004F /* PBXContainerItemProxy */;
+		};
+		2BFD206120B2F3C600B0004F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BFD203920B2F3C400B0004F /* animated-bg */;
+			targetProxy = 2BFD206020B2F3C600B0004F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2BFD204720B2F3C400B0004F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BFD204820B2F3C400B0004F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2BFD204C20B2F3C500B0004F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BFD204D20B2F3C500B0004F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2BFD206620B2F3C600B0004F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2BFD206720B2F3C600B0004F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2BFD206920B2F3C600B0004F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G93KF89C9R;
+				INFOPLIST_FILE = "animated-bg/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CharlieSweeney.animated-bg";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2BFD206A20B2F3C600B0004F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G93KF89C9R;
+				INFOPLIST_FILE = "animated-bg/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CharlieSweeney.animated-bg";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2BFD206C20B2F3C600B0004F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G93KF89C9R;
+				INFOPLIST_FILE = "animated-bgTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CharlieSweeney.animated-bgTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/animated-bg.app/animated-bg";
+			};
+			name = Debug;
+		};
+		2BFD206D20B2F3C600B0004F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G93KF89C9R;
+				INFOPLIST_FILE = "animated-bgTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CharlieSweeney.animated-bgTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/animated-bg.app/animated-bg";
+			};
+			name = Release;
+		};
+		2BFD206F20B2F3C600B0004F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G93KF89C9R;
+				INFOPLIST_FILE = "animated-bgUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CharlieSweeney.animated-bgUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "animated-bg";
+			};
+			name = Debug;
+		};
+		2BFD207020B2F3C600B0004F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G93KF89C9R;
+				INFOPLIST_FILE = "animated-bgUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CharlieSweeney.animated-bgUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "animated-bg";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2BFD203520B2F3C400B0004F /* Build configuration list for PBXProject "animated-bg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BFD206620B2F3C600B0004F /* Debug */,
+				2BFD206720B2F3C600B0004F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BFD206820B2F3C600B0004F /* Build configuration list for PBXNativeTarget "animated-bg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BFD206920B2F3C600B0004F /* Debug */,
+				2BFD206A20B2F3C600B0004F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BFD206B20B2F3C600B0004F /* Build configuration list for PBXNativeTarget "animated-bgTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BFD206C20B2F3C600B0004F /* Debug */,
+				2BFD206D20B2F3C600B0004F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BFD206E20B2F3C600B0004F /* Build configuration list for PBXNativeTarget "animated-bgUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BFD206F20B2F3C600B0004F /* Debug */,
+				2BFD207020B2F3C600B0004F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2BFD203220B2F3C400B0004F /* Project object */;
+}
