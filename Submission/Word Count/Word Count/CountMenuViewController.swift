@@ -15,6 +15,7 @@ class CountMenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -22,6 +23,21 @@ class CountMenuViewController: UIViewController {
     }
     
     @IBAction func unwindToMain(_ sender: UIButton) {
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let sender = sender as? UIButton else {return}
+        
+//        segue.destination.navigationController?.setNavigationBarHidden(false, animated: false)
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        if sender == forgotPasswordButton {
+//            segue.destination.navigationItem.title = "Forgot Password"
+//        } else if sender == forgotUsernameButton {
+//            segue.destination.navigationItem.title = "Forgot Username"
+//        } else {
+//            segue.destination.navigationItem.title = userNameTextField.text
+//        }
+        
     }
     
     /*

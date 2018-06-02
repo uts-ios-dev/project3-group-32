@@ -94,7 +94,6 @@
 			children = (
 				36EA575020C21DBD005BAADB /* Word Count.entitlements */,
 				36EA573E20C21CFC005BAADB /* AppDelegate.swift */,
-				36EA575820C23EAA005BAADB /* CountMenuViewController.swift */,
 				36EA574020C21CFC005BAADB /* MainMenuViewController.swift */,
 				36EA575A20C23EBD005BAADB /* WordMenuViewController.swift */,
 				36EA574220C21CFC005BAADB /* Main.storyboard */,
@@ -103,8 +102,9 @@
 				36EA575620C22079005BAADB /* GoogleService-Info.plist */,
 				36EA574A20C21CFD005BAADB /* Info.plist */,
 				36658CEB20C289D800573D96 /* WordGameViewController.swift */,
-				36658CF120C2923A00573D96 /* CountGameViewController.swift */,
 				36658CEF20C28A1E00573D96 /* WordGameScene.swift */,
+				36EA575820C23EAA005BAADB /* CountMenuViewController.swift */,
+				36658CF120C2923A00573D96 /* CountGameViewController.swift */,
 				36658CF320C2925A00573D96 /* CountGameScene.swift */,
 				36658CF520C2927200573D96 /* CountGameScene.sks */,
 				36658CED20C289F500573D96 /* WordGameScene.sks */,
