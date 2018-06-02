@@ -213,7 +213,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="304.5" height="216"/>
                                                         <state key="normal" image="addition" backgroundImage="Menu Bubble"/>
                                                         <connections>
-                                                            <segue destination="WSa-U5-SjH" kind="show" id="hwj-Sd-ksE"/>
+                                                            <action selector="plusButtinTouched:" destination="IRr-mT-5Hl" eventType="touchUpInside" id="cY1-dq-Ysk"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Addition" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PeZ-XT-69H">
@@ -230,6 +230,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xh9-CI-gWt">
                                                         <rect key="frame" x="0.0" y="0.0" width="304.5" height="216"/>
                                                         <state key="normal" image="subraction" backgroundImage="Menu Bubble"/>
+                                                        <connections>
+                                                            <action selector="minusButtonPressed:" destination="IRr-mT-5Hl" eventType="touchUpInside" id="BxH-mp-Jb7"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtraction" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiS-Yd-2Ve">
                                                         <rect key="frame" x="0.0" y="231" width="304.5" height="48"/>
@@ -263,6 +266,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ql0-yj-KLh"/>
                     </view>
+                    <connections>
+                        <outlet property="additionButton" destination="me0-CP-Xn6" id="3bQ-bL-VMC"/>
+                        <outlet property="subtractionButton" destination="xh9-CI-gWt" id="2Xg-Pw-nn1"/>
+                        <segue destination="WSa-U5-SjH" kind="show" identifier="plus" id="rBg-Oe-xWs"/>
+                        <segue destination="WSa-U5-SjH" kind="show" identifier="minus" id="gDy-fR-mHf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ZN-Od-mtm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -337,10 +346,10 @@
                                                         <rect key="frame" x="0.0" y="565" width="454" height="131"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="equalsLine" translatesAutoresizingMaskIntoConstraints="NO" id="uBg-Zy-0ww">
-                                                                <rect key="frame" x="0.0" y="0.0" width="454" height="2.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="454" height="2"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67u-UA-buT" userLabel="answerLabel">
-                                                                <rect key="frame" x="0.0" y="2.5" width="454" height="128.5"/>
+                                                                <rect key="frame" x="0.0" y="2" width="454" height="129"/>
                                                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="80"/>
                                                                 <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 <nil key="highlightedColor"/>
@@ -618,4 +627,7 @@
         <image name="science" width="79" height="135"/>
         <image name="subraction" width="128" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="gDy-fR-mHf"/>
+    </inferredMetricsTieBreakers>
 </document>

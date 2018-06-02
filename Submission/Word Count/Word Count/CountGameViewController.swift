@@ -12,7 +12,7 @@ import GameplayKit
 
 class CountGameViewController: UIViewController {
     var currentGame: CountGameScene!
-    
+    var menuController: CountMenuViewController!
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var rightView: UIView!
     
@@ -65,7 +65,9 @@ class CountGameViewController: UIViewController {
 //        scoreLabel.text = String(score)
         hintLabel.text = ""
         answerLabel.text = ""
+       
         
+//        op = navigationController?.title?.lowercased()
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.
         if let scene = GKScene(fileNamed: "CountGameScene") {
@@ -81,7 +83,6 @@ class CountGameViewController: UIViewController {
                     view.presentScene(sceneNode)
                     currentGame = sceneNode
                     currentGame.viewController = self
-                    
                     view.ignoresSiblingOrder = true
                     
                     view.showsFPS = true
@@ -97,8 +98,13 @@ class CountGameViewController: UIViewController {
 //        // Hide the Navigation Bar
 //        self.navigationController?.setNavigationBarHidden(false, animated: false)
 ////        self.navigationController?.setNavigationBarHidden(true, animated: true)
+//        if let str = navigationController?.title?.lowercased() {
+//            print(str)
+//        } else {
+//            print("Fuck segues")
+//        }
 //    }
-//    
+//
 //    override func viewWillDisappear(_ animated: Bool) {
 //        super.viewWillDisappear(true)
 //        // Show the Navigation Bar
@@ -116,6 +122,10 @@ class CountGameViewController: UIViewController {
         } else {
             return .all
         }
+    }
+    
+    @IBAction func unwindToMain(_ sender: UIButton) {
+        gameOver = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -378,6 +388,10 @@ class CountGameViewController: UIViewController {
     
     func startGame() {
         loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: op)
+    }
+    
+    func setOperator(passedOp: String) {
+        op = passedOp
     }
     
 //    func startGameTimer()  {

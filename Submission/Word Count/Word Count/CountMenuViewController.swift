@@ -9,10 +9,15 @@
 import UIKit
 
 class CountMenuViewController: UIViewController {
-
+    
+    var gameController: CountGameViewController!
+    var operation: String!
+    @IBOutlet weak var additionButton: UIButton!
+    @IBOutlet weak var subtractionButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
@@ -26,28 +31,32 @@ class CountMenuViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let sender = sender as? UIButton else {return}
+        guard let sender = sender as? UIButton else {return}
         
-//        segue.destination.navigationController?.setNavigationBarHidden(false, animated: false)
-//        self.navigationController?.setNavigationBarHidden(false, animated: false)
-//        if sender == forgotPasswordButton {
-//            segue.destination.navigationItem.title = "Forgot Password"
-//        } else if sender == forgotUsernameButton {
-//            segue.destination.navigationItem.title = "Forgot Username"
-//        } else {
-//            segue.destination.navigationItem.title = userNameTextField.text
-//        }
-        
+        if sender == additionButton {
+            segue.destination.navigationItem.title = "Addition"
+            gameController = segue.destination as! CountGameViewController
+            gameController.op = plus
+        } else if sender == subtractionButton {
+            segue.destination.navigationItem.title = "Subtraction"
+            gameController = segue.destination as! CountGameViewController
+            gameController.op = minus
+        }
     }
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func plusButtinTouched(_ sender: UIButton) {
+        operation = plus
+        performSegue(withIdentifier: "plus", sender: sender)
     }
-    */
-
+    
+    @IBAction func minusButtonPressed(_ sender: UIButton) {
+        operation = minus
+        performSegue(withIdentifier: "minus", sender: sender)
+    }
+    
+    
+    
+    
+    
 }
