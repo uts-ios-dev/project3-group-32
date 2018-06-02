@@ -1,24 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jqX-UT-PA1">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Main Menu View Controller-->
+        <scene sceneID="ivU-w2-0az">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="jqX-UT-PA1" userLabel="Main Menu View Controller" customClass="MainMenuViewController" customModule="Word_Count" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nxP-mk-clX">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Main Menu Background" translatesAutoresizingMaskIntoConstraints="NO" id="JoI-YI-a0G" userLabel="Main Menu Background">
+                                <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLT-cW-Cwc">
+                                <rect key="frame" x="100" y="345" width="824" height="323"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="bJv-rD-8LT" userLabel="Bubble Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="824" height="323"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u87-5f-qVL">
+                                                <rect key="frame" x="0.0" y="0.0" width="387" height="323"/>
+                                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="80"/>
+                                                <state key="normal" title="Word" backgroundImage="Menu Bubble">
+                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="IMo-14-rfZ" kind="show" id="HhO-qP-gmh"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1W-Uq-V2x">
+                                                <rect key="frame" x="437" y="0.0" width="387" height="323"/>
+                                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="80"/>
+                                                <state key="normal" title="Count" backgroundImage="Menu Bubble">
+                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="IRr-mT-5Hl" kind="show" id="MLI-lS-Doy"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bJv-rD-8LT" firstAttribute="top" secondItem="XLT-cW-Cwc" secondAttribute="top" id="E5C-hk-CrM"/>
+                                    <constraint firstItem="bJv-rD-8LT" firstAttribute="leading" secondItem="XLT-cW-Cwc" secondAttribute="leading" id="Q84-gL-8qE"/>
+                                    <constraint firstAttribute="trailing" secondItem="bJv-rD-8LT" secondAttribute="trailing" id="kOY-1c-vKQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="bJv-rD-8LT" secondAttribute="bottom" id="kPm-Uq-kwe"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JoI-YI-a0G" firstAttribute="top" secondItem="uDv-Yk-onP" secondAttribute="top" id="GcG-6P-Dcp"/>
+                            <constraint firstItem="JoI-YI-a0G" firstAttribute="leading" secondItem="uDv-Yk-onP" secondAttribute="leading" id="RCA-WZ-BPK"/>
+                            <constraint firstItem="XLT-cW-Cwc" firstAttribute="top" secondItem="uDv-Yk-onP" secondAttribute="top" constant="325" id="ScI-tm-bPK"/>
+                            <constraint firstItem="uDv-Yk-onP" firstAttribute="bottom" secondItem="JoI-YI-a0G" secondAttribute="bottom" id="Xsi-ox-X7R"/>
+                            <constraint firstItem="uDv-Yk-onP" firstAttribute="trailing" secondItem="XLT-cW-Cwc" secondAttribute="trailing" constant="100" id="hPA-eQ-Pgq"/>
+                            <constraint firstItem="uDv-Yk-onP" firstAttribute="bottom" secondItem="XLT-cW-Cwc" secondAttribute="bottom" constant="100" id="pTa-0Q-POt"/>
+                            <constraint firstItem="uDv-Yk-onP" firstAttribute="trailing" secondItem="JoI-YI-a0G" secondAttribute="trailing" id="w4Y-ue-bQV"/>
+                            <constraint firstItem="XLT-cW-Cwc" firstAttribute="leading" secondItem="uDv-Yk-onP" secondAttribute="leading" constant="100" id="w5h-SW-Plp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uDv-Yk-onP"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eF0-oN-1Jq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-535.546875" y="52.34375"/>
+        </scene>
+        <!--Word Menu View Controller-->
+        <scene sceneID="WwY-d5-pe2">
+            <objects>
+                <viewController id="IMo-14-rfZ" customClass="WordMenuViewController" customModule="Word_Count" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="alZ-yH-aQo">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Words Background" translatesAutoresizingMaskIntoConstraints="NO" id="pzV-8a-MSt">
+                                <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nm-aR-iDH">
+                                <rect key="frame" x="373" y="317" width="353" height="154"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.15961898969999999" green="0.80936285620000004" blue="0.20577540450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="100"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="nzj-qu-Et8" kind="unwind" unwindAction="unwindToMainWithUnwindSegue:" id="3MP-E8-j3F"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="s50-rl-uc2" firstAttribute="bottom" secondItem="pzV-8a-MSt" secondAttribute="bottom" id="9C7-nK-Ve2"/>
+                            <constraint firstItem="pzV-8a-MSt" firstAttribute="leading" secondItem="s50-rl-uc2" secondAttribute="leading" id="Oc1-N4-oPf"/>
+                            <constraint firstItem="s50-rl-uc2" firstAttribute="trailing" secondItem="pzV-8a-MSt" secondAttribute="trailing" id="cGL-7C-5CB"/>
+                            <constraint firstItem="pzV-8a-MSt" firstAttribute="top" secondItem="s50-rl-uc2" secondAttribute="top" id="ekb-jL-SrH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="s50-rl-uc2"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="emh-l3-jTs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nzj-qu-Et8" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-897.07031249999989" y="876.5625"/>
+        </scene>
+        <!--Count Menu View Controller-->
+        <scene sceneID="qPQ-hR-iz6">
+            <objects>
+                <viewController id="IRr-mT-5Hl" customClass="CountMenuViewController" customModule="Word_Count" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iNv-oK-DFg">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Count Background" translatesAutoresizingMaskIntoConstraints="NO" id="190-mI-f4T">
+                                <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQS-cl-ibl">
+                                <rect key="frame" x="375" y="386" width="278" height="132"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="100"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="jB5-RK-6Lb" kind="unwind" unwindAction="unwindToMainWithUnwindSegue:" id="ETU-4Z-xV5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="190-mI-f4T" firstAttribute="leading" secondItem="ql0-yj-KLh" secondAttribute="leading" id="hhk-Mk-t91"/>
+                            <constraint firstItem="ql0-yj-KLh" firstAttribute="trailing" secondItem="190-mI-f4T" secondAttribute="trailing" id="kJH-2t-qPv"/>
+                            <constraint firstItem="ql0-yj-KLh" firstAttribute="bottom" secondItem="190-mI-f4T" secondAttribute="bottom" id="kQT-3a-j40"/>
+                            <constraint firstItem="190-mI-f4T" firstAttribute="top" secondItem="ql0-yj-KLh" secondAttribute="top" id="zSQ-pC-FsK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ql0-yj-KLh"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2ZN-Od-mtm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="jB5-RK-6Lb" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-104" y="877"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Count Background" width="1024" height="768"/>
+        <image name="Main Menu Background" width="1024" height="768"/>
+        <image name="Menu Bubble" width="176" height="177"/>
+        <image name="Words Background" width="1024" height="768"/>
+    </resources>
 </document>
