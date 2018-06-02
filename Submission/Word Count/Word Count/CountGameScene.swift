@@ -22,7 +22,7 @@ class CountGameScene: SKScene {
     // Game timer menu
     let clockLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
     var gameTimer: Timer!
-    var gameTime = 60.0
+    var gameTime = 10.0
     // Start countdown
     let startTimerLable = SKLabelNode(fontNamed: "American Typewriter Bold")
     var startCountDown: Timer!
@@ -172,6 +172,17 @@ class CountGameScene: SKScene {
         }
     }
     
+    // Build score label
+    func createScore() {
+        gameScore = SKLabelNode(fontNamed: "American Typewriter Bold")
+        gameScore.text = "Score: 0"
+        gameScore.horizontalAlignmentMode = .left
+        gameScore.verticalAlignmentMode = .top
+        gameScore.fontSize = 48
+        addChild(gameScore)
+        gameScore.position = CGPoint(x: viewWidth - 300, y: viewHeight-50)
+    }
+    
     // Build timer label
     func createTimer() {
         clockLabel.text = "Time: \(timeString(time: TimeInterval(gameTime)))"
@@ -206,14 +217,16 @@ class CountGameScene: SKScene {
             clockLabel.position = CGPoint(x: viewWidth/2, y: viewHeight/2)
             clockLabel.text = "Times Up!"
             // Move the score to centre of screen
-//            gameScore.horizontalAlignmentMode = .center
-//            gameScore.verticalAlignmentMode = .center
-//            gameScore.fontSize = 80
-//            gameScore.position = CGPoint(x: viewWidth/2, y: Int(Float(viewHeight)/1.5))
+            gameScore.horizontalAlignmentMode = .center
+            gameScore.verticalAlignmentMode = .center
+            gameScore.fontSize = 80
+            gameScore.position = CGPoint(x: viewWidth/2, y: Int(Float(viewHeight)/1.5))
             //  Clear last bubble popped menu
 //            if gameKitEnabled {
 //                viewController.updateLeaderBoard(Int(score))
 //            }
+            viewController.leftView.isHidden = true
+            viewController.rightView.isHidden = true
             //  End game
             gameEnded = true
             // Go to menu
@@ -286,7 +299,7 @@ class CountGameScene: SKScene {
 //            if gameKitEnabled {
 //                createTopScore()
 //            }
-//            createScore()
+            createScore()
             createTimer()
             startCountDown.invalidate()
             startTimerLable.removeFromParent()

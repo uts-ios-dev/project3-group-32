@@ -43,7 +43,7 @@ class CountGameViewController: UIViewController {
     var denominatorProblemSize = 10
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
-    var gameTime: Int = 60
+//    var gameTime: Int = 10 //this does nothing
     var gameTimeBonus = 1.0
     var gameOver: Bool = false
     var score: Int = 0
@@ -244,6 +244,7 @@ class CountGameViewController: UIViewController {
                 gameTimeBonus += (Double(numeratorLabel.text!.count) * 1.5)
             }
             currentGame.gameTime += Double(gameTimeBonus)
+            currentGame.score += Float(score)
 //            gameTime += gameTimeBonus
 //            gameTimerLabel.text = String(gameTime)
 //            scoreLabel.text = String(score)
@@ -388,6 +389,7 @@ class CountGameViewController: UIViewController {
     
     func startGame() {
         loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: op)
+        currentGame.score = Float(score)
     }
     
     func setOperator(passedOp: String) {
