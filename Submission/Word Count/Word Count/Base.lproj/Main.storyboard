@@ -186,7 +186,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tB-qo-Frn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1009" y="1683"/>
+            <point key="canvasLocation" x="-897" y="1700"/>
         </scene>
         <!--Count Menu View Controller-->
         <scene sceneID="qPQ-hR-iz6">
@@ -211,6 +211,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="me0-CP-Xn6">
                                                         <rect key="frame" x="0.0" y="0.0" width="304.5" height="216"/>
                                                         <state key="normal" image="addition" backgroundImage="Menu Bubble"/>
+                                                        <connections>
+                                                            <segue destination="WSa-U5-SjH" kind="show" id="hwj-Sd-ksE"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Addition" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PeZ-XT-69H">
                                                         <rect key="frame" x="0.0" y="231" width="304.5" height="48"/>
@@ -263,6 +266,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ZN-Od-mtm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-104.296875" y="876.5625"/>
+        </scene>
+        <!--Count Game View Controller-->
+        <scene sceneID="MFh-wn-CQV">
+            <objects>
+                <viewController id="WSa-U5-SjH" customClass="CountGameViewController" customModule="Word_Count" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AUe-w8-0Pf" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="wo7-Qu-jWA"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2mY-Hm-tFy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-102" y="1700"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SYu-1k-GIc">
