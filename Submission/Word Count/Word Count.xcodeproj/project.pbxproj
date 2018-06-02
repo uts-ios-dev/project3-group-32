@@ -12,9 +12,14 @@
 		36EA574420C21CFC005BAADB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36EA574220C21CFC005BAADB /* Main.storyboard */; };
 		36EA574620C21CFD005BAADB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36EA574520C21CFD005BAADB /* Assets.xcassets */; };
 		36EA574920C21CFD005BAADB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36EA574720C21CFD005BAADB /* LaunchScreen.storyboard */; };
+		36EA575320C21DC3005BAADB /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36EA575220C21DC3005BAADB /* GameKit.framework */; };
+		36EA575520C21DD2005BAADB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36EA575420C21DD2005BAADB /* StoreKit.framework */; };
+		36EA575720C22079005BAADB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 36EA575620C22079005BAADB /* GoogleService-Info.plist */; };
+		E8B1FC977612E5BA0EDEBA78 /* Pods_Word_Count.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64E818B082FF54EF64754C4 /* Pods_Word_Count.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D43D3B734A85AB7E61A2BB3 /* Pods-Word Count.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Word Count.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Word Count/Pods-Word Count.debug.xcconfig"; sourceTree = "<group>"; };
 		36EA573B20C21CFC005BAADB /* Word Count.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Count.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36EA573E20C21CFC005BAADB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36EA574020C21CFC005BAADB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +27,12 @@
 		36EA574520C21CFD005BAADB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		36EA574820C21CFD005BAADB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		36EA574A20C21CFD005BAADB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36EA575020C21DBD005BAADB /* Word Count.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Word Count.entitlements"; sourceTree = "<group>"; };
+		36EA575220C21DC3005BAADB /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		36EA575420C21DD2005BAADB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		36EA575620C22079005BAADB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E64E818B082FF54EF64754C4 /* Pods_Word_Count.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Word_Count.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED046793DA24E12C8B06D45A /* Pods-Word Count.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Word Count.release.xcconfig"; path = "Pods/Target Support Files/Pods-Word Count/Pods-Word Count.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +40,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36EA575320C21DC3005BAADB /* GameKit.framework in Frameworks */,
+				36EA575520C21DD2005BAADB /* StoreKit.framework in Frameworks */,
+				E8B1FC977612E5BA0EDEBA78 /* Pods_Word_Count.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +54,8 @@
 			children = (
 				36EA573D20C21CFC005BAADB /* Word Count */,
 				36EA573C20C21CFC005BAADB /* Products */,
+				36EA575120C21DC3005BAADB /* Frameworks */,
+				A42676EE320BEFA491AC3AAC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +70,35 @@
 		36EA573D20C21CFC005BAADB /* Word Count */ = {
 			isa = PBXGroup;
 			children = (
+				36EA575020C21DBD005BAADB /* Word Count.entitlements */,
 				36EA573E20C21CFC005BAADB /* AppDelegate.swift */,
 				36EA574020C21CFC005BAADB /* ViewController.swift */,
 				36EA574220C21CFC005BAADB /* Main.storyboard */,
 				36EA574520C21CFD005BAADB /* Assets.xcassets */,
 				36EA574720C21CFD005BAADB /* LaunchScreen.storyboard */,
+				36EA575620C22079005BAADB /* GoogleService-Info.plist */,
 				36EA574A20C21CFD005BAADB /* Info.plist */,
 			);
 			path = "Word Count";
+			sourceTree = "<group>";
+		};
+		36EA575120C21DC3005BAADB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				36EA575420C21DD2005BAADB /* StoreKit.framework */,
+				36EA575220C21DC3005BAADB /* GameKit.framework */,
+				E64E818B082FF54EF64754C4 /* Pods_Word_Count.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A42676EE320BEFA491AC3AAC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1D43D3B734A85AB7E61A2BB3 /* Pods-Word Count.debug.xcconfig */,
+				ED046793DA24E12C8B06D45A /* Pods-Word Count.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +108,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36EA574D20C21CFD005BAADB /* Build configuration list for PBXNativeTarget "Word Count" */;
 			buildPhases = (
+				47EFBABE4D79AB5B08569FCF /* [CP] Check Pods Manifest.lock */,
 				36EA573720C21CFC005BAADB /* Sources */,
 				36EA573820C21CFC005BAADB /* Frameworks */,
 				36EA573920C21CFC005BAADB /* Resources */,
+				46B1310912C7065C0A43DCB3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +135,17 @@
 				TargetAttributes = {
 					36EA573A20C21CFC005BAADB = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.GameCenter.iOS = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -123,12 +173,54 @@
 			buildActionMask = 2147483647;
 			files = (
 				36EA574920C21CFD005BAADB /* LaunchScreen.storyboard in Resources */,
+				36EA575720C22079005BAADB /* GoogleService-Info.plist in Resources */,
 				36EA574620C21CFD005BAADB /* Assets.xcassets in Resources */,
 				36EA574420C21CFC005BAADB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46B1310912C7065C0A43DCB3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Word Count/Pods-Word Count-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Word Count/Pods-Word Count-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		47EFBABE4D79AB5B08569FCF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Word Count-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		36EA573720C21CFC005BAADB /* Sources */ = {
@@ -278,8 +370,10 @@
 		};
 		36EA574E20C21CFD005BAADB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D43D3B734A85AB7E61A2BB3 /* Pods-Word Count.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Word Count/Word Count.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YE7CK8L96V;
 				INFOPLIST_FILE = "Word Count/Info.plist";
@@ -296,8 +390,10 @@
 		};
 		36EA574F20C21CFD005BAADB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED046793DA24E12C8B06D45A /* Pods-Word Count.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Word Count/Word Count.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YE7CK8L96V;
 				INFOPLIST_FILE = "Word Count/Info.plist";
