@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -274,7 +275,170 @@
                     <view key="view" contentMode="scaleToFill" id="AUe-w8-0Pf" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Q3p-cQ-2Am" userLabel="Super Stack View">
+                                <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tpq-LN-7Ru" userLabel="Left View">
+                                        <rect key="frame" x="0.0" y="0.0" width="512" height="704"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lm6-XJ-iWD" userLabel="Right View">
+                                        <rect key="frame" x="512" y="0.0" width="512" height="704"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="3Vv-Eb-z2O">
+                                                <rect key="frame" x="0.0" y="0.0" width="512" height="704"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHJ-R8-mBv">
+                                                        <rect key="frame" x="0.0" y="0.0" width="512" height="141"/>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="s7s-lj-NVh">
+                                                        <rect key="frame" x="0.0" y="141" width="512" height="140.5"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYI-U2-Uij">
+                                                                <rect key="frame" x="0.0" y="0.0" width="164" height="140.5"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="7" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFg-Qk-p5W">
+                                                                <rect key="frame" x="174" y="0.0" width="164" height="140.5"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="8" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUZ-TK-DaF">
+                                                                <rect key="frame" x="348" y="0.0" width="164" height="140.5"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="9" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9RS-iT-quV">
+                                                        <rect key="frame" x="0.0" y="281.5" width="512" height="141"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="147-GE-bvj">
+                                                                <rect key="frame" x="0.0" y="0.0" width="164" height="141"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="4" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGg-0N-G1o">
+                                                                <rect key="frame" x="174" y="0.0" width="164" height="141"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="5" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReI-Zb-Xq3">
+                                                                <rect key="frame" x="348" y="0.0" width="164" height="141"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="6" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="c48-x0-DSg">
+                                                        <rect key="frame" x="0.0" y="422.5" width="512" height="140.5"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TXt-XZ-nAw">
+                                                                <rect key="frame" x="0.0" y="0.0" width="164" height="140.5"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="1" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pwu-6a-0Zi">
+                                                                <rect key="frame" x="174" y="0.0" width="164" height="140.5"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="2" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bb9-48-8Bq">
+                                                                <rect key="frame" x="348" y="0.0" width="164" height="140.5"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="3" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sv1-GD-ton">
+                                                        <rect key="frame" x="0.0" y="563" width="512" height="141"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAl-Ua-X7Y">
+                                                                <rect key="frame" x="0.0" y="0.0" width="164" height="141"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="40"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="Clear" backgroundImage="numberBubbleRed">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2w-q9-Cto">
+                                                                <rect key="frame" x="174" y="0.0" width="164" height="141"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="72"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="0" backgroundImage="numberBubble">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urc-vA-5SD">
+                                                                <rect key="frame" x="348" y="0.0" width="164" height="141"/>
+                                                                <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="40"/>
+                                                                <size key="titleShadowOffset" width="-2" height="-1"/>
+                                                                <state key="normal" title="Hint" backgroundImage="numberBubbleGreen">
+                                                                    <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="titleShadowColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </state>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="3Vv-Eb-z2O" secondAttribute="bottom" id="2p6-HM-f6U"/>
+                                            <constraint firstItem="3Vv-Eb-z2O" firstAttribute="top" secondItem="Lm6-XJ-iWD" secondAttribute="top" id="Cuc-Zz-Aqz"/>
+                                            <constraint firstItem="3Vv-Eb-z2O" firstAttribute="leading" secondItem="Lm6-XJ-iWD" secondAttribute="leading" id="Rxw-U9-Vij"/>
+                                            <constraint firstAttribute="trailing" secondItem="3Vv-Eb-z2O" secondAttribute="trailing" id="zdC-aF-ClA"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="wo7-Qu-jWA" firstAttribute="bottom" secondItem="Q3p-cQ-2Am" secondAttribute="bottom" id="ICa-ea-oBd"/>
+                            <constraint firstItem="Lm6-XJ-iWD" firstAttribute="width" secondItem="AUe-w8-0Pf" secondAttribute="width" multiplier="0.5" id="VWc-7B-YE1"/>
+                            <constraint firstItem="Q3p-cQ-2Am" firstAttribute="leading" secondItem="wo7-Qu-jWA" secondAttribute="leading" id="bvc-rD-FiX"/>
+                            <constraint firstItem="wo7-Qu-jWA" firstAttribute="trailing" secondItem="Q3p-cQ-2Am" secondAttribute="trailing" id="out-qb-6L7"/>
+                            <constraint firstItem="Q3p-cQ-2Am" firstAttribute="top" secondItem="wo7-Qu-jWA" secondAttribute="top" id="vNQ-Ia-dda"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="wo7-Qu-jWA"/>
                     </view>
                 </viewController>
@@ -310,6 +474,9 @@
         <image name="addition" width="128" height="128"/>
         <image name="animals" width="107" height="124"/>
         <image name="jumbled" width="110" height="110"/>
+        <image name="numberBubble" width="40" height="40"/>
+        <image name="numberBubbleGreen" width="40" height="40"/>
+        <image name="numberBubbleRed" width="40" height="40"/>
         <image name="science" width="79" height="135"/>
         <image name="subraction" width="128" height="16"/>
     </resources>

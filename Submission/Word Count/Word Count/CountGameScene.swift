@@ -10,13 +10,15 @@ import SpriteKit
 import GameplayKit
 
 class CountGameScene: SKScene {
-    
+//    View Constants
     var viewWidth = 1024
     var viewHeight = 750
-    
+//    Animiated Background
     var backgroundSpeed: CGFloat = 200.0 // Speed of background
     var deltaTime: TimeInterval = 0
     var lastUpdateTimeInterval: TimeInterval = 0
+    //    Number Pad Labels
+    var numberBubble: SKSpriteNode!
     
     override func sceneDidLoad() {
 
@@ -149,4 +151,12 @@ class CountGameScene: SKScene {
             
         }
     }
+    
+//    func buildNumberPad() {
+//        for i in 0...10 {
+//            numberBubble = SKSpriteNode(imageNamed: "bubbleNumber")
+//            numberBubble.name = "\(i)"
+//            numberBubble.lab
+//        }
+//    }
 }
