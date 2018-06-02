@@ -100,6 +100,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFD-Ug-2GQ" userLabel="jumbledButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="264.5" height="187"/>
                                                         <state key="normal" image="jumbled" backgroundImage="Menu Bubble"/>
+                                                        <connections>
+                                                            <segue destination="gPP-nV-q0a" kind="show" id="XEJ-yc-16c"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jumbled" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0Y-nF-a3o">
                                                         <rect key="frame" x="0.0" y="187" width="264.5" height="48"/>
@@ -169,6 +172,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="emh-l3-jTs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-897.07031249999989" y="876.5625"/>
+        </scene>
+        <!--Word Game View Controller-->
+        <scene sceneID="dWQ-BQ-dis">
+            <objects>
+                <viewController id="gPP-nV-q0a" customClass="WordGameViewController" customModule="Word_Count" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="f7S-6z-CKf" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Xfj-4i-Qgg"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4tB-qo-Frn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1009" y="1683"/>
         </scene>
         <!--Count Menu View Controller-->
         <scene sceneID="qPQ-hR-iz6">
