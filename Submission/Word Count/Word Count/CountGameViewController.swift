@@ -244,7 +244,7 @@ class CountGameViewController: UIViewController {
                 gameTimeBonus += (Double(numeratorLabel.text!.count) * 1.5)
             }
             currentGame.gameTime += Double(gameTimeBonus)
-            currentGame.score += Float(score)
+            currentGame.score = Float(score)
 //            gameTime += gameTimeBonus
 //            gameTimerLabel.text = String(gameTime)
 //            scoreLabel.text = String(score)

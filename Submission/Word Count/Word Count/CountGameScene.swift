@@ -180,7 +180,7 @@ class CountGameScene: SKScene {
         gameScore.verticalAlignmentMode = .top
         gameScore.fontSize = 48
         addChild(gameScore)
-        gameScore.position = CGPoint(x: viewWidth - 300, y: viewHeight-50)
+        gameScore.position = CGPoint(x: viewWidth - 250, y: viewHeight-50)
     }
     
     // Build timer label
