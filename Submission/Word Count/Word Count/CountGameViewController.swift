@@ -13,6 +13,7 @@ import GameplayKit
 class CountGameViewController: UIViewController {
     var currentGame: CountGameScene!
     var menuController: CountMenuViewController!
+//    var mainController: MainMenuViewController!
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var rightView: UIView!
     

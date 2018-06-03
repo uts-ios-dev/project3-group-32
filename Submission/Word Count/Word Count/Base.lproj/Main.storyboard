@@ -72,7 +72,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uDv-Yk-onP"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Menu" largeTitleDisplayMode="always" id="GDL-Ln-zf3"/>
+                    <navigationItem key="navigationItem" title="Menu" largeTitleDisplayMode="always" id="GDL-Ln-zf3">
+                        <barButtonItem key="rightBarButtonItem" title="Leaderboard" id="6JS-6m-qeE">
+                            <connections>
+                                <action selector="leaderboardButtontouched:" destination="jqX-UT-PA1" id="t6n-9C-RBD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eF0-oN-1Jq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
