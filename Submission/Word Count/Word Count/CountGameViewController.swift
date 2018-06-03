@@ -10,10 +10,10 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class CountGameViewController: UIViewController {
+class CountGameViewController: UIViewController, GameSceneDelegate {
     var currentGame: CountGameScene!
     var menuController: CountMenuViewController!
-//    var mainController: MainMenuViewController!
+    var mainController: MainMenuViewController!
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var rightView: UIView!
     
@@ -44,9 +44,8 @@ class CountGameViewController: UIViewController {
     var denominatorProblemSize = 10
     var wrongAnswer: Bool = false
     var gameTimer: Timer!
-//    var gameTime: Int = 10 //this does nothing
     var gameTimeBonus = 1.0
-    var gameOver: Bool = false
+    var endGame: Bool = false
     var score: Int = 0
     var flag: Bool = true
     var additionHintContainer = [Int]()
@@ -59,18 +58,11 @@ class CountGameViewController: UIViewController {
         super.viewDidLoad()
         leftView.isHidden = true
         rightView.isHidden = true
-        
-//        loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: op)
-//        gameTimerLabel.text = String(gameTime)
-//        startGameTimer()
-//        scoreLabel.text = String(score)
+    
         hintLabel.text = ""
         answerLabel.text = ""
        
-        
-//        op = navigationController?.title?.lowercased()
-        // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
-        // including entities and graphs.
+        // Load 'GameScene.sks' as a GKScene.
         if let scene = GKScene(fileNamed: "CountGameScene") {
             
             // Get the SKScene from the loaded GKScene
@@ -84,6 +76,8 @@ class CountGameViewController: UIViewController {
                     view.presentScene(sceneNode)
                     currentGame = sceneNode
                     currentGame.viewController = self
+                    currentGame.gameSceneDelegate = self
+                    
                     view.ignoresSiblingOrder = true
                     
                     view.showsFPS = true
@@ -93,25 +87,6 @@ class CountGameViewController: UIViewController {
             }
         }
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        // Hide the Navigation Bar
-//        self.navigationController?.setNavigationBarHidden(false, animated: false)
-////        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//        if let str = navigationController?.title?.lowercased() {
-//            print(str)
-//        } else {
-//            print("Fuck segues")
-//        }
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(true)
-//        // Show the Navigation Bar
-////        self.navigationController?.setNavigationBarHidden(false, animated: false)
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//    }
     
     override var shouldAutorotate: Bool {
         return true
@@ -126,7 +101,7 @@ class CountGameViewController: UIViewController {
     }
     
     @IBAction func unwindToMain(_ sender: UIButton) {
-        gameOver = true
+        endGame = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -139,7 +114,7 @@ class CountGameViewController: UIViewController {
     }
     
     @IBAction func numberButtonTouched(_ sender: UIButton) {
-        if gameOver {
+        if endGame {
             return
         }
         
@@ -246,9 +221,6 @@ class CountGameViewController: UIViewController {
             }
             currentGame.gameTime += Double(gameTimeBonus)
             currentGame.score = Float(score)
-//            gameTime += gameTimeBonus
-//            gameTimerLabel.text = String(gameTime)
-//            scoreLabel.text = String(score)
         } else {
             hintLabel.text = ""
             hintFlag = false
@@ -270,9 +242,9 @@ class CountGameViewController: UIViewController {
         var num2 = num2
         
         if num2 > num1 {
-            //            print("swap: \(num1) \(num2)")
+//            print("swap: \(num1) \(num2)")
             swap(&num1, &num2)
-            //            print("swapped: \(num1) \(num2)")
+//            print("swapped: \(num1) \(num2)")
         }
         
         let numTest = num2 % denominatorProblemSize
@@ -391,24 +363,17 @@ class CountGameViewController: UIViewController {
     func startGame() {
         loadNewProblem(num1: RandomInt(min: number % (numeratorProblemSize/10), max: number % numeratorProblemSize), num2: RandomInt(min: number % (denominatorProblemSize/10), max: number % denominatorProblemSize), op: op)
         currentGame.score = Float(score)
+//        currentGame.gameSceneDelegate = main
     }
     
-    func setOperator(passedOp: String) {
-        op = passedOp
+    //  Game scene passes to this function at the end of a game
+    func gameOver() {
+        //  for testing
+        print("Inside of gameOver()")
+        self.performSegue(withIdentifier: "unwindToMenu", sender: self)
+        // Submit score to GC leaderboard
+//        if gcEnabled {
+//            showScoreBoard()
+//        }   
     }
-    
-//    func startGameTimer()  {
-//        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateGameTimer), userInfo: nil, repeats: true)
-//    }
-    
-//    @objc func updateGameTimer() {
-//        if gameTime < 1 {
-//            gameTimer.invalidate()
-//            gameOver = true
-//        } else {
-//            gameTime -= 1
-//            gameTimerLabel.text = String(gameTime)
-//        }
-//    }
-    
 }

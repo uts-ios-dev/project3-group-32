@@ -76,6 +76,25 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil)
     }
+    
+    //  Game scene passes to this function at the end of a game
+    func gameOver() {
+        //  for testing
+        print("Inside of gameOver()")
+        // Submit score to GC leaderboard
+        if gcEnabled {
+            showScoreBoard()
+        }
+    }
+    
+    func showScoreBoard() {
+        // Present Leader board
+        let gcVC = GKGameCenterViewController()
+        gcVC.gameCenterDelegate = self
+        gcVC.viewState = .leaderboards
+        gcVC.leaderboardIdentifier = LEADERBOARD_ID
+        present(gcVC, animated: true, completion: nil)
+    }
 
 }
 

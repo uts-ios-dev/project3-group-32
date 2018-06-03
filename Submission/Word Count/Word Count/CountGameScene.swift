@@ -9,9 +9,14 @@
 import SpriteKit
 import GameplayKit
 
+protocol GameSceneDelegate {
+    func gameOver()
+}
+
 class CountGameScene: SKScene {
     // Declere view controller
     weak var viewController: CountGameViewController!
+    var gameSceneDelegate: GameSceneDelegate?
 //    View Constants
     var viewWidth = 1024
     var viewHeight = 750
@@ -189,6 +194,7 @@ class CountGameScene: SKScene {
         clockLabel.horizontalAlignmentMode = .left
         clockLabel.verticalAlignmentMode = .top
         clockLabel.fontSize = 48
+        clockLabel.zPosition = 2
         addChild(clockLabel)
         clockLabel.position = CGPoint(x: 20, y: viewHeight-50)
     }
@@ -240,7 +246,7 @@ class CountGameScene: SKScene {
                 self.gameScore.removeFromParent()
                 self.score = 0.0
                 self.clockLabel.removeFromParent()
-//                self.gameSceneDelegate?.gameOver()
+                self.gameSceneDelegate?.gameOver()
             }
         } else {
             gameTime -= 1
