@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "53ACDB42C27969B3A51B0CE9AA45C8F2"
+               BlueprintIdentifier = "CFB27281670D300C69CF9D9C41C7DA3D"
                BuildableName = "Pods_Word_Count.framework"
                BlueprintName = "Pods-Word Count"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "53ACDB42C27969B3A51B0CE9AA45C8F2"
+            BlueprintIdentifier = "CFB27281670D300C69CF9D9C41C7DA3D"
             BuildableName = "Pods_Word_Count.framework"
             BlueprintName = "Pods-Word Count"
             ReferencedContainer = "container:Pods.xcodeproj">

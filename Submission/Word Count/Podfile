@@ -8,5 +8,6 @@ target 'Word Count' do
   # Pods for Word Count
 
   pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
 
 end
