@@ -14,6 +14,12 @@ class CountGameViewController: UIViewController, GameSceneDelegate {
     var currentGame: CountGameScene!
     var menuController: CountMenuViewController!
     var mainController: MainMenuViewController!
+    
+    var gcEnabled = Bool()
+    var gcLeaderBoard = String()
+    
+//    let COUNT_LEADERBOARD_ID = "com.score.wordcount.count"
+    
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var rightView: UIView!
     
@@ -201,7 +207,6 @@ class CountGameViewController: UIViewController, GameSceneDelegate {
                 return
             }
         }
-        
     }
     
     func replay() {
@@ -370,10 +375,16 @@ class CountGameViewController: UIViewController, GameSceneDelegate {
     func gameOver() {
         //  for testing
         print("Inside of gameOver()")
+        print("gcStatus -> countGameController: \(mainController.gcEnabled)")
+//        Submit score to GC leaderboard
+            if mainController.gcEnabled {
+//                mainController.updateLeaderBoard(score)
+                mainController.updateCountLeaderBoard(score)
+                mainController.showScoreBoard(mainController.COUNT_LEADERBOARD_ID)
+            }
+        
+        
         self.performSegue(withIdentifier: "unwindToMenu", sender: self)
-        // Submit score to GC leaderboard
-//        if gcEnabled {
-//            showScoreBoard()
-//        }   
+        
     }
 }

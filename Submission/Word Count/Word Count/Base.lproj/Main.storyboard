@@ -45,7 +45,7 @@
                                                     <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="IRr-mT-5Hl" kind="show" id="MLI-lS-Doy"/>
+                                                    <action selector="countButtonTouched:" destination="jqX-UT-PA1" eventType="touchUpInside" id="L3z-JQ-lsd"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -79,6 +79,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="countButton" destination="O1W-Uq-V2x" id="en4-nD-Nnp"/>
+                        <segue destination="IRr-mT-5Hl" kind="show" identifier="count" id="2ns-z0-zbQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eF0-oN-1Jq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -352,10 +356,10 @@
                                                         <rect key="frame" x="0.0" y="565" width="454" height="131"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="equalsLine" translatesAutoresizingMaskIntoConstraints="NO" id="uBg-Zy-0ww">
-                                                                <rect key="frame" x="0.0" y="0.0" width="454" height="2"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="454" height="1.5"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67u-UA-buT" userLabel="answerLabel">
-                                                                <rect key="frame" x="0.0" y="2" width="454" height="129"/>
+                                                                <rect key="frame" x="0.0" y="1.5" width="454" height="129.5"/>
                                                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="80"/>
                                                                 <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 <nil key="highlightedColor"/>
