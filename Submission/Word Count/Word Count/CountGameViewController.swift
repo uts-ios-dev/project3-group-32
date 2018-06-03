@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class CountGameViewController: UIViewController, GameSceneDelegate {
+class CountGameViewController: UIViewController, CountGameSceneDelegate {
     var currentGame: CountGameScene!
     var menuController: CountMenuViewController!
     var mainController: MainMenuViewController!

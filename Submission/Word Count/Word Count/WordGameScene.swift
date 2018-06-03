@@ -9,16 +9,33 @@
 import SpriteKit
 import GameplayKit
 
+protocol WordGameSceneDelegate {
+    func gameOver()
+}
+
 class WordGameScene: SKScene {
+    weak var wordViewController: WordGameViewController!
+    var wordGameSceneDelegate: WordGameSceneDelegate?
+    
     var viewWidth = 1024
     var viewHeight = 750
 //    Animiated Background
     var backgroundSpeed: CGFloat = 200.0 // Speed of background
     var deltaTime: TimeInterval = 0
     var lastUpdateTimeInterval: TimeInterval = 0
+    // Game timer menu
+    let clockLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
+    var gameTimer: Timer!
+    var gameTime = 11.0
+    // Start countdown
+    let startTimerLable = SKLabelNode(fontNamed: "American Typewriter Bold")
+    var startCountDown: Timer!
+    var startTime = 3
+    var istimerAnimationOn: Bool = false
     
     override func sceneDidLoad() {
         setUpBackgrounds()
+        startTimer()
     }
     
     
@@ -123,6 +140,139 @@ class WordGameScene: SKScene {
             }
             
         }
+    }
+    
+    // Build timer label
+    func createTimer() {
+        clockLabel.text = "Time: \(timeString(time: TimeInterval(gameTime)))"
+        clockLabel.horizontalAlignmentMode = .left
+        clockLabel.verticalAlignmentMode = .top
+        clockLabel.fontSize = 48
+        clockLabel.zPosition = 2
+        addChild(clockLabel)
+        clockLabel.position = CGPoint(x: 20, y: viewHeight-50)
+    }
+    
+    // Run the game timer
+    func runTimer() {
+        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    // Formate timer string if time is more than 60 seconds
+    func timeString(time:TimeInterval) -> String {
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        return String(format:"%i:%02i", minutes, seconds)
+    }
+    
+    // Update the game timer iver seconed. If time is up stop game
+    @objc func updateTimer()  {
+        if gameTime < 1 {
+            //Send alert to indicate time's up.
+            gameTimer.invalidate()
+            //            startTime = 3
+            // Move the clock to centre of screen
+            clockLabel.horizontalAlignmentMode = .center
+            clockLabel.verticalAlignmentMode = .center
+            clockLabel.position = CGPoint(x: viewWidth/2, y: viewHeight/2)
+            clockLabel.text = "Times Up!"
+            // Move the score to centre of screen
+//            gameScore.horizontalAlignmentMode = .center
+//            gameScore.verticalAlignmentMode = .center
+//            gameScore.fontSize = 80
+//            gameScore.position = CGPoint(x: viewWidth/2, y: Int(Float(viewHeight)/1.5))
+            //  Clear last bubble popped menu
+            //            if gameKitEnabled {
+            //                viewController.updateLeaderBoard(Int(score))
+            //            }
+//            viewController.leftView.isHidden = true
+//            viewController.rightView.isHidden = true
+            //  End game
+//            gameEnded = true
+            // Go to menu
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [unowned self] in
+                //                if self.gameKitEnabled {
+                //                    self.topScoreLabel.removeFromParent()
+                //                    self.topScoreLabel.removeAllActions()
+                //                }
+                self.clockLabel.removeAllActions()
+                self.clockLabel.fontColor = UIColor.white
+//                self.gameScore.removeFromParent()
+//                self.score = 0.0
+                self.clockLabel.removeFromParent()
+                self.wordGameSceneDelegate?.gameOver()
+            }
+        } else {
+            gameTime -= 1
+            //  Formate timer label
+            if gameTime >= 60.0 {
+                clockLabel.text = "Time: \(timeString(time: TimeInterval(Int(gameTime))))"
+            } else {
+                clockLabel.text = "Time: \(Int(gameTime))"
+            }
+            // Animate the clock label when time is running out
+            if gameTime <= 10.0 {
+                clockLabel.fontColor = UIColor.red
+                animateNode(clockLabel)
+                istimerAnimationOn = true
+            } else if istimerAnimationOn && gameTime > 10.0 {
+                //  Disable animation - this is only used when time is added to the game timer for score multiplier
+                clockLabel.removeAllActions()
+            }
+            //  Animate top score label if top score is achieved
+            //            if gameKitEnabled && Int(score) > topScore {
+            //                topScoreLabel.text = "New Top Score: \(Int(score))"
+            //                animateNode(topScoreLabel)
+            //            }
+        }
+    }
+    
+    //  Animate nodes reference: https://www.swiftbysundell.com/posts/using-spritekit-to-create-animations-in-swift
+    func animateNode(_ node: SKNode) {
+        node.run(.sequence([
+            .repeatForever(.sequence([
+                .scale(to: 1.5, duration: 0.3),
+                .wait(forDuration: TimeInterval(0.2)),
+                .scale(to: 1, duration: 0.3),
+                .wait(forDuration: 0.2)
+                ]))
+            ]))
+    }
+    
+    // Build game starting countdown timer
+    func startTimer() {
+        startTimerLable.text = "3"
+        startTimerLable.horizontalAlignmentMode = .center
+        startTimerLable.verticalAlignmentMode = .center
+        startTimerLable.position = CGPoint(x: viewWidth/2, y: viewHeight/2)
+        startTimerLable.fontSize = 120
+        startTimerLable.zPosition = 2
+        addChild(startTimerLable)
+        animateNode(startTimerLable)
+        startCountDown = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateStartTimer)), userInfo: nil, repeats: true)
+    }
+    
+    // Initiate and start game
+    @objc func updateStartTimer() {
+        if startTime == 1 {
+//            resetGame()
+            //            if gameKitEnabled {
+            //                createTopScore()
+            //            }
+//            createScore()
+            createTimer()
+            startCountDown.invalidate()
+            startTimerLable.removeFromParent()
+            startTimerLable.removeAllActions()
+//            viewController.leftView.isHidden = false
+//            viewController.rightView.isHidden = false
+//            viewController.startGame()
+            runTimer()
+        } else {
+            startTime -= 1
+            startTimerLable.text = "\(startTime)"
+        }
+        
     }
 
 }

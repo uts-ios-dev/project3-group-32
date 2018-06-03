@@ -9,14 +9,14 @@
 import SpriteKit
 import GameplayKit
 
-protocol GameSceneDelegate {
+protocol CountGameSceneDelegate {
     func gameOver()
 }
 
 class CountGameScene: SKScene {
     // Declere view controller
     weak var viewController: CountGameViewController!
-    var gameSceneDelegate: GameSceneDelegate?
+    var gameSceneDelegate: CountGameSceneDelegate?
 //    View Constants
     var viewWidth = 1024
     var viewHeight = 750

@@ -9,7 +9,12 @@
 import UIKit
 
 class WordMenuViewController: UIViewController {
+    
+    var wordGameController: WordGameViewController!
+    var wordMainController: MainMenuViewController!
 
+    @IBOutlet weak var jumbledButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +26,23 @@ class WordMenuViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-   
+    @IBAction func unwindToMenu(_ sender: UIButton) {
+    }
+    
+    @IBAction func jumbledButtonTouched(_ sender: UIButton) {
+        performSegue(withIdentifier: "jumbled", sender: sender)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let sender = sender as? UIButton else {return}
+        wordGameController = segue.destination as! WordGameViewController
+        wordGameController.wordMainController = wordMainController
+        if sender == jumbledButton {
+            segue.destination.navigationItem.title = "Jumbled Words"
+            //            gameController = segue.destination as! CountGameViewController
+        }
+    }
     
     /*
     // MARK: - Navigation

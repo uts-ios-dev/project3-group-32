@@ -112,7 +112,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="264.5" height="187"/>
                                                         <state key="normal" image="jumbled" backgroundImage="Menu Bubble"/>
                                                         <connections>
-                                                            <segue destination="gPP-nV-q0a" kind="show" id="XEJ-yc-16c"/>
+                                                            <action selector="jumbledButtonTouched:" destination="IMo-14-rfZ" eventType="touchUpInside" id="FGe-bO-4Kk"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jumbled" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0Y-nF-a3o">
@@ -179,6 +179,10 @@
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="jumbledButton" destination="qFD-Ug-2GQ" id="k8i-4B-6zI"/>
+                        <segue destination="gPP-nV-q0a" kind="show" identifier="jumbled" id="8K3-0E-A6L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="emh-l3-jTs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -194,8 +198,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Xfj-4i-Qgg"/>
                     </view>
+                    <connections>
+                        <segue destination="i4d-fx-sTc" kind="unwind" identifier="unwindToMenu" unwindAction="unwindToMainWithUnwindSegue:" id="tTk-lQ-0ao"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tB-qo-Frn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="i4d-fx-sTc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-897" y="1700"/>
         </scene>

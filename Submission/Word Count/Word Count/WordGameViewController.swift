@@ -10,7 +10,13 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class WordGameViewController: UIViewController {
+class WordGameViewController: UIViewController, WordGameSceneDelegate {
+    
+    var wordCurrentGame: WordGameScene!
+    var wordMenuController: WordMenuViewController!
+    var wordMainController: MainMenuViewController!
+    
+    var endGame: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,18 +26,21 @@ class WordGameViewController: UIViewController {
         if let scene = GKScene(fileNamed: "WordGameScene") {
             
             // Get the SKScene from the loaded GKScene
-            if let sceneNode = scene.rootNode as! WordGameScene? {
+            if let wordSceneNode = scene.rootNode as! WordGameScene? {
                 
                 // Copy gameplay related content over to the scene
                 //                sceneNode.entities = scene.entities
                 //                sceneNode.graphs = scene.graphs
                 
                 // Set the scale mode to scale to fit the window
-                sceneNode.scaleMode = .aspectFill
+                wordSceneNode.scaleMode = .aspectFill
                 
                 // Present the scene
                 if let view = self.view as! SKView? {
-                    view.presentScene(sceneNode)
+                    view.presentScene(wordSceneNode)
+                    wordCurrentGame = wordSceneNode
+                    wordCurrentGame.wordViewController = self
+                    wordCurrentGame.wordGameSceneDelegate = self
                     
                     view.ignoresSiblingOrder = true
                     
@@ -61,5 +70,27 @@ class WordGameViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    @IBAction func unwindToMain(_ sender: UIButton) {
+        endGame = true
+    }
+    
+    
+    //  Game scene passes to this function at the end of a game
+    func gameOver() {
+        //  for testing
+        print("Inside of word gameOver()")
+//        print("gcStatus -> countGameController: \(wordMainController.gcEnabled)")
+//        //        Submit score to GC leaderboard
+//        if wordMainController.gcEnabled {
+//            //                mainController.updateLeaderBoard(score)
+////            mainController.updateCountLeaderBoard(score)
+//            wordMainController.showScoreBoard(wordMainController.WORD_LEADERBOARD_ID)
+//        }
+        
+        
+        self.performSegue(withIdentifier: "unwindToMenu", sender: self)
+        
     }
 }
