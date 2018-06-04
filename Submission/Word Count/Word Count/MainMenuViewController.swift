@@ -8,7 +8,8 @@
 
 import UIKit
 import GameKit
-//import Firebase
+import Firebase
+//import FirebaseMessaging
 //import FirebaseFirestore
 
 class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
@@ -83,6 +84,23 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
 //        gcVC.leaderboardIdentifier = LEADERBOARD_ID
         present(gcVC, animated: true, completion: nil)
     }
+    
+//    //Not wired up but ready to implement messaging
+//    @IBAction func handleLogTokenTouch(_ sender: UIButton) {
+//        // [START log_fcm_reg_token]
+//        let token = Messaging.messaging().fcmToken
+//        print("FCM token: \(token ?? "")")
+//        // [END log_fcm_reg_token]
+//    }
+//
+//    //Not wired up but ready to implement subscribing
+//    @IBAction func handleSubscribeTouch(_ sender: UIButton) {
+//        // [START subscribe_topic]
+//        Messaging.messaging().subscribe(toTopic: "news") { error in
+//            print("Subscribed to news topic")
+//        }
+//        // [END subscribe_topic]
+//    }
     
     // Authenticate Local Player
     func authenticateLocalPlayer() {
