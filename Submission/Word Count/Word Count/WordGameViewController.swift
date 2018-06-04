@@ -9,17 +9,38 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+//import Firebase
+//import FirebaseFirestore
 
 class WordGameViewController: UIViewController, WordGameSceneDelegate {
+    
+//    var docRef: DocumentReference!
+//    var db: Firestore!
     
     var wordCurrentGame: WordGameScene!
     var wordMenuController: WordMenuViewController!
     var wordMainController: MainMenuViewController!
     
+    var wordList = [String]()
+    
     var endGame: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("Word GAME View Controller \(wordList)")
+        
+//        docRef = Firestore.firestore().document("WordLists/3bNsOHfU2HJhmtsXHPfo")
+        
+//        db.collection("WordLists").getDocuments() { (querySnapshot, err) in
+//            if let err = err {
+//                print("Error getting documents: \(err)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//                    print("\(document.documentID) => \(document.data())")
+//                }
+//            }
+//        }
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.

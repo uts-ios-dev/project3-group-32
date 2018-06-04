@@ -74,6 +74,7 @@
 		36EA573220C21CFC005BAADB = {
 			isa = PBXGroup;
 			children = (
+				36EA575620C22079005BAADB /* GoogleService-Info.plist */,
 				36EA573D20C21CFC005BAADB /* Word Count */,
 				36EA573C20C21CFC005BAADB /* Products */,
 				36EA575120C21DC3005BAADB /* Frameworks */,
@@ -98,7 +99,6 @@
 				36EA574220C21CFC005BAADB /* Main.storyboard */,
 				36EA574520C21CFD005BAADB /* Assets.xcassets */,
 				36EA574720C21CFD005BAADB /* LaunchScreen.storyboard */,
-				36EA575620C22079005BAADB /* GoogleService-Info.plist */,
 				36EA574A20C21CFD005BAADB /* Info.plist */,
 				36EA575A20C23EBD005BAADB /* WordMenuViewController.swift */,
 				36658CEB20C289D800573D96 /* WordGameViewController.swift */,

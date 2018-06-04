@@ -7,17 +7,33 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class WordMenuViewController: UIViewController {
     
     var wordGameController: WordGameViewController!
     var wordMainController: MainMenuViewController!
-
+    var jumbledWords = [String]()
+    var docRef: DocumentReference!
+//    var db: Firestore!
+    
     @IBOutlet weak var jumbledButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        docRef = Firestore.firestore().document("WordLists/3bNsOHfU2HJhmtsXHPfo")
+        
+        docRef.getDocument { (docSnapshot, error) in
+            guard let docSnapshot = docSnapshot, docSnapshot.exists else {return}
+            let wordList = docSnapshot.data()
+            self.jumbledWords = wordList!["jumbledWords"] as! [String]
+            print("""
+                \(self.jumbledWords)
+                Word Menu View Controller
+                """)
+        }
+        
         // Do any additional setup after loading the view.
     }
 
@@ -33,11 +49,11 @@ class WordMenuViewController: UIViewController {
         performSegue(withIdentifier: "jumbled", sender: sender)
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let sender = sender as? UIButton else {return}
         wordGameController = segue.destination as! WordGameViewController
         wordGameController.wordMainController = wordMainController
+        wordGameController.wordList = jumbledWords
         if sender == jumbledButton {
             segue.destination.navigationItem.title = "Jumbled Words"
             //            gameController = segue.destination as! CountGameViewController

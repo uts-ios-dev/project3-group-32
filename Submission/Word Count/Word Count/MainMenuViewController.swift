@@ -8,6 +8,8 @@
 
 import UIKit
 import GameKit
+//import Firebase
+//import FirebaseFirestore
 
 class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
     
@@ -32,6 +34,9 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
         // Call the GC authentication controller
         authenticateLocalPlayer()
