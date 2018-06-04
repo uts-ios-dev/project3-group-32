@@ -24,7 +24,7 @@ class WordGameScene: SKScene {
     
     var viewWidth = 1024
     var viewHeight = 750
-    var gravity = CGVector(dx: -0.0, dy: -0.05)
+    var gravity = CGVector(dx: 0.0, dy: -0.01)
 //    Animiated Background
     var backgroundSpeed: CGFloat = 200.0 // Speed of background
     var deltaTime: TimeInterval = 0
@@ -42,7 +42,7 @@ class WordGameScene: SKScene {
     // Game timer menu
     let clockLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
     var gameTimer: Timer!
-    var gameTime = 11.0
+    var gameTime = 20.0
     // Start countdown
     let startTimerLable = SKLabelNode(fontNamed: "American Typewriter Bold")
     var startCountDown: Timer!
@@ -138,7 +138,7 @@ class WordGameScene: SKScene {
 //                node.name = ""
 //                lastBubbblePopImage.removeFromParent()
 //                // Prohibit physics interactions
-//                node.physicsBody?.isDynamic = false
+                node.physicsBody?.isDynamic = false
 //                // Animate bubble removal
 //                let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
 //                let fadeOut = SKAction.fadeOut(withDuration: 0.2)
@@ -210,6 +210,23 @@ class WordGameScene: SKScene {
         lastUpdateTimeInterval = currentTime
         
         updateBackground()
+        
+        if activeBubbles.count > 0 {
+            for node in activeBubbles {
+                //  Remove bubbles that are off the bottom of the screen from the node tree or popped
+                if node.position.y < 0 {
+                    node.removeAllActions()
+                    node.removeFromParent()
+                    if let index = activeBubbles.index(of: node) {
+                        activeBubbles.remove(at: index)
+                    }
+                }
+            }
+        } else {
+            if canTouch {
+                updateWordLabel(wordViewController.newWord())
+            }
+        }
     }
     
     func setUpBackgrounds() {
@@ -330,7 +347,7 @@ class WordGameScene: SKScene {
             }
         } else {
             gameTime -= 1
-            updateWordLabel(wordViewController.newWord())
+//            updateWordLabel(wordViewController.newWord())
 //            wordLabel.text = wordViewController.newWord()
             
             //  Formate timer label
@@ -393,10 +410,8 @@ class WordGameScene: SKScene {
             startCountDown.invalidate()
             startTimerLable.removeFromParent()
             startTimerLable.removeAllActions()
-//            viewController.leftView.isHidden = false
-//            viewController.rightView.isHidden = false
-//            viewController.startGame()
             canTouch = true
+            updateWordLabel(wordViewController.newWord())
             runTimer()
         } else {
             startTime -= 1
@@ -448,29 +463,43 @@ class WordGameScene: SKScene {
 
     
     func updateWordLabel(_ word: String) {
+        print(word)
+        var alphabet: [Character] = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
         var newWordLabelText = ""
         var bubbleCharacters = [Character]()
         let numChar = Int(Double(word.count)*difficulty)
+        let numBogusChar = Int(Double(word.count)*(1-difficulty))
         var i = 0
-        var j = 0
+        var num = 0
         var tmpContainer = [Int]()
         while i < numChar {
-            let num = RandomInt(min: 0, max: numChar)
+            num = RandomInt(min: 0, max: numChar)
             if !tmpContainer.contains(num){
                 tmpContainer.append(num)
                 i += 1
             }
         }
-        
+        i = 0
         for w in word {
-            if tmpContainer.contains(j) {
+            if tmpContainer.contains(i) {
                 newWordLabelText = "\(newWordLabelText) \(w)"
             } else {
-                bubbleCharacters.append(w)
+                if !bubbleCharacters.contains(w) {
+                    bubbleCharacters.append(w)
+                }
                 newWordLabelText = "\(newWordLabelText) _"
             }
-            j += 1
+            i += 1
         }
+        i = 0
+        while i < numBogusChar {
+            num = RandomInt(min: 0, max: alphabet.count-1)
+            if !bubbleCharacters.contains(alphabet[num]){
+                bubbleCharacters.append(alphabet[num])
+                i += 1
+            }
+        }
+        
         print("Bubble Character: \(bubbleCharacters)")
         createBubbles(bubbleCharacters)
         print("Word Label: \(newWordLabelText)")
@@ -510,41 +539,10 @@ class WordGameScene: SKScene {
             // Apply physics
             bubble.physicsBody = SKPhysicsBody(circleOfRadius: bubble.size.width / 2.0)
             bubble.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
-//            bubble.physicsBody?.velocity = CGVector(dx: 0, dy: -1)
             bubble.physicsBody?.angularVelocity = randomAngularVelocity
-            physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth+500, height: viewHeight+300))
+            physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth, height: viewHeight+300))
             bubble.physicsBody?.restitution = 0.2
-            
-//            // Randomise bubble posiion
-//            let randomPosition = CGPoint(x: RandomInt(min: 20, max: 1000), y: -10)
-//            bubble.position = randomPosition
-//
-//            // Randomise bubble angle velocity
-//            let randomAngularVelocity = CGFloat(RandomInt(min: -10, max: 10)) / 2.0
-//            var randomXVelocity = 0
-//
-//            // Randomise bubble horizontail velocity
-//            if randomPosition.x < 256 {
-//                randomXVelocity = RandomInt(min: 3, max: 10)
-//            } else if randomPosition.x < 512 {
-//                randomXVelocity = RandomInt(min: 1, max: 5)
-//            } else if randomPosition.x < 768 {
-//                randomXVelocity = -RandomInt(min: 1, max: 5)
-//            } else {
-//                randomXVelocity = -RandomInt(min: 3, max: 10)
-//            }
-//
-//            // Randomise bubble verticle velocity
-//            let randomYVelocity = RandomInt(min: 20, max: 40)
-//
-//            // Apply physics
-//            bubble.physicsBody = SKPhysicsBody(circleOfRadius: bubble.size.width / 2.0)
-//            bubble.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
-//            bubble.physicsBody?.angularVelocity = randomAngularVelocity
-//            physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth, height: viewHeight+300))
-//            bubble.physicsBody?.restitution = 0.2
-            
-            physicsWorld.speed = 0.1
+            physicsWorld.speed = 0.05
             
             
         }
