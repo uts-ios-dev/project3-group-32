@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import Foundation
 
 protocol WordGameSceneDelegate {
     func gameOver()
@@ -101,12 +102,19 @@ class WordGameScene: SKScene {
         // Draw the slice
         activeSlicePoints.append(location)
         redrawActiveSlice()
+//        do {
+//        
+//        try {
         // Detect interesction of touch and bubble
         let nodesAtPoint = nodes(at: location)
         for node in nodesAtPoint {
             guard let nodeName = node.name else { return }
             print(nodeName)
+//            do{
+//                if let checkChar = try? bogusCharacters.contains(Character(nodeName)) {return}
+            
             if !nodeName.isEmpty && bogusCharacters.contains(Character(nodeName)) {
+//            if !nodeName.isEmpty && checkChar {
                 print("BANG FAKETIME")
                 gameTime -= 2
                 // Play bubble popped sound effect
@@ -114,6 +122,7 @@ class WordGameScene: SKScene {
 //                     Remove bubble from active bubble array
                 let index = activeBubbles.index(of: node as! SKSpriteNode)!
                 activeBubbles.remove(at: index)
+//                activeBubbles.remove(at: activeBubbles.index(before: activeBubbles.endIndex))
             }
             if !nodeName.isEmpty && bubbleCharacters.contains(Character(nodeName)) {
                 newWordLabelText = ""
@@ -160,7 +169,23 @@ class WordGameScene: SKScene {
             let seq = SKAction.sequence([group, SKAction.removeFromParent()])
             node.run(seq)
         }
+//        } catch (Error error){
+//        return
+//        }
     }
+    
+//    func getChar(_ c: Character) -> Character{
+//        do {
+//            if let checkChar = try? bogusCharacters.contains(c) {
+//                
+//            } //{return}
+////            try
+////        } catch <#pattern#> {
+////            <#statements#>
+//            return checkChar
+//        }
+//        
+//    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
     {

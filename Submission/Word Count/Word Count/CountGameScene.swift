@@ -287,6 +287,7 @@ class CountGameScene: SKScene {
     }
     
     func incrementScore(_ score: Float) {
+        gameScore.text = "Score: \(String(Int(score)))"
         run(SKAction.playSoundFileNamed("right.caf", waitForCompletion: false))
     }
     
