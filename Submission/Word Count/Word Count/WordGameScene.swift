@@ -23,6 +23,13 @@ class WordGameScene: SKScene {
     var backgroundSpeed: CGFloat = 200.0 // Speed of background
     var deltaTime: TimeInterval = 0
     var lastUpdateTimeInterval: TimeInterval = 0
+    
+    // Slice variables for touch
+    var activeSlicePoints = [CGPoint]()
+    var activeSliceBG: SKShapeNode!
+    var activeSliceFG: SKShapeNode!
+    var isSwooshSoundActive = false
+    
     // Game timer menu
     let clockLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
     var gameTimer: Timer!
@@ -35,58 +42,152 @@ class WordGameScene: SKScene {
     // Word label
     var wordLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
     var difficulty = 0.5
-    
+    var canTouch = false
     var endGame = false
     
     override func sceneDidLoad() {
         setUpBackgrounds()
         startTimer()
         createWordLabel()
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-        //            n.position = pos
-        //            n.strokeColor = SKColor.green
-        //            self.addChild(n)
-        //        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-        //            n.position = pos
-        //            n.strokeColor = SKColor.blue
-        //            self.addChild(n)
-        //        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-        //            n.position = pos
-        //            n.strokeColor = SKColor.red
-        //            self.addChild(n)
-        //        }
+        createSlices()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //        if let label = self.label {
-        //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        //        }
-        //
-        //        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        if !canTouch {
+            return
+        }
+        
+        super.touchesBegan(touches, with: event)
+        
+        // Clear view of existing slices
+        activeSlicePoints.removeAll(keepingCapacity: true)
+        
+        // Read the touch location
+        if let touch = touches.first {
+            let location = touch.location(in: self)
+            activeSlicePoints.append(location)
+            
+            // Draw the current slice
+            redrawActiveSlice()
+            
+            // Clear the node tree of slices actions
+            activeSliceBG.removeAllActions()
+            activeSliceFG.removeAllActions()
+            
+            // Make the slice visible
+            activeSliceBG.alpha = 1
+            activeSliceFG.alpha = 1
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        // Disable if game is over
+        if endGame || !canTouch{
+            return
+        }
+        // Read touch action
+        guard let touch = touches.first else { return }
+        // Set location of touch
+        let location = touch.location(in: self)
+        // Draw the slice
+        activeSlicePoints.append(location)
+        redrawActiveSlice()
+        // Make slice sounds
+//        if !isSwooshSoundActive {
+//            playSwooshSound()
+//        }
+        // Detect interesction of touch and bubble
+        let nodesAtPoint = nodes(at: location)
+        for node in nodesAtPoint {
+            
+//            // If bubble is touched then pop it
+//            if node.name == "bubbleRed" || node.name == "bubblePink" || node.name == "bubbleGreen" || node.name == "bubbleBlue" || node.name == "bubbleBlack" {
+//                let nodeName = node.name!
+//
+//                // Fire the coloured explosion animation on bubble popped
+//                let emitter = SKEmitterNode(fileNamed: "\(nodeName)SliceHit")!
+//                emitter.position = node.position
+//                addChild(emitter)
+//
+//                //  Check if consecutive colours were popped, apply score multiplier and show label if true
+//                if lastPoppedName == nodeName {
+//                    //  Add a bonus time to game timer for a same bubble popped sequence
+//                    gameTime += 0.5
+//                    pointsMultiplier = 1.5
+//                    multiplierLabel.alpha = 0.8
+//                    animateNode(multiplierLabel)
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [unowned self] in
+//                        self.multiplierLabel.alpha = 0
+//                    }
+//                } else {
+//                    pointsMultiplier = 1.0
+//                }
+//                // For testing
+//                //              print("Last Bubble: \(lastPoppedName) nodeName: \(nodeName) \(pointsMultiplier)")
+//                //  Clear bubble from view
+//                lastPoppedName = nodeName
+//                node.name = ""
+//                lastBubbblePopImage.removeFromParent()
+//                // Prohibit physics interactions
+//                node.physicsBody?.isDynamic = false
+//                // Animate bubble removal
+//                let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
+//                let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+//                let group = SKAction.group([scaleOut, fadeOut])
+//                //  Run animation
+//                let seq = SKAction.sequence([group, SKAction.removeFromParent()])
+//                node.run(seq)
+//                // Add score and set last bubble popped label
+//                let oldScore = score
+//                switch nodeName {
+//                case "bubbleRed":
+//                    score += 1 * pointsMultiplier
+//                    createlastBubblePop(imageName: "ballRed")
+//                case "bubblePink":
+//                    score += 2 * pointsMultiplier
+//                    createlastBubblePop(imageName: "ballPink")
+//                case "bubbleGreen":
+//                    score += 5 * pointsMultiplier
+//                    createlastBubblePop(imageName: "ballGreen")
+//                case "bubbleBlue":
+//                    score += 8 * pointsMultiplier
+//                    createlastBubblePop(imageName: "ballCyan")
+//                case "bubbleBlack":
+//                    score += 10 * pointsMultiplier
+//                    createlastBubblePop(imageName: "ballBlack")
+//                default:
+//                    score += 0
+//                    createlastBubblePop(imageName: "sliceLife")
+//                }
+//
+//                addToScoreLabel.text = "+\(Int(score - oldScore))"
+//                addToScoreLabel.alpha = 0.8
+//                animateNode(addToScoreLabel)
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [unowned self] in
+//                    self.addToScoreLabel.alpha = 0
+//                }
+//                // Remove bubble from active bubble array
+//                let index = activeBubbles.index(of: node as! SKSpriteNode)!
+//                activeBubbles.remove(at: index)
+//                // Play bubble popped sound effect
+//                run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
+//            }
+        }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        if !canTouch {
+            return
+        }
+        //  Animate slice disappearing
+        activeSliceBG.run(SKAction.fadeOut(withDuration: 0.20))
+        activeSliceFG.run(SKAction.fadeOut(withDuration: 0.15))
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        //  Trigger slice disappearing animation
+        touchesEnded(touches, with: event)
     }
     
     
@@ -286,11 +387,53 @@ class WordGameScene: SKScene {
 //            viewController.leftView.isHidden = false
 //            viewController.rightView.isHidden = false
 //            viewController.startGame()
+            canTouch = true
             runTimer()
         } else {
             startTime -= 1
             startTimerLable.text = "\(startTime)"
         }
+    }
+    
+    // Create slices
+    func createSlices() {
+        activeSliceBG = SKShapeNode()
+        activeSliceBG.zPosition = 2
+        
+        activeSliceFG = SKShapeNode()
+        activeSliceFG.zPosition = 2
+        
+        activeSliceBG.strokeColor = UIColor.yellow
+        activeSliceBG.lineWidth = 10
+        
+        activeSliceFG.strokeColor = UIColor.white
+        activeSliceFG.lineWidth = 5
+        
+        addChild(activeSliceBG)
+        addChild(activeSliceFG)
+    }
+    
+    //  Draw slices
+    func redrawActiveSlice() {
+        if activeSlicePoints.count < 2 {
+            activeSliceBG.path = nil
+            activeSliceFG.path = nil
+            return
+        }
+        
+        while activeSlicePoints.count > 6 {
+            activeSlicePoints.remove(at: 0)
+        }
+        
+        let path = UIBezierPath()
+        path.move(to: activeSlicePoints[0])
+        
+        for i in 1 ..< activeSlicePoints.count {
+            path.addLine(to: activeSlicePoints[i])
+        }
+        
+        activeSliceBG.path = path.cgPath
+        activeSliceFG.path = path.cgPath
     }
     
 
@@ -323,5 +466,7 @@ class WordGameScene: SKScene {
         print("Word Label: \(newWordLabelText)")
         wordLabel.text = newWordLabelText
     }
+
+
 
 }
