@@ -16,7 +16,6 @@ class WordMenuViewController: UIViewController {
     var wordMainController: MainMenuViewController!
     var jumbledWords = [String]()
     var docRef: DocumentReference!
-//    var db: Firestore!
     
     @IBOutlet weak var jumbledButton: UIButton!
     
@@ -28,10 +27,10 @@ class WordMenuViewController: UIViewController {
             guard let docSnapshot = docSnapshot, docSnapshot.exists else {return}
             let wordList = docSnapshot.data()
             self.jumbledWords = wordList!["jumbledWords"] as! [String]
-            print("""
-                \(self.jumbledWords)
-                Word Menu View Controller
-                """)
+//            print("""
+//                \(self.jumbledWords)
+//                Word Menu View Controller
+//                """)
         }
         
         // Do any additional setup after loading the view.
@@ -42,11 +41,15 @@ class WordMenuViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+// MARK: - Navigation
+    
     @IBAction func unwindToMenu(_ sender: UIButton) {
     }
     
     @IBAction func jumbledButtonTouched(_ sender: UIButton) {
-        performSegue(withIdentifier: "jumbled", sender: sender)
+        if !jumbledWords.isEmpty {
+            performSegue(withIdentifier: "jumbled", sender: sender)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,18 +59,8 @@ class WordMenuViewController: UIViewController {
         wordGameController.wordList = jumbledWords
         if sender == jumbledButton {
             segue.destination.navigationItem.title = "Jumbled Words"
-            //            gameController = segue.destination as! CountGameViewController
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

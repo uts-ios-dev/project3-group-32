@@ -28,19 +28,12 @@ class WordGameViewController: UIViewController, WordGameSceneDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Word GAME View Controller \(wordList)")
+        var cnt = 0
+        for _ in wordList{
+            cnt += 1
+        }
         
-//        docRef = Firestore.firestore().document("WordLists/3bNsOHfU2HJhmtsXHPfo")
-        
-//        db.collection("WordLists").getDocuments() { (querySnapshot, err) in
-//            if let err = err {
-//                print("Error getting documents: \(err)")
-//            } else {
-//                for document in querySnapshot!.documents {
-//                    print("\(document.documentID) => \(document.data())")
-//                }
-//            }
-//        }
+        print("Word GAME View Controller \(wordList)\rCount: \(wordList.count) -> \(cnt)")
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.
@@ -48,11 +41,6 @@ class WordGameViewController: UIViewController, WordGameSceneDelegate {
             
             // Get the SKScene from the loaded GKScene
             if let wordSceneNode = scene.rootNode as! WordGameScene? {
-                
-                // Copy gameplay related content over to the scene
-                //                sceneNode.entities = scene.entities
-                //                sceneNode.graphs = scene.graphs
-                
                 // Set the scale mode to scale to fit the window
                 wordSceneNode.scaleMode = .aspectFill
                 
@@ -94,7 +82,6 @@ class WordGameViewController: UIViewController, WordGameSceneDelegate {
     }
     
     @IBAction func unwindToMain(_ sender: UIButton) {
-        endGame = true
     }
     
     
@@ -110,8 +97,18 @@ class WordGameViewController: UIViewController, WordGameSceneDelegate {
 //            wordMainController.showScoreBoard(wordMainController.WORD_LEADERBOARD_ID)
 //        }
         
-        
         self.performSegue(withIdentifier: "unwindToMenu", sender: self)
         
+    }
+    
+    func newWord() -> String {
+        if wordList.count <= 0 {
+            //Finished all words -> end the game
+            wordCurrentGame.gameTime = 0
+        }
+        var word = wordList.remove(at: RandomInt(min: 0, max: wordList.count-1))
+//        print(wordList.count)
+        word = word.uppercased()
+        return word
     }
 }

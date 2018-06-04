@@ -32,10 +32,16 @@ class WordGameScene: SKScene {
     var startCountDown: Timer!
     var startTime = 3
     var istimerAnimationOn: Bool = false
+    // Word label
+    var wordLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
+    var difficulty = 0.5
+    
+    var endGame = false
     
     override func sceneDidLoad() {
         setUpBackgrounds()
         startTimer()
+        createWordLabel()
     }
     
     
@@ -142,6 +148,16 @@ class WordGameScene: SKScene {
         }
     }
     
+    func createWordLabel() {
+        wordLabel.horizontalAlignmentMode = .center
+        wordLabel.verticalAlignmentMode = .bottom
+        wordLabel.fontSize = 48
+        wordLabel.zPosition = 2
+        wordLabel.text = "_ _ _ _ _"
+        addChild(wordLabel)
+        wordLabel.position = CGPoint(x: viewWidth/2, y: 40)
+    }
+    
     // Build timer label
     func createTimer() {
         clockLabel.text = "Time: \(timeString(time: TimeInterval(gameTime)))"
@@ -167,7 +183,7 @@ class WordGameScene: SKScene {
     
     // Update the game timer iver seconed. If time is up stop game
     @objc func updateTimer()  {
-        if gameTime < 1 {
+        if gameTime < 1 || endGame {
             //Send alert to indicate time's up.
             gameTimer.invalidate()
             //            startTime = 3
@@ -204,6 +220,9 @@ class WordGameScene: SKScene {
             }
         } else {
             gameTime -= 1
+            updateWordLabel(wordViewController.newWord())
+//            wordLabel.text = wordViewController.newWord()
+            
             //  Formate timer label
             if gameTime >= 60.0 {
                 clockLabel.text = "Time: \(timeString(time: TimeInterval(Int(gameTime))))"
@@ -272,7 +291,37 @@ class WordGameScene: SKScene {
             startTime -= 1
             startTimerLable.text = "\(startTime)"
         }
+    }
+    
+
+    
+    func updateWordLabel(_ word: String) {
+        var newWordLabelText = ""
+        var bubbleCharacters = [Character]()
+        let numChar = Int(Double(word.count)*difficulty)
+        var i = 0
+        var j = 0
+        var tmpContainer = [Int]()
+        while i < numChar {
+            let num = RandomInt(min: 0, max: numChar)
+            if !tmpContainer.contains(num){
+                tmpContainer.append(num)
+                i += 1
+            }
+        }
         
+        for w in word {
+            if tmpContainer.contains(j) {
+                newWordLabelText = "\(newWordLabelText) \(w)"
+            } else {
+                bubbleCharacters.append(w)
+                newWordLabelText = "\(newWordLabelText) _"
+            }
+            j += 1
+        }
+        print("Bubble Character: \(bubbleCharacters)")
+        print("Word Label: \(newWordLabelText)")
+        wordLabel.text = newWordLabelText
     }
 
 }
