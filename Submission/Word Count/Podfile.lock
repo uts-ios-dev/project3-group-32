@@ -104,6 +104,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.5.0)
+  - SwiftyStoreKit (0.13.2)
 
 DEPENDENCIES:
   - Firebase/AdMob
@@ -114,6 +115,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Messaging
   - Firebase/Storage
+  - SwiftyStoreKit
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -138,6 +140,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
+    - SwiftyStoreKit
 
 SPEC CHECKSUMS:
   BoringSSL: c46efb47593135382bc0934196f16d2f726f5f36
@@ -161,7 +164,8 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  SwiftyStoreKit: b7563505440a68c9d9fa70bc43d8a97015519409
 
-PODFILE CHECKSUM: 4b0248eed82a5a3782bc3f1e135587bb1b36454c
+PODFILE CHECKSUM: 87a4fde75253e4b2fa8722d4412780e9481e057a
 
 COCOAPODS: 1.5.3

@@ -6,7 +6,7 @@ target 'Word Count' do
   use_frameworks!
 
   # Pods for Word Count
-
+  pod 'SwiftyStoreKit'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Messaging'

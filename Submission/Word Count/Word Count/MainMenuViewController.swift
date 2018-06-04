@@ -38,6 +38,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         // Call the GC authentication controller
         authenticateLocalPlayer()
+        InAppPurchasesService.shared.getProducts()
     }
     
     override func viewWillAppear(_ animated: Bool) {

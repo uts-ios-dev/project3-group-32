@@ -59,6 +59,15 @@ class WordMenuViewController: UIViewController {
         }
     }
     
+    @IBAction func animalButtonTouched(_ sender: UIButton) {
+        InAppPurchasesService.shared.purchase(product: .AnimalWordList)
+    }
+    
+    @IBAction func scienceButtonTouched(_ sender: UIButton) {
+        InAppPurchasesService.shared.purchase(product: .ScienceWordList)
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let sender = sender as? UIButton else {return}
         wordGameController = segue.destination as! WordGameViewController

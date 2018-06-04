@@ -24,6 +24,8 @@
 		366DD90420C528A0005B10E2 /* right.caf in Resources */ = {isa = PBXBuildFile; fileRef = 366DD90220C528A0005B10E2 /* right.caf */; };
 		366DD90520C528A0005B10E2 /* wrong.caf in Resources */ = {isa = PBXBuildFile; fileRef = 366DD90320C528A0005B10E2 /* wrong.caf */; };
 		366DD90720C52ABC005B10E2 /* next.caf in Resources */ = {isa = PBXBuildFile; fileRef = 366DD90620C52ABC005B10E2 /* next.caf */; };
+		366DD90920C55533005B10E2 /* InAppPurchaceProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366DD90820C55533005B10E2 /* InAppPurchaceProducts.swift */; };
+		366DD90B20C55698005B10E2 /* InAppPurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366DD90A20C55698005B10E2 /* InAppPurchaseService.swift */; };
 		36EA573F20C21CFC005BAADB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EA573E20C21CFC005BAADB /* AppDelegate.swift */; };
 		36EA574120C21CFC005BAADB /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EA574020C21CFC005BAADB /* MainMenuViewController.swift */; };
 		36EA574420C21CFC005BAADB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36EA574220C21CFC005BAADB /* Main.storyboard */; };
@@ -56,6 +58,8 @@
 		366DD90220C528A0005B10E2 /* right.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = right.caf; sourceTree = "<group>"; };
 		366DD90320C528A0005B10E2 /* wrong.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = wrong.caf; sourceTree = "<group>"; };
 		366DD90620C52ABC005B10E2 /* next.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = next.caf; sourceTree = "<group>"; };
+		366DD90820C55533005B10E2 /* InAppPurchaceProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaceProducts.swift; sourceTree = "<group>"; };
+		366DD90A20C55698005B10E2 /* InAppPurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseService.swift; sourceTree = "<group>"; };
 		36EA573B20C21CFC005BAADB /* Word Count.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Count.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36EA573E20C21CFC005BAADB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36EA574020C21CFC005BAADB /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 				36658CF720C2966200573D96 /* Extensions.swift */,
 				36658CF920C29D2500573D96 /* CountGameModel.swift */,
 				36658CFB20C29D6C00573D96 /* Helper.swift */,
+				366DD90820C55533005B10E2 /* InAppPurchaceProducts.swift */,
+				366DD90A20C55698005B10E2 /* InAppPurchaseService.swift */,
 			);
 			path = "Word Count";
 			sourceTree = "<group>";
@@ -269,6 +275,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
@@ -282,6 +289,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
@@ -324,10 +332,12 @@
 				36658CF820C2966200573D96 /* Extensions.swift in Sources */,
 				36658CF220C2923A00573D96 /* CountGameViewController.swift in Sources */,
 				36EA574120C21CFC005BAADB /* MainMenuViewController.swift in Sources */,
+				366DD90920C55533005B10E2 /* InAppPurchaceProducts.swift in Sources */,
 				36EA573F20C21CFC005BAADB /* AppDelegate.swift in Sources */,
 				36EA575920C23EAA005BAADB /* CountMenuViewController.swift in Sources */,
 				36EA575B20C23EBD005BAADB /* WordMenuViewController.swift in Sources */,
 				36658CFA20C29D2500573D96 /* CountGameModel.swift in Sources */,
+				366DD90B20C55698005B10E2 /* InAppPurchaseService.swift in Sources */,
 				36658CF020C28A1E00573D96 /* WordGameScene.swift in Sources */,
 				36658CEC20C289D800573D96 /* WordGameViewController.swift in Sources */,
 			);

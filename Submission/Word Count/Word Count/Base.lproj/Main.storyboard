@@ -131,6 +131,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPB-6c-xrV">
                                                         <rect key="frame" x="0.0" y="0.0" width="265" height="187"/>
                                                         <state key="normal" image="animals" backgroundImage="Menu Bubble"/>
+                                                        <connections>
+                                                            <action selector="animalButtonTouched:" destination="IMo-14-rfZ" eventType="touchUpInside" id="1eV-t1-NXa"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Animals" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7LG-vw-qkV" userLabel="animalsLabel">
                                                         <rect key="frame" x="0.0" y="187" width="265" height="48"/>
@@ -146,6 +149,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pjc-YS-Y3T">
                                                         <rect key="frame" x="0.0" y="0.0" width="264.5" height="187"/>
                                                         <state key="normal" image="science" backgroundImage="Menu Bubble"/>
+                                                        <connections>
+                                                            <action selector="scienceButtonTouched:" destination="IMo-14-rfZ" eventType="touchUpInside" id="93r-Es-Kc9"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Science" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMx-sv-axg" userLabel="scienceLabel">
                                                         <rect key="frame" x="0.0" y="187" width="264.5" height="48"/>
