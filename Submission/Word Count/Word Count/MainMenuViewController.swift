@@ -14,7 +14,7 @@ import GameKit
 class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
     
     var countMenuConroller: CountMenuViewController!
-
+    var wordMenuController: WordMenuViewController!
     //  GameKit Variables
     // Check if the user has Game Center enabled
     var gcEnabled = Bool()
@@ -31,6 +31,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
     let COUNT_LEADERBOARD_ID = "com.score.wordcount.count"
     
     @IBOutlet weak var countButton: UIButton!
+    @IBOutlet weak var wordButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()   
@@ -46,7 +47,10 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    @IBAction func wordButtonTouched(_ sender: UIButton) {
+        performSegue(withIdentifier: "word", sender: sender)
+    }
+    
     @IBAction func countButtonTouched(_ sender: UIButton) {
         performSegue(withIdentifier: "count", sender: sender)
     }
@@ -56,15 +60,10 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
         if sender == countButton {
             countMenuConroller = segue.destination as! CountMenuViewController
             countMenuConroller.mainController = self
-//            self.localPlayer.loadDefaultLeaderboardIdentifier(completionHandler: { (COUNT_LEADERBOARD_ID, error) in
-//                if error != nil {print(error!) }
-//                else {self.gcDefaultLeaderBoard = COUNT_LEADERBOARD_ID!}
-//                 print("count leaderBoard assigned: \(self.gcDefaultLeaderBoard)")
-//            })
-            
-//            countMenuConroller.gcEnabled = gcEnabled
-//            print("main passing to count menu -> gcEnabled: \(gcEnabled)")
-//            countMenuConroller.gcLeaderBoard = LEADERBOARD_ID
+        }
+        if sender == wordButton {
+            wordMenuController = segue.destination as! WordMenuViewController
+            wordMenuController.wordMainController = self
         }
     }
     
@@ -94,10 +93,6 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
                     }
                     print("leaderBoard: \(self.gcDefaultLeaderBoard)")
                 })
-//                let achievement5 = GKAchievement(identifier: "countScore5")
-//                let achievement10 = GKAchievement(identifier: "countScore10")
-//                self.achievements.append(achievement5)
-//                self.achievements.append(achievement10)
                 if self.localPlayer.displayName != nil {
                     self.displayName = self.localPlayer.displayName!
                 }
@@ -117,15 +112,6 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
         gameCenterViewController.dismiss(animated: true, completion: nil)
     }
     
-    //  Game scene passes to this function at the end of a game
-//    func gameOver() {
-        //  for testing
-//        print("Inside of gameOver()")
-        // Submit score to GC leaderboard
-//        if gcEnabled {
-//            showScoreBoard()
-//        }
-//    }
     
     func showScoreBoard(_ leaderBoardId: String) {
         // Present Leader board
@@ -153,9 +139,24 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
 //
 //    }
     
+    func updateWordLeaderBoard(_ score: Int) {
+        //  for testing
+        print("updateWordLeaderBoard() score: \(score)")
+        let bestScoreInt = GKScore(leaderboardIdentifier: WORD_LEADERBOARD_ID)
+        bestScoreInt.value = Int64(score)
+        GKScore.report([bestScoreInt]) { (error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                //  for testing
+                print("Score submitted to Word Leaderboard")
+            }
+        }
+    }
+    
     func updateCountLeaderBoard(_ score: Int) {
         //  for testing
-        print("updateLeaderBoard() score: \(score)")
+        print("updateCountLeaderBoard() score: \(score)")
         let bestScoreInt = GKScore(leaderboardIdentifier: COUNT_LEADERBOARD_ID)
         bestScoreInt.value = Int64(score)
         GKScore.report([bestScoreInt]) { (error) in

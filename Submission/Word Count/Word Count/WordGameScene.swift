@@ -42,7 +42,7 @@ class WordGameScene: SKScene {
     // Game timer menu
     let clockLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
     var gameTimer: Timer!
-    var gameTime = 10.0
+    var gameTime = 30.0
     // Start countdown
     let startTimerLable = SKLabelNode(fontNamed: "American Typewriter Bold")
     var startCountDown: Timer!

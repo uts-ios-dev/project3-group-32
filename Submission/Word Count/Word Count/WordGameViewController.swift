@@ -93,7 +93,7 @@ class WordGameViewController: UIViewController, WordGameSceneDelegate {
 //        //        Submit score to GC leaderboard
         if wordMainController.gcEnabled {
             //                mainController.updateLeaderBoard(score)
-            wordMainController.updateCountLeaderBoard(score)
+            wordMainController.updateWordLeaderBoard(score)
             wordMainController.showScoreBoard(wordMainController.WORD_LEADERBOARD_ID)
         }
         

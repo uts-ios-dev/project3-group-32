@@ -35,7 +35,7 @@
                                                     <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="IMo-14-rfZ" kind="show" id="HhO-qP-gmh"/>
+                                                    <action selector="wordButtonTouched:" destination="jqX-UT-PA1" eventType="touchUpInside" id="Ivk-cC-4nc"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1W-Uq-V2x">
@@ -81,7 +81,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="countButton" destination="O1W-Uq-V2x" id="en4-nD-Nnp"/>
+                        <outlet property="wordButton" destination="u87-5f-qVL" id="K0K-F2-OUM"/>
                         <segue destination="IRr-mT-5Hl" kind="show" identifier="count" id="2ns-z0-zbQ"/>
+                        <segue destination="IMo-14-rfZ" kind="show" identifier="word" id="t5y-Ze-OmQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eF0-oN-1Jq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -364,10 +366,10 @@
                                                         <rect key="frame" x="0.0" y="565" width="454" height="131"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="equalsLine" translatesAutoresizingMaskIntoConstraints="NO" id="uBg-Zy-0ww">
-                                                                <rect key="frame" x="0.0" y="0.0" width="454" height="1.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="454" height="2.5"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67u-UA-buT" userLabel="answerLabel">
-                                                                <rect key="frame" x="0.0" y="1.5" width="454" height="129.5"/>
+                                                                <rect key="frame" x="0.0" y="2.5" width="454" height="128.5"/>
                                                                 <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="80"/>
                                                                 <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 <nil key="highlightedColor"/>
@@ -615,7 +617,6 @@
         <!--Navigation Controller-->
         <scene sceneID="SYu-1k-GIc">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zNo-66-Bib" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1F1-Ss-rZm" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="3uZ-HQ-CFP">
@@ -628,6 +629,7 @@
                         <segue destination="jqX-UT-PA1" kind="relationship" relationship="rootViewController" id="5i0-bW-v3a"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zNo-66-Bib" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-522" y="-1002"/>
         </scene>
