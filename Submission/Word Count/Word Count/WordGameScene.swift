@@ -13,12 +13,18 @@ protocol WordGameSceneDelegate {
     func gameOver()
 }
 
+// Type of bubble launches
+enum SequenceType: Int {
+    case one, halfMax, max, chain, fastChain
+}
+
 class WordGameScene: SKScene {
     weak var wordViewController: WordGameViewController!
     var wordGameSceneDelegate: WordGameSceneDelegate?
     
     var viewWidth = 1024
     var viewHeight = 750
+    var gravity = CGVector(dx: -0.0, dy: -0.05)
 //    Animiated Background
     var backgroundSpeed: CGFloat = 200.0 // Speed of background
     var deltaTime: TimeInterval = 0
@@ -29,6 +35,9 @@ class WordGameScene: SKScene {
     var activeSliceBG: SKShapeNode!
     var activeSliceFG: SKShapeNode!
     var isSwooshSoundActive = false
+    
+    // Bubble parameters
+    var activeBubbles = [SKSpriteNode]()
     
     // Game timer menu
     let clockLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
@@ -463,10 +472,132 @@ class WordGameScene: SKScene {
             j += 1
         }
         print("Bubble Character: \(bubbleCharacters)")
+        createBubbles(bubbleCharacters)
         print("Word Label: \(newWordLabelText)")
         wordLabel.text = newWordLabelText
     }
+    
+    func createBubbles(_ characters: [Character]) {
+        var bubble: SKSpriteNode
+        var label: SKLabelNode
+        for char in characters {
+            bubble = SKSpriteNode(imageNamed: "wordBubble")
+            bubble.name = String("bubble\(char)")
+            
+            label = SKLabelNode(fontNamed: "American Typewriter Bold")
+            label.text = String(char)
+            label.fontSize = 60
+            label.horizontalAlignmentMode = .center
+            label.verticalAlignmentMode = .center
+            
+            bubble.addChild(label)
+            addChild(bubble)
+            activeBubbles.append(bubble)
+            
+            //Randomise Bubble Starting Position
+            let randomPosition = CGPoint(x: RandomInt(min: 50, max: viewWidth - 50), y: viewHeight)
+            bubble.position = randomPosition
 
+            // Randomise Bubble Angular Velocity
+            let randomAngularVelocity = CGFloat(RandomInt(min: -10, max: 10)) / 2.0
 
+            //Randomise Bubble X Velocity (Horizontal)
+            let randomXVelocity = RandomDouble(min: -5, max: 5)
+
+            //Randomise Bubble Y Velocity (Verticle)
+            let randomYVelocity = RandomDouble(min: 0.1, max: 1.0)
+
+            // Apply physics
+            bubble.physicsBody = SKPhysicsBody(circleOfRadius: bubble.size.width / 2.0)
+            bubble.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
+//            bubble.physicsBody?.velocity = CGVector(dx: 0, dy: -1)
+            bubble.physicsBody?.angularVelocity = randomAngularVelocity
+            physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth+500, height: viewHeight+300))
+            bubble.physicsBody?.restitution = 0.2
+            
+//            // Randomise bubble posiion
+//            let randomPosition = CGPoint(x: RandomInt(min: 20, max: 1000), y: -10)
+//            bubble.position = randomPosition
+//
+//            // Randomise bubble angle velocity
+//            let randomAngularVelocity = CGFloat(RandomInt(min: -10, max: 10)) / 2.0
+//            var randomXVelocity = 0
+//
+//            // Randomise bubble horizontail velocity
+//            if randomPosition.x < 256 {
+//                randomXVelocity = RandomInt(min: 3, max: 10)
+//            } else if randomPosition.x < 512 {
+//                randomXVelocity = RandomInt(min: 1, max: 5)
+//            } else if randomPosition.x < 768 {
+//                randomXVelocity = -RandomInt(min: 1, max: 5)
+//            } else {
+//                randomXVelocity = -RandomInt(min: 3, max: 10)
+//            }
+//
+//            // Randomise bubble verticle velocity
+//            let randomYVelocity = RandomInt(min: 20, max: 40)
+//
+//            // Apply physics
+//            bubble.physicsBody = SKPhysicsBody(circleOfRadius: bubble.size.width / 2.0)
+//            bubble.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
+//            bubble.physicsBody?.angularVelocity = randomAngularVelocity
+//            physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth, height: viewHeight+300))
+//            bubble.physicsBody?.restitution = 0.2
+            
+            physicsWorld.speed = 0.1
+            
+            
+        }
+        
+        // Throw bubbles onto the view
+//        func tossBubbles(_ bubbleContainer: [SKSpriteNode]) {
+//            //  Diable if game is over
+//            if endGame {
+//                return
+//            }
+//
+//            for b in bubbleContainer {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
+//            }
+        
+//            for _ in 0...RandomInt(min: 1, max: maxActiveBubbles) {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
+//            }
+            
+            // Increase game difficulty as game progresses
+//            popupTime *= 0.951
+//            chainDelay *= 0.9
+//            physicsWorld.speed *= 1.07
+//            gravity *= 1.015
+//            physicsWorld.gravity = CGVector(dx: 0, dy: gravity)
+            
+//            let sequenceType = sequence[sequencePosition]
+//
+//            switch sequenceType {
+//            case .one:
+//                createBubbles()
+//            case .halfMax:
+//                halfMaxBubbleGenerator()
+//            case .max:
+//                maxBubbleGenerator()
+//            case .chain:
+//                chainBubbleGenerator()
+//            case .fastChain:
+//                fastChainBubbleGenerator()
+//            }
+//
+//            sequencePosition += 1
+//            nextSequenceQueued = false
+//        }
+        
+//    }
+
+//    func chainBubbleGenerator() {
+//        createBubbles()
+//        for _ in 0...RandomInt(min: 1, max: maxActiveBubbles) {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
+//        }
+//    }
+    }
 
 }
