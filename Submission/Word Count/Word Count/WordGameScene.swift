@@ -21,7 +21,6 @@ enum SequenceType: Int {
 class WordGameScene: SKScene {
     weak var wordViewController: WordGameViewController!
     var wordGameSceneDelegate: WordGameSceneDelegate?
-    
     var viewWidth = 1024
     var viewHeight = 750
     var gravity = CGVector(dx: 0.0, dy: -0.01)
@@ -29,13 +28,11 @@ class WordGameScene: SKScene {
     var backgroundSpeed: CGFloat = 200.0 // Speed of background
     var deltaTime: TimeInterval = 0
     var lastUpdateTimeInterval: TimeInterval = 0
-    
     // Slice variables for touch
     var activeSlicePoints = [CGPoint]()
     var activeSliceBG: SKShapeNode!
     var activeSliceFG: SKShapeNode!
     var isSwooshSoundActive = false
-    
     // Bubble parameters
     var activeBubbles = [SKSpriteNode]()
     var currentWord = ""
@@ -73,27 +70,19 @@ class WordGameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !canTouch {
-            return
-        }
-        
+        if !canTouch { return }
         super.touchesBegan(touches, with: event)
-        
         // Clear view of existing slices
         activeSlicePoints.removeAll(keepingCapacity: true)
-        
         // Read the touch location
         if let touch = touches.first {
             let location = touch.location(in: self)
             activeSlicePoints.append(location)
-            
             // Draw the current slice
             redrawActiveSlice()
-            
             // Clear the node tree of slices actions
             activeSliceBG.removeAllActions()
             activeSliceFG.removeAllActions()
-            
             // Make the slice visible
             activeSliceBG.alpha = 1
             activeSliceFG.alpha = 1
@@ -112,19 +101,9 @@ class WordGameScene: SKScene {
         // Draw the slice
         activeSlicePoints.append(location)
         redrawActiveSlice()
-        // Make slice sounds
-//        if !isSwooshSoundActive {
-//            playSwooshSound()
-//        }
         // Detect interesction of touch and bubble
         let nodesAtPoint = nodes(at: location)
         for node in nodesAtPoint {
-//            for x in activeBubbles {
-//                print(x.name!)
-//            }
-//            print(node.name)
-//            if node != nil {
-//            guard let myNode = node else { return }
             guard let nodeName = node.name else { return }
             print(nodeName)
             if !nodeName.isEmpty && bogusCharacters.contains(Character(nodeName)) {
@@ -160,20 +139,6 @@ class WordGameScene: SKScene {
                     addToScoreAnimation(currentWord)
                     run(SKAction.playSoundFileNamed("right.caf", waitForCompletion: false))
                     cleanBubbles()
-//                    for b in activeBubbles {
-//                        b.name = ""
-//                        // Prohibit physics interactions
-//                        b.physicsBody?.isDynamic = false
-//                        // Animate bubble removal
-//                        let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
-//                        let fadeOut = SKAction.fadeOut(withDuration: 0.2)
-//                        let group = SKAction.group([scaleOut, fadeOut])
-//                        //  Run animation
-//                        let seq = SKAction.sequence([group, SKAction.removeFromParent()])
-//                        b.run(seq)
-//                        run(SKAction.playSoundFileNamed("right.caf", waitForCompletion: false))
-//                    }
-                    
                     activeBubbles.removeAll()
                     score += 1
                 } else {
@@ -181,9 +146,6 @@ class WordGameScene: SKScene {
                     // Remove bubble from active bubble array
                     let index = activeBubbles.index(of: node as! SKSpriteNode)!
                     activeBubbles.remove(at: index)
-//                    let randomNumber = RandomInt(min: 1, max: 3)
-//                    let soundName = "swoosh\(randomNumber).caf"
-//                    print(soundName)
                     run(SKAction.playSoundFileNamed("right.caf", waitForCompletion: false))
                 }
             }
@@ -197,14 +159,6 @@ class WordGameScene: SKScene {
             //  Run animation
             let seq = SKAction.sequence([group, SKAction.removeFromParent()])
             node.run(seq)
-            
-
-//                // Remove bubble from active bubble array
-//                let index = activeBubbles.index(of: node as! SKSpriteNode)!
-//                activeBubbles.remove(at: index)
-//                // Play bubble popped sound effect
-//                run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
-//            }
         }
     }
     
@@ -292,7 +246,6 @@ class WordGameScene: SKScene {
                     back.position += CGPoint(x: back.size.width * CGFloat(8), y: 0)
                 }
             }
-            
         }
     }
     
@@ -349,7 +302,7 @@ class WordGameScene: SKScene {
         return String(format:"%i:%02i", minutes, seconds)
     }
     
-    // Update the game timer iver seconed. If time is up stop game
+    // Update the game timer
     @objc func updateTimer()  {
         if gameTime < 1 || endGame {
             //Send alert to indicate time's up.
@@ -357,6 +310,8 @@ class WordGameScene: SKScene {
             //            startTime = 3
             // Move the clock to centre of screen
             cleanBubbles()
+            canTouch = false
+            wordViewController.score = Int(score)
             clockLabel.horizontalAlignmentMode = .center
             clockLabel.verticalAlignmentMode = .center
             clockLabel.position = CGPoint(x: viewWidth/2, y: viewHeight/2)
@@ -366,28 +321,10 @@ class WordGameScene: SKScene {
             gameScore.verticalAlignmentMode = .center
             gameScore.fontSize = 80
             gameScore.position = CGPoint(x: viewWidth/2, y: Int(Float(viewHeight)/1.5))
-            //  Clear last bubble popped menu
-            //            if gameKitEnabled {
-            //                viewController.updateLeaderBoard(Int(score))
-            //            }
-//            viewController.leftView.isHidden = true
-//            viewController.rightView.isHidden = true
             //  End game
             endGame = true
             // Go to menu
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [unowned self] in
-                //                if self.gameKitEnabled {
-                //                    self.topScoreLabel.removeFromParent()
-                //                    self.topScoreLabel.removeAllActions()
-                //                }
-                
-//                for b in self.activeBubbles {
-//                    b.removeAllActions()
-//                    b.removeAllChildren()
-//                    b.removeFromParent()
-//                }
-//                self.activeBubbles.removeAll()
-                
                 self.clockLabel.removeAllActions()
                 self.clockLabel.fontColor = UIColor.white
                 self.gameScore.removeFromParent()
@@ -399,6 +336,7 @@ class WordGameScene: SKScene {
             }
         } else {
             gameTime -= 1
+//            For testing
 //            updateWordLabel(wordViewController.newWord())
 //            wordLabel.text = wordViewController.newWord()
             
@@ -417,11 +355,6 @@ class WordGameScene: SKScene {
                 //  Disable animation - this is only used when time is added to the game timer for score multiplier
                 clockLabel.removeAllActions()
             }
-            //  Animate top score label if top score is achieved
-            //            if gameKitEnabled && Int(score) > topScore {
-            //                topScoreLabel.text = "New Top Score: \(Int(score))"
-            //                animateNode(topScoreLabel)
-            //            }
         }
     }
     
@@ -463,9 +396,6 @@ class WordGameScene: SKScene {
     @objc func updateStartTimer() {
         if startTime == 1 {
 //            resetGame()
-            //            if gameKitEnabled {
-            //                createTopScore()
-            //            }
             createScore()
             createTimer()
             startCountDown.invalidate()
@@ -517,8 +447,6 @@ class WordGameScene: SKScene {
         activeSliceFG.path = path.cgPath
     }
     
-
-    
     func updateWordLabel(_ word: String) {
         if endGame { return }
         print(word)
@@ -554,7 +482,6 @@ class WordGameScene: SKScene {
         i = 0
         while i < numBogusChar {
             num = RandomInt(min: 0, max: alphabet.count-1)
-//            if !bubbleCharacters.contains(alphabet[num]){
             if !word.contains(alphabet[num]){
                 bogusCharacters.append(alphabet[num])
                 i += 1
@@ -581,7 +508,6 @@ class WordGameScene: SKScene {
             //  Run animation
             let seq = SKAction.sequence([group, SKAction.removeFromParent()])
             b.run(seq)
-//            run(SKAction.playSoundFileNamed("right.caf", waitForCompletion: false))
         }
         
         activeBubbles.removeAll()
@@ -594,6 +520,7 @@ class WordGameScene: SKScene {
             bubble = SKSpriteNode(imageNamed: "wordBubble")
             bubble.name = String(char)
             bubble.zPosition = 5
+//            for testing
 //            print("Assigned Bubble Name: \(bubble.name!)")
             label = SKLabelNode(fontNamed: "American Typewriter Bold")
             label.text = String(char)
@@ -625,77 +552,7 @@ class WordGameScene: SKScene {
             physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: -300, width: viewWidth, height: viewHeight+300))
             bubble.physicsBody?.restitution = 0.2
             physicsWorld.speed = 0.05
-            
-            
         }
-        
-       
-        
-//        func popBubble(_ node: SKNode) {
-//            node.name = ""
-//            // Prohibit physics interactions
-//            node.physicsBody?.isDynamic = false
-//            // Animate bubble removal
-//            let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
-//            let fadeOut = SKAction.fadeOut(withDuration: 0.2)
-//            let group = SKAction.group([scaleOut, fadeOut])
-//            //  Run animation
-//            let seq = SKAction.sequence([group, SKAction.removeFromParent()])
-//            node.run(seq)
-//            // Remove bubble from active bubble array
-//            let index = activeBubbles.index(of: node as! SKSpriteNode)!
-//            activeBubbles.remove(at: index)
-//        }
-        
-        // Throw bubbles onto the view
-//        func tossBubbles(_ bubbleContainer: [SKSpriteNode]) {
-//            //  Diable if game is over
-//            if endGame {
-//                return
-//            }
-//
-//            for b in bubbleContainer {
-//                DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
-//            }
-        
-//            for _ in 0...RandomInt(min: 1, max: maxActiveBubbles) {
-//                DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
-//            }
-            
-            // Increase game difficulty as game progresses
-//            popupTime *= 0.951
-//            chainDelay *= 0.9
-//            physicsWorld.speed *= 1.07
-//            gravity *= 1.015
-//            physicsWorld.gravity = CGVector(dx: 0, dy: gravity)
-            
-//            let sequenceType = sequence[sequencePosition]
-//
-//            switch sequenceType {
-//            case .one:
-//                createBubbles()
-//            case .halfMax:
-//                halfMaxBubbleGenerator()
-//            case .max:
-//                maxBubbleGenerator()
-//            case .chain:
-//                chainBubbleGenerator()
-//            case .fastChain:
-//                fastChainBubbleGenerator()
-//            }
-//
-//            sequencePosition += 1
-//            nextSequenceQueued = false
-//        }
-        
-//    }
-
-//    func chainBubbleGenerator() {
-//        createBubbles()
-//        for _ in 0...RandomInt(min: 1, max: maxActiveBubbles) {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * RandomDouble(min: 1.0, max: 4.0))) { [unowned self] in self.createBubbles() }
-//        }
-//    }
     }
 
 }

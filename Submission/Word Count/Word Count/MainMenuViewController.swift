@@ -33,10 +33,7 @@ class MainMenuViewController: UIViewController, GKGameCenterControllerDelegate {
     @IBOutlet weak var countButton: UIButton!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        
+        super.viewDidLoad()   
         // Do any additional setup after loading the view, typically from a nib.
         // Call the GC authentication controller
         authenticateLocalPlayer()

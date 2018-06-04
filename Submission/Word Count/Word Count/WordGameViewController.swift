@@ -22,7 +22,7 @@ class WordGameViewController: UIViewController, WordGameSceneDelegate {
     var wordMainController: MainMenuViewController!
     
     var wordList = [String]()
-    
+    var score = 0
     var endGame: Bool = false
     
     override func viewDidLoad() {
@@ -91,11 +91,11 @@ class WordGameViewController: UIViewController, WordGameSceneDelegate {
         print("Inside of word gameOver()")
 //        print("gcStatus -> countGameController: \(wordMainController.gcEnabled)")
 //        //        Submit score to GC leaderboard
-//        if wordMainController.gcEnabled {
-//            //                mainController.updateLeaderBoard(score)
-////            mainController.updateCountLeaderBoard(score)
-//            wordMainController.showScoreBoard(wordMainController.WORD_LEADERBOARD_ID)
-//        }
+        if wordMainController.gcEnabled {
+            //                mainController.updateLeaderBoard(score)
+            wordMainController.updateCountLeaderBoard(score)
+            wordMainController.showScoreBoard(wordMainController.WORD_LEADERBOARD_ID)
+        }
         
         self.performSegue(withIdentifier: "unwindToMenu", sender: self)
         
