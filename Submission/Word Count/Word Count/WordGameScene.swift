@@ -14,10 +14,14 @@ protocol WordGameSceneDelegate {
     func gameOver()
 }
 
-// Type of bubble launches
-enum SequenceType: Int {
-    case one, halfMax, max, chain, fastChain
+enum CharacterError: Error {
+    
 }
+
+// Type of bubble launches
+//enum SequenceType: Int {
+//    case one, halfMax, max, chain, fastChain
+//}
 
 class WordGameScene: SKScene {
     weak var wordViewController: WordGameViewController!
@@ -102,19 +106,14 @@ class WordGameScene: SKScene {
         // Draw the slice
         activeSlicePoints.append(location)
         redrawActiveSlice()
-//        do {
-//        
-//        try {
+
         // Detect interesction of touch and bubble
         let nodesAtPoint = nodes(at: location)
         for node in nodesAtPoint {
             guard let nodeName = node.name else { return }
-            print(nodeName)
-//            do{
-//                if let checkChar = try? bogusCharacters.contains(Character(nodeName)) {return}
-            
+            print("NodeName: \(nodeName)")
+            if nodeName == "world" { return }
             if !nodeName.isEmpty && bogusCharacters.contains(Character(nodeName)) {
-//            if !nodeName.isEmpty && checkChar {
                 print("BANG FAKETIME")
                 gameTime -= 2
                 // Play bubble popped sound effect
@@ -122,12 +121,13 @@ class WordGameScene: SKScene {
 //                     Remove bubble from active bubble array
                 let index = activeBubbles.index(of: node as! SKSpriteNode)!
                 activeBubbles.remove(at: index)
-//                activeBubbles.remove(at: activeBubbles.index(before: activeBubbles.endIndex))
             }
             if !nodeName.isEmpty && bubbleCharacters.contains(Character(nodeName)) {
                 newWordLabelText = ""
-                var updateLabel = wordLabel.text!.filter({ $0 != " " }).compactMap({$0})
-                var currentWordArray = currentWord.compactMap({$0})
+//                Flatmap is depreciated and this may throw a warning. Leaving it in for backwards compatability.
+                var updateLabel = wordLabel.text!.filter({ $0 != " " }).flatMap({$0})
+//                Flatmap is depreciated and this may throw a warning. Leaving it in for backwards compatability.
+                var currentWordArray = currentWord.flatMap({$0})
                 print("Update Label: \(updateLabel), Current Word Array \(currentWordArray)")
                 
                 for index in 0..<currentWordArray.count {
@@ -174,17 +174,14 @@ class WordGameScene: SKScene {
 //        }
     }
     
-//    func getChar(_ c: Character) -> Character{
+//    func getChar(_ c: Character, container: [Character]) throws -> Character{
+//        let checkChar: Character
 //        do {
-//            if let checkChar = try? bogusCharacters.contains(c) {
-//                
-//            } //{return}
-////            try
+//            try checkChar = container.contains(c)
 ////        } catch <#pattern#> {
 ////            <#statements#>
-//            return checkChar
 //        }
-//        
+//
 //    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
