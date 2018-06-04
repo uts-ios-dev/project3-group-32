@@ -38,11 +38,14 @@ class WordGameScene: SKScene {
     
     // Bubble parameters
     var activeBubbles = [SKSpriteNode]()
-    
+    var currentWord = ""
+    var newWordLabelText = ""
+    var bubbleCharacters = [Character]()
+    var bogusCharacters = [Character]()
     // Game timer menu
     let clockLabel = SKLabelNode(fontNamed: "American Typewriter Bold")
     var gameTimer: Timer!
-    var gameTime = 20.0
+    var gameTime = 30.0
     // Start countdown
     let startTimerLable = SKLabelNode(fontNamed: "American Typewriter Bold")
     var startCountDown: Timer!
@@ -53,6 +56,13 @@ class WordGameScene: SKScene {
     var difficulty = 0.5
     var canTouch = false
     var endGame = false
+    // Game score menu
+    var gameScore: SKLabelNode!
+    var score: Float = 0 {
+        didSet {
+            gameScore.text = "Score: \(Int(score))"
+        }
+    }
     
     override func sceneDidLoad() {
         setUpBackgrounds()
@@ -108,10 +118,82 @@ class WordGameScene: SKScene {
         // Detect interesction of touch and bubble
         let nodesAtPoint = nodes(at: location)
         for node in nodesAtPoint {
+//            for x in activeBubbles {
+//                print(x.name!)
+//            }
+//            print(node.name)
+//            if node != nil {
+//            guard let myNode = node else { return }
+                guard let nodeName = node.name else { return }
+                print(nodeName)
+                if !nodeName.isEmpty && bogusCharacters.contains(Character(nodeName)) {
+                    print("BANG FAKETIME")
+                    gameTime -= 1
+                    // Remove bubble from active bubble array
+                    let index = activeBubbles.index(of: node as! SKSpriteNode)!
+                    activeBubbles.remove(at: index)
+                }
+                if !nodeName.isEmpty && bubbleCharacters.contains(Character(nodeName)) {
+                    newWordLabelText = ""
+                    var updateLabel = wordLabel.text!.filter({ $0 != " " }).compactMap({$0})
+                    var currentWordArray = currentWord.compactMap({$0})
+                    print("Update Label: \(updateLabel), Current Word Array \(currentWordArray)")
+                    
+                    for index in 0..<currentWordArray.count {
+                        if currentWordArray[index] == Character(nodeName) && updateLabel[index] == "_" {
+                            updateLabel[index] = currentWordArray[index]
+                        }
+                    }
+                    
+                    print("Update Label: \(updateLabel)")
+                    for char in updateLabel {
+                        newWordLabelText = "\(newWordLabelText) \(char)"
+                    }
+                    
+                    if updateLabel == currentWordArray {
+                        print("COMPLETED!!")
+                        wordLabel.text = newWordLabelText
+                        gameTime += 10
+                        for b in activeBubbles {
+                            b.name = ""
+                            // Prohibit physics interactions
+                            b.physicsBody?.isDynamic = false
+                            // Animate bubble removal
+                            let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
+                            let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+                            let group = SKAction.group([scaleOut, fadeOut])
+                            //  Run animation
+                            let seq = SKAction.sequence([group, SKAction.removeFromParent()])
+                            b.run(seq)
+                        }
+                        
+                        activeBubbles.removeAll()
+                        score += 1
+                    } else {
+                        wordLabel.text = newWordLabelText
+                        // Remove bubble from active bubble array
+                        let index = activeBubbles.index(of: node as! SKSpriteNode)!
+                        activeBubbles.remove(at: index)
+                    }
+                    
+                   
+                }
+                
+                node.name = ""
+                // Prohibit physics interactions
+                node.physicsBody?.isDynamic = false
+                // Animate bubble removal
+                let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
+                let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+                let group = SKAction.group([scaleOut, fadeOut])
+                //  Run animation
+                let seq = SKAction.sequence([group, SKAction.removeFromParent()])
+                node.run(seq)
+//                // Remove bubble from active bubble array
+//                let index = activeBubbles.index(of: node as! SKSpriteNode)!
+//                activeBubbles.remove(at: index)
+//            }
             
-//            // If bubble is touched then pop it
-//            if node.name == "bubbleRed" || node.name == "bubblePink" || node.name == "bubbleGreen" || node.name == "bubbleBlue" || node.name == "bubbleBlack" {
-//                let nodeName = node.name!
 //
 //                // Fire the coloured explosion animation on bubble popped
 //                let emitter = SKEmitterNode(fileNamed: "\(nodeName)SliceHit")!
@@ -138,7 +220,7 @@ class WordGameScene: SKScene {
 //                node.name = ""
 //                lastBubbblePopImage.removeFromParent()
 //                // Prohibit physics interactions
-                node.physicsBody?.isDynamic = false
+//                node.physicsBody?.isDynamic = false
 //                // Animate bubble removal
 //                let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
 //                let fadeOut = SKAction.fadeOut(withDuration: 0.2)
@@ -231,9 +313,7 @@ class WordGameScene: SKScene {
     
     func setUpBackgrounds() {
         //add background
-        
         for i in 0...7 {
-            
             let background = SKSpriteNode(imageNamed: "\(i).png")
             background.anchorPoint = CGPoint(x: 0, y: 0)
             background.position = CGPoint(x: CGFloat(i) * size.width, y: 0)
@@ -241,7 +321,6 @@ class WordGameScene: SKScene {
             background.zPosition = -1
             background.name = "Background"
             self.addChild(background)
-            
         }
         
         let world = SKSpriteNode(imageNamed: "world")
@@ -273,6 +352,17 @@ class WordGameScene: SKScene {
             }
             
         }
+    }
+    
+    // Build score label
+    func createScore() {
+        gameScore = SKLabelNode(fontNamed: "American Typewriter Bold")
+        gameScore.text = "Score: 0"
+        gameScore.horizontalAlignmentMode = .right
+        gameScore.verticalAlignmentMode = .top
+        gameScore.fontSize = 48
+        addChild(gameScore)
+        gameScore.position = CGPoint(x: viewWidth - 20, y: viewHeight-50)
     }
     
     func createWordLabel() {
@@ -405,7 +495,7 @@ class WordGameScene: SKScene {
             //            if gameKitEnabled {
             //                createTopScore()
             //            }
-//            createScore()
+            createScore()
             createTimer()
             startCountDown.invalidate()
             startTimerLable.removeFromParent()
@@ -444,18 +534,14 @@ class WordGameScene: SKScene {
             activeSliceFG.path = nil
             return
         }
-        
         while activeSlicePoints.count > 6 {
             activeSlicePoints.remove(at: 0)
         }
-        
         let path = UIBezierPath()
         path.move(to: activeSlicePoints[0])
-        
         for i in 1 ..< activeSlicePoints.count {
             path.addLine(to: activeSlicePoints[i])
         }
-        
         activeSliceBG.path = path.cgPath
         activeSliceFG.path = path.cgPath
     }
@@ -463,10 +549,13 @@ class WordGameScene: SKScene {
 
     
     func updateWordLabel(_ word: String) {
+        if endGame { return }
         print(word)
+        currentWord = word
+        bubbleCharacters.removeAll()
+        bogusCharacters.removeAll()
         var alphabet: [Character] = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-        var newWordLabelText = ""
-        var bubbleCharacters = [Character]()
+        newWordLabelText = ""
         let numChar = Int(Double(word.count)*difficulty)
         let numBogusChar = Int(Double(word.count)*(1-difficulty))
         var i = 0
@@ -494,14 +583,17 @@ class WordGameScene: SKScene {
         i = 0
         while i < numBogusChar {
             num = RandomInt(min: 0, max: alphabet.count-1)
-            if !bubbleCharacters.contains(alphabet[num]){
-                bubbleCharacters.append(alphabet[num])
+//            if !bubbleCharacters.contains(alphabet[num]){
+            if !word.contains(alphabet[num]){
+                bogusCharacters.append(alphabet[num])
                 i += 1
             }
         }
         
         print("Bubble Character: \(bubbleCharacters)")
+        print("Bogus Character: \(bogusCharacters)")
         createBubbles(bubbleCharacters)
+        createBubbles(bogusCharacters)
         print("Word Label: \(newWordLabelText)")
         wordLabel.text = newWordLabelText
     }
@@ -511,8 +603,9 @@ class WordGameScene: SKScene {
         var label: SKLabelNode
         for char in characters {
             bubble = SKSpriteNode(imageNamed: "wordBubble")
-            bubble.name = String("bubble\(char)")
-            
+            bubble.name = String(char)
+            bubble.zPosition = 5
+//            print("Assigned Bubble Name: \(bubble.name!)")
             label = SKLabelNode(fontNamed: "American Typewriter Bold")
             label.text = String(char)
             label.fontSize = 60
@@ -524,14 +617,14 @@ class WordGameScene: SKScene {
             activeBubbles.append(bubble)
             
             //Randomise Bubble Starting Position
-            let randomPosition = CGPoint(x: RandomInt(min: 50, max: viewWidth - 50), y: viewHeight)
+            let randomPosition = CGPoint(x: RandomInt(min: 250, max: viewWidth - 300), y: viewHeight-50)
             bubble.position = randomPosition
 
             // Randomise Bubble Angular Velocity
             let randomAngularVelocity = CGFloat(RandomInt(min: -10, max: 10)) / 2.0
 
             //Randomise Bubble X Velocity (Horizontal)
-            let randomXVelocity = RandomDouble(min: -5, max: 5)
+            let randomXVelocity = RandomDouble(min: -7, max: 7)
 
             //Randomise Bubble Y Velocity (Verticle)
             let randomYVelocity = RandomDouble(min: 0.1, max: 1.0)
@@ -546,6 +639,22 @@ class WordGameScene: SKScene {
             
             
         }
+        
+//        func popBubble(_ node: SKNode) {
+//            node.name = ""
+//            // Prohibit physics interactions
+//            node.physicsBody?.isDynamic = false
+//            // Animate bubble removal
+//            let scaleOut = SKAction.scale(to: 0.001, duration:0.2)
+//            let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+//            let group = SKAction.group([scaleOut, fadeOut])
+//            //  Run animation
+//            let seq = SKAction.sequence([group, SKAction.removeFromParent()])
+//            node.run(seq)
+//            // Remove bubble from active bubble array
+//            let index = activeBubbles.index(of: node as! SKSpriteNode)!
+//            activeBubbles.remove(at: index)
+//        }
         
         // Throw bubbles onto the view
 //        func tossBubbles(_ bubbleContainer: [SKSpriteNode]) {
