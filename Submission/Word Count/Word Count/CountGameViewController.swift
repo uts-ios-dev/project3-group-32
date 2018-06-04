@@ -225,7 +225,8 @@ class CountGameViewController: UIViewController, CountGameSceneDelegate {
                 gameTimeBonus += (Double(numeratorLabel.text!.count) * 1.5)
             }
             currentGame.gameTime += Double(gameTimeBonus)
-            currentGame.score = Float(score)
+            currentGame.incrementScore(Float(score))
+//            currentGame.score = Float(score)
         } else {
             hintLabel.text = ""
             hintFlag = false

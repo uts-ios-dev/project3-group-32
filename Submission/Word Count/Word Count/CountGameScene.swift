@@ -299,6 +299,10 @@ class CountGameScene: SKScene {
         
     }
     
+    func incrementScore(_ score: Float) {
+        run(SKAction.playSoundFileNamed("right.caf", waitForCompletion: false))
+    }
+    
     func resetGame()  {
         gameEnded = false
         finalScore = 0        
