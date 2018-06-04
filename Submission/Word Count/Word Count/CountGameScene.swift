@@ -163,7 +163,7 @@ class CountGameScene: SKScene {
         gameScore.verticalAlignmentMode = .top
         gameScore.fontSize = 48
         addChild(gameScore)
-        gameScore.position = CGPoint(x: viewWidth - 250, y: viewHeight-50)
+        gameScore.position = CGPoint(x: viewWidth - 250, y: viewHeight-20)
     }
     
     // Build timer label
@@ -174,7 +174,7 @@ class CountGameScene: SKScene {
         clockLabel.fontSize = 48
         clockLabel.zPosition = 2
         addChild(clockLabel)
-        clockLabel.position = CGPoint(x: 20, y: viewHeight-50)
+        clockLabel.position = CGPoint(x: 20, y: viewHeight-20)
     }
     
     // Run the game timer
@@ -205,20 +205,12 @@ class CountGameScene: SKScene {
             gameScore.verticalAlignmentMode = .center
             gameScore.fontSize = 80
             gameScore.position = CGPoint(x: viewWidth/2, y: Int(Float(viewHeight)/1.5))
-            //  Clear last bubble popped menu
-//            if gameKitEnabled {
-//                viewController.updateLeaderBoard(Int(score))
-//            }
             viewController.leftView.isHidden = true
             viewController.rightView.isHidden = true
             //  End game
             gameEnded = true
             // Go to menu
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [unowned self] in
-//                if self.gameKitEnabled {
-//                    self.topScoreLabel.removeFromParent()
-//                    self.topScoreLabel.removeAllActions()
-//                }
                 self.clockLabel.removeAllActions()
                 self.clockLabel.fontColor = UIColor.white
                 self.gameScore.removeFromParent()
@@ -243,11 +235,6 @@ class CountGameScene: SKScene {
                 //  Disable animation - this is only used when time is added to the game timer for score multiplier
                 clockLabel.removeAllActions()
             }
-            //  Animate top score label if top score is achieved
-//            if gameKitEnabled && Int(score) > topScore {
-//                topScoreLabel.text = "New Top Score: \(Int(score))"
-//                animateNode(topScoreLabel)
-//            }
         }
     }
     

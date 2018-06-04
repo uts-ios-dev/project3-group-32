@@ -94,6 +94,13 @@ class CountGameViewController: UIViewController, CountGameSceneDelegate {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Hide the navigation bar on the this view controller
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }

@@ -35,6 +35,13 @@ class WordMenuViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Show the navigation bar on the this view controller
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

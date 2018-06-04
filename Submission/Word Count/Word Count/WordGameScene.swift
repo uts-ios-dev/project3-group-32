@@ -257,7 +257,7 @@ class WordGameScene: SKScene {
         gameScore.verticalAlignmentMode = .top
         gameScore.fontSize = 48
         addChild(gameScore)
-        gameScore.position = CGPoint(x: viewWidth - 20, y: viewHeight-50)
+        gameScore.position = CGPoint(x: viewWidth - 20, y: viewHeight-20)
     }
     
     func createWordLabel() {
@@ -287,7 +287,7 @@ class WordGameScene: SKScene {
         clockLabel.fontSize = 48
         clockLabel.zPosition = 2
         addChild(clockLabel)
-        clockLabel.position = CGPoint(x: 20, y: viewHeight-50)
+        clockLabel.position = CGPoint(x: 20, y: viewHeight-20)
     }
     
     // Run the game timer
@@ -374,7 +374,7 @@ class WordGameScene: SKScene {
         addToScoreLabel.text = word
         addToScoreLabel.alpha = 0.8
         animateNode(addToScoreLabel)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [unowned self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [unowned self] in
             self.addToScoreLabel.alpha = 0
         }
     }
